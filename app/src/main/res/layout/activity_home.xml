@@ -7,44 +7,66 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeScreen">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fragmentContainerView"-->
+<!--        android:name="com.parkingapp.hulapark.Fragments.ParkingFrag"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/BottomNavBar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:layout="@layout/parking_frag" />-->
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <fragment
+        android:id="@+id/activeFrag"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:navGraph="@navigation/frag_nav" />
+
+    <com.parkingapp.hulapark.Views.CurvedBottomNavigationView
+        android:id="@+id/BottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:exampleColor="@color/teal_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
     />
 
-<!--    <com.parkingapp.hulapark.Views.CurvedBottomNavigationView-->
-<!--        android:id="@+id/BottomNavBar"-->
+    <!--    <com.simform.custombottomnavigation.SSCustomBottomNavigation-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="62dp"-->
-<!--        app:exampleColor="@color/teal_700"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/SSbottomnav"-->
+<!--        app:ss_backgroundBottomColor="@color/teal_700"-->
+<!--        app:ss_circleColor="#ff0000"-->
+<!--        app:ss_waveHeight="7"-->
+<!--        app:ss_countTextColor="#ffffff"-->
+<!--        app:ss_defaultIconColor="@color/gray_400"-->
+<!--        app:ss_iconTextColor="@color/gray_400"-->
+<!--        app:ss_rippleColor="#2f424242"-->
+<!--        app:ss_iconTextSize="14sp"-->
+<!--        app:ss_selectedIconColor="#ff6f00"-->
+<!--        app:ss_selectedIconTextColor="#ff6f00"-->
 <!--        app:layout_constraintBottom_toBottomOf="parent"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--    />-->
-    <com.simform.custombottomnavigation.SSCustomBottomNavigation
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SSbottomnav"
-        app:ss_backgroundBottomColor="@color/green_leaf"
-        app:ss_circleColor="#ff6f00"
-        app:ss_waveHeight="7"
-        app:ss_countBackgroundColor="@color/teal_700"
-        app:ss_countTextColor="#ffffff"
-        app:ss_defaultIconColor="@color/gray_600"
-        app:ss_iconTextColor="@color/gray_400"
-        app:ss_rippleColor="#2f424242"
-        app:ss_iconTextSize="14sp"
-        app:ss_selectedIconColor="#ff6f00"
-        app:ss_selectedIconTextColor="#ff6f00"
-        app:ss_shadowColor="#1f212121"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,17 +23,4 @@
         app:lottie_rawRes="@raw/logo_animation"
         tools:ignore="MissingClass,MissingConstraints" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
-        app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
-        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
-        android:textColor="@color/green_leaf"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        />
-    />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
