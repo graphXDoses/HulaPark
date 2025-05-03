@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MapFrag">
+    tools:context=".Fragments.WalletFrag">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -12,6 +12,6 @@
         android:gravity="center"
         android:textSize="28sp"
         android:textColor="@color/gray_600"
-        android:text="@string/navstr_map" />
+        android:text="@string/navstr_wallet" />
 
 </FrameLayout>

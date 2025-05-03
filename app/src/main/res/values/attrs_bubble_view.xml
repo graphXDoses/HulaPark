@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="BubbleView">
+        <attr name="color" format="color" />
+    </declare-styleable>
+</resources>
