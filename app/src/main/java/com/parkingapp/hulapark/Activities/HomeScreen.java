@@ -74,7 +74,8 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 //                        .commit();
                 break;
         }
-        binding.Bubble.setX(findViewById(id).getX());
+        binding.BottomNavBar.setBubbleX(findViewById(id).getX());
+//        binding.Bubble.setX(findViewById(id).getX());
         return true;
     }
 }

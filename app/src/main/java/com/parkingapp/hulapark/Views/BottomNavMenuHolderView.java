@@ -8,6 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
+
+import androidx.annotation.Dimension;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.R;
@@ -31,6 +34,11 @@ public class BottomNavMenuHolderView extends BottomNavigationView
     public int mNavigationBarWidth;
     public int mNavigationBarHeight;
     private Context context;
+    private int itemCount = 1;
+    private int bezierWidth, bezierHeight;
+    private float Xoffset = 0.0f;
+
+    final float scale = getContext().getResources().getDisplayMetrics().density;
 
     public BottomNavMenuHolderView(Context context) {
         super(context);
@@ -58,11 +66,16 @@ public class BottomNavMenuHolderView extends BottomNavigationView
             Resources resources = getResources();
 
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BottomNavMenuHolderView);
-            mPaint.setColor(typedArray.getColor(R.styleable.BottomNavMenuHolderView_exampleColor, resources.getColor(R.color.green_leaf)));
+            mPaint.setColor(typedArray.getColor(R.styleable.BottomNavMenuHolderView_menuColor, resources.getColor(R.color.green_leaf)));
+            bezierHeight = (int)(typedArray.getDimension(R.styleable.BottomNavMenuHolderView_bubbleWaveHeight, 50.0f));
 
             typedArray.recycle();
         }
 
+        itemCount = getMenu().size();
+        itemCount = itemCount <= 0 ? 1 : itemCount;
+        bezierHeight = bezierHeight == 50 ? toPX(50) : bezierHeight;
+        bezierWidth = bezierHeight * 4;
         setBackgroundColor(Color.TRANSPARENT);
     }
 
@@ -76,17 +89,36 @@ public class BottomNavMenuHolderView extends BottomNavigationView
         super.onSizeChanged(w, h, oldw, oldh);
         mNavigationBarWidth = getWidth();
         mNavigationBarHeight = getHeight();
+        bezierWidth = mNavigationBarWidth / itemCount;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mPath.reset();
-        mPath.moveTo(0, 0);
-        mPath.lineTo(mNavigationBarWidth, 0);
+        mPath.moveTo(0, bezierHeight);
+        mPath.lineTo(Xoffset, bezierHeight);
+        mPath.cubicTo(
+                Xoffset + (bezierWidth / 4), bezierHeight,
+                Xoffset + (bezierWidth / 4), 0,
+                Xoffset + (bezierWidth / 2), 0);
+        mPath.cubicTo(
+                Xoffset + ((bezierWidth / 4) * 3), 0,
+                Xoffset + ((bezierWidth / 4) * 3), bezierHeight,
+                Xoffset + bezierWidth, bezierHeight);
+        mPath.lineTo(mNavigationBarWidth, bezierHeight);
         mPath.lineTo(mNavigationBarWidth, mNavigationBarHeight);
         mPath.lineTo(0, mNavigationBarHeight);
         mPath.close();
         canvas.drawPath(mPath, mPaint);
+    }
+
+    protected int toPX(float dps) { return (int)(dps * scale + 0.5f); }
+
+    public void setBubbleX(float x)
+    {
+        Xoffset = x;
+        invalidate();
+        requestLayout();
     }
 }

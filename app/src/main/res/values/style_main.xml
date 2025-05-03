@@ -1,12 +1,12 @@
 <resources>
     <style name="Widget.Theme.HulaPark.MyView" parent="">
         <item name="android:background">@color/beige</item>
-        <item name="exampleColor">@color/mild_purple</item>
+        <item name="menuColor">@color/mild_purple</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/yellow</item>
-        <item name="android:width">@dimen/_40sdp</item>
-        <item name="android:height">@dimen/_40sdp</item>
+        <item name="android:width">@dimen/_42sdp</item>
+        <item name="android:height">@dimen/_42sdp</item>
     </style>
 </resources>

@@ -8,20 +8,22 @@
     tools:context=".Activities.HomeScreen">
 
     <ImageView
+        android:background="@color/greenish"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="110dp"
+        android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:elevation="10dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        tools:srcCompat="@tools:sample/backgrounds/scenic[2]" />
 
     <fragment
         android:id="@+id/activeFrag"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="-18dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/BottomNavBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,21 +31,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:navGraph="@navigation/frag_nav" />
 
-    <com.parkingapp.hulapark.Views.BubbleView
-        android:id="@+id/Bubble"
-        android:layout_width="100dp"
-        android:layout_height="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/BottomNavBar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:ignore="MissingConstraints"
-        app:color="@color/mild_purple"
-    />
-
     <com.parkingapp.hulapark.Views.BottomNavMenuHolderView
-        app:exampleColor="@color/mild_purple"
+        app:menuColor="@color/green_leaf"
+        app:bubbleWaveHeight="18dp"
         android:id="@+id/BottomNavBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         app:itemTextColor="@drawable/bottom_nav_active_frag_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,26 +44,8 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:itemPaddingBottom="5dp"
+        app:itemPaddingBottom="10dp"
+        app:itemIconTint="@drawable/bottom_nav_active_frag_icon"
     />
-
-    <!--    <com.simform.custombottomnavigation.SSCustomBottomNavigation-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:id="@+id/SSbottomnav"-->
-    <!--        app:ss_backgroundBottomColor="@color/teal_700"-->
-    <!--        app:ss_circleColor="#ff0000"-->
-    <!--        app:ss_waveHeight="7"-->
-    <!--        app:ss_countTextColor="#ffffff"-->
-    <!--        app:ss_defaultIconColor="@color/gray_400"-->
-    <!--        app:ss_iconTextColor="@color/gray_400"-->
-    <!--        app:ss_rippleColor="#2f424242"-->
-    <!--        app:ss_iconTextSize="14sp"-->
-    <!--        app:ss_selectedIconColor="#ff6f00"-->
-    <!--        app:ss_selectedIconTextColor="#ff6f00"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--    />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
