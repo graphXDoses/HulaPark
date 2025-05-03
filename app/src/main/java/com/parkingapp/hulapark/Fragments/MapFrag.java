@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 
 /**
@@ -61,6 +63,13 @@ public class MapFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_map, container, false);
+        View view = inflater.inflate(R.layout.frag_map, container, false);
+
+        view.findViewById(R.id.mapFindMyLocation).setOnClickListener(v ->
+        {
+            CommonFragUtils.FragmentSwapper.getBottomNavMenu().setSelectedItemId(R.id.nav_history);
+        });
+
+        return view;
     }
 }

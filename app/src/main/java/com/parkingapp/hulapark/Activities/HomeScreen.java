@@ -2,38 +2,34 @@ package com.parkingapp.hulapark.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.window.OnBackInvokedDispatcher;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parkingapp.hulapark.Fragments.HistoryFrag;
-import com.parkingapp.hulapark.Fragments.MapFrag;
-import com.parkingapp.hulapark.Fragments.ParkingFrag;
-import com.parkingapp.hulapark.Fragments.WalletFrag;
+import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
 import com.parkingapp.hulapark.databinding.ActivityHomeBinding;
 
 public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener
 {
     private ActivityHomeBinding binding;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        BottomNavMenuHolderView mView = binding.BottomNavBar;
-        mView.setSelectedItemId(R.id.nav_parking_car);
-        mView.setOnNavigationItemSelectedListener(HomeScreen.this);
+
+        // Navbar
+        navController = Navigation.findNavController(findViewById(R.id.activeFrag));
+        CommonFragUtils.FragmentSwapper.setNavController(navController);
+        CommonFragUtils.FragmentSwapper.setBottomNavMenu(binding.BottomNavBar);
+        binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
+        binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
     }
 
     @Override
@@ -46,32 +42,16 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_parking_car:
-                Navigation.findNavController(findViewById(R.id.activeFrag)).navigate(R.id.parkingFrag);
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.activeFrag, ParkingFrag.class, null)
-//                        .commit();
+                navController.navigate(R.id.parkingFrag);
                 break;
             case R.id.nav_map:
-                Navigation.findNavController(findViewById(R.id.activeFrag)).navigate(R.id.mapFrag);
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.activeFrag, MapFrag.class, null)
-//                        .commit();
+                navController.navigate(R.id.mapFrag);
                 break;
             case R.id.nav_wallet:
-                Navigation.findNavController(findViewById(R.id.activeFrag)).navigate(R.id.walletFrag);
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.activeFrag, WalletFrag.class, null)
-//                        .commit();
+                navController.navigate(R.id.walletFrag);
                 break;
             case R.id.nav_history:
-                Navigation.findNavController(findViewById(R.id.activeFrag)).navigate(R.id.historyFrag);
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.activeFrag, HistoryFrag.class, null)
-//                        .commit();
+                navController.navigate(R.id.historyFrag);
                 break;
         }
         binding.BottomNavBar.setBubbleX(findViewById(id).getX());
