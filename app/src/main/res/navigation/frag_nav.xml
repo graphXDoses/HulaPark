@@ -9,22 +9,22 @@
         android:id="@+id/parkingFrag"
         android:name="com.parkingapp.hulapark.Fragments.ParkingFrag"
         android:label="parking_frag"
-        tools:layout="@layout/parking_frag" >
+        tools:layout="@layout/frag_parking" >
     </fragment>
     <fragment
         android:id="@+id/mapFrag"
         android:name="com.parkingapp.hulapark.Fragments.MapFrag"
         android:label="map_frag"
-        tools:layout="@layout/map_frag" >
+        tools:layout="@layout/frag_map" >
     </fragment>
     <fragment
         android:id="@+id/walletFrag"
         android:name="com.parkingapp.hulapark.Fragments.WalletFrag"
         android:label="wallet_frag"
-        tools:layout="@layout/wallet_frag" />
+        tools:layout="@layout/frag_wallet" />
     <fragment
         android:id="@+id/historyFrag"
         android:name="com.parkingapp.hulapark.Fragments.HistoryFrag"
         android:label="history_frag"
-        tools:layout="@layout/history_frag" />
+        tools:layout="@layout/frag_history" />
 </navigation>
