@@ -2,6 +2,7 @@ package com.parkingapp.hulapark.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -9,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mapbox.geojson.Point;
+import com.mapbox.maps.CameraOptions;
+import com.mapbox.maps.MapView;
+import com.mapbox.maps.Style;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 
@@ -27,6 +32,8 @@ public class MapFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private MapView map;
 
     public MapFrag() {
         // Required empty public constructor
@@ -65,9 +72,23 @@ public class MapFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_map, container, false);
 
+        map = view.findViewById(R.id.streetMap);
+
         view.findViewById(R.id.mapFindMyLocation).setOnClickListener(v ->
         {
-            CommonFragUtils.FragmentSwapper.getBottomNavMenu().setSelectedItemId(R.id.nav_history);
+//            CommonFragUtils.FragmentSwapper.getBottomNavMenu().setSelectedItemId(R.id.nav_history);
+        });
+
+        map.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                map.getMapboxMap().setCamera(
+                        new CameraOptions.Builder()
+                                .center(Point.fromLngLat(-157.848, 21.297))
+                                .zoom(12.28)
+                                .build()
+                );
+            }
         });
 
         return view;
