@@ -5,6 +5,14 @@
     <string name="navstr_map">Χάρτης</string>
     <string name="navstr_wallet">Πορτοφόλι</string>
     <string name="navstr_history">Ιστορικό</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="button_new_parking">ΝΕΑ ΣΤΑΘΜΕΥΣΗ</string>
+
+    <string name="info_create_acc">Δημιουργώντας λογαριασμό</string>
+
+    <string name="singIn">Σύνδεση</string>
+    <string name="singUp">Εγγραφή</string>
+
+    <string name="info_praking_txt1">Πιο εύκολη &amp; γρήγορη πληρωμή στάθμευσης</string>
+    <string name="info_praking_txt2">Παρακολούθηση τρεχόντων σταθμεύσεων &amp; ειδοποιήσεις</string>
 </resources>

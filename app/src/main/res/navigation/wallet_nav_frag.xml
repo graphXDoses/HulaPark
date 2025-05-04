@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wallet_nav_frag"
+    app:startDestination="@id/guestWalletFrag">
+
+    <fragment
+        android:id="@+id/guestWalletFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.Guest.GuestWalletFrag"
+        android:label="frag_guest_wallet"
+        tools:layout="@layout/frag_guest_wallet" />
+    <fragment
+        android:id="@+id/userWalletFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.User.UserWalletFrag"
+        android:label="fragment_user_wallet"
+        tools:layout="@layout/frag_user_wallet" />
+</navigation>

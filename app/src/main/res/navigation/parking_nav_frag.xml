@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parking_nav_frag"
+    app:startDestination="@id/guestParkingFrag">
+
+    <fragment
+        android:id="@+id/guestParkingFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.Guest.GuestParkingFrag"
+        android:label="frag_guest_parking"
+        tools:layout="@layout/frag_guest_parking" />
+    <fragment
+        android:id="@+id/userParkingFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.User.UserParkingFrag"
+        android:label="frag_user_parking"
+        tools:layout="@layout/frag_user_parking" />
+</navigation>

@@ -1,16 +1,36 @@
 package com.parkingapp.hulapark;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
 
 public class CommonFragUtils
 {
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
     private CommonFragUtils() { }
-    private NavController navController;
     private BottomNavMenuHolderView bottomNavMenu;
+    private NavController NC_BottomNavMenu;
+
+    public int getZeta() {
+        return Zeta;
+    }
+
+    public void setZeta(int zeta) {
+        Zeta = zeta;
+    }
+
+    private int Zeta = 0;
+
+    public NavController getNC_Parking() {
+        return NC_Parking;
+    }
+
+    public void setNC_Parking(NavController NC_Parking) {
+        this.NC_Parking = NC_Parking;
+    }
+
+    private NavController NC_Parking;
 
     public BottomNavMenuHolderView getBottomNavMenu() {
         return bottomNavMenu;
@@ -21,13 +41,13 @@ public class CommonFragUtils
         this.bottomNavMenu = bottomNavMenu;
     }
 
-    public void setNavController(NavController navController)
+    public void setNC_BottomNavMenu(NavController NC_BottomNavMenu)
     {
-        this.navController = navController;
+        this.NC_BottomNavMenu = NC_BottomNavMenu;
     }
 
-    public NavController getNavController()
+    public NavController getNC_BottomNavMenu()
     {
-        return navController;
+        return NC_BottomNavMenu;
     }
 }

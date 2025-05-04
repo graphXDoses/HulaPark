@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ParkingFrag">
+    tools:context=".FragmentContainers.ParkingFrag">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@color/gray_600"
-        android:text="@string/navstr_parking" />
 
-</FrameLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/parkingFragContainer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/parking_nav_frag" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/parkingFragContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/parkBtn"
+            android:layout_width="175dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bg_button_parking_btn"
+            android:drawableTop="@drawable/ic_add_circle_outline"
+            android:drawableTint="@color/white"
+            android:elevation="5dp"
+            android:gravity="bottom"
+            android:paddingVertical="10dp"
+            android:stateListAnimator="@null"
+            android:text="@string/button_new_parking"
+            android:textAlignment="center"
+            android:textFontWeight="1"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

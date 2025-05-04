@@ -1,28 +1,22 @@
-package com.parkingapp.hulapark.Fragments;
+package com.parkingapp.hulapark.UserFragments.Guest;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mapbox.geojson.Point;
-import com.mapbox.maps.CameraOptions;
-import com.mapbox.maps.MapView;
-import com.mapbox.maps.Style;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MapFrag#newInstance} factory method to
+ * Use the {@link GuestWalletFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFrag extends Fragment {
+public class GuestWalletFrag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,9 +27,7 @@ public class MapFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private MapView map;
-
-    public MapFrag() {
+    public GuestWalletFrag() {
         // Required empty public constructor
     }
 
@@ -45,11 +37,11 @@ public class MapFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFrag.
+     * @return A new instance of fragment GuestWalletFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static MapFrag newInstance(String param1, String param2) {
-        MapFrag fragment = new MapFrag();
+    public static GuestWalletFrag newInstance(String param1, String param2) {
+        GuestWalletFrag fragment = new GuestWalletFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,26 +62,13 @@ public class MapFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_map, container, false);
-
-        map = view.findViewById(R.id.streetMap);
-
-        view.findViewById(R.id.mapFindMyLocation).setOnClickListener(v ->
+        View view;
+        if(CommonFragUtils.FragmentSwapper.getZeta() == 0)
         {
-//            CommonFragUtils.FragmentSwapper.getBottomNavMenu().setSelectedItemId(R.id.nav_history);
-        });
-
-        map.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                map.getMapboxMap().setCamera(
-                        new CameraOptions.Builder()
-                                .center(Point.fromLngLat(-157.848, 21.297))
-                                .zoom(12.28)
-                                .build()
-                );
-            }
-        });
+            view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
+        } else {
+            view = inflater.inflate(R.layout.frag_user_wallet, container, false);
+        }
 
         return view;
     }

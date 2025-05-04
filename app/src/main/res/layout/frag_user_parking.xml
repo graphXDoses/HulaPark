@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentContainers.WalletFrag">
+    tools:context=".UserFragments.User.UserParkingFrag">
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/walletFragContainer"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/wallet_nav_frag"
-    />
+        android:gravity="center"
+        android:textSize="28sp"
+        android:textColor="@color/gray_600"
+        android:text="@string/navstr_parking" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

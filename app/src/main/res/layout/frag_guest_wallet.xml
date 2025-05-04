@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    tools:context=".UserFragments.Guest.GuestWalletFrag">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_info_panel"
+        android:elevation="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/infoCreateAccTxt2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:drawableTop="@drawable/ic_about"
+            android:drawableTint="@color/gray_600"
+            android:gravity="bottom"
+            android:text="@string/info_create_acc"
+            android:textSize="18sp" />
+
+        <ListView
+            android:id="@+id/infoListView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/walletAccBtns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/singIn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/bg_sign_btns"
+            android:stateListAnimator="@null"
+            android:text="@string/singIn"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/yellow"
+            app:icon="@drawable/ic_singin"
+            app:iconGravity="textStart"
+            app:iconPadding="15dp"
+            app:iconTint="@color/beige"
+            app:elevation="5dp"
+            tools:ignore="RtlCompat"
+        />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/singUp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_sign_btns"
+            android:stateListAnimator="@null"
+            android:text="@string/singUp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/yellow"
+            app:icon="@drawable/ic_singup"
+            app:iconGravity="textStart"
+            app:iconPadding="15dp"
+            app:iconTint="@color/beige"
+            app:elevation="5dp"
+            tools:ignore="RtlCompat"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

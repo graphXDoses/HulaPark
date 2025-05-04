@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Fragments;
+package com.parkingapp.hulapark.UserFragments.User;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.parkingapp.hulapark.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HistoryFrag#newInstance} factory method to
+ * Use the {@link UserParkingFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HistoryFrag extends Fragment {
+public class UserParkingFrag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class HistoryFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HistoryFrag() {
+    public UserParkingFrag() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class HistoryFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HistoryFrag.
+     * @return A new instance of fragment UserParkingFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static HistoryFrag newInstance(String param1, String param2) {
-        HistoryFrag fragment = new HistoryFrag();
+    public static UserParkingFrag newInstance(String param1, String param2) {
+        UserParkingFrag fragment = new UserParkingFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class HistoryFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_history, container, false);
+        return inflater.inflate(R.layout.frag_user_parking, container, false);
     }
 }

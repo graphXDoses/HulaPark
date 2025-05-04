@@ -18,6 +18,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private ActivityHomeBinding binding;
     private NavController navController;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +27,24 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
-        CommonFragUtils.FragmentSwapper.setNavController(navController);
+        CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
         CommonFragUtils.FragmentSwapper.setBottomNavMenu(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
+
+        // NavControllers
+        NavController parking_nc = Navigation.findNavController(findViewById(R.id.parkingFragContainer));
+        CommonFragUtils.FragmentSwapper.setNC_Parking(parking_nc);
+        binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
+            if(isChecked)
+            {
+                CommonFragUtils.FragmentSwapper.setZeta(1);
+            } else {
+                CommonFragUtils.FragmentSwapper.setZeta(0);
+            }
+            int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
+            CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
+        });
     }
 
     @Override
@@ -55,7 +70,6 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
                 break;
         }
         binding.BottomNavBar.setBubbleX(findViewById(id).getX());
-//        binding.Bubble.setX(findViewById(id).getX());
         return true;
     }
 }

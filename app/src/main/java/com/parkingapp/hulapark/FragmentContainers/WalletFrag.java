@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Fragments;
+package com.parkingapp.hulapark.FragmentContainers;
 
 import android.os.Bundle;
 

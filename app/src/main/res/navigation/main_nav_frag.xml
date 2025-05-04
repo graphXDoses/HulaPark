@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/parkingFrag"
-        android:name="com.parkingapp.hulapark.Fragments.ParkingFrag"
+        android:name="com.parkingapp.hulapark.FragmentContainers.ParkingFrag"
         android:label="parking_frag"
         tools:layout="@layout/frag_parking" >
     </fragment>
     <fragment
         android:id="@+id/mapFrag"
-        android:name="com.parkingapp.hulapark.Fragments.MapFrag"
+        android:name="com.parkingapp.hulapark.FragmentContainers.MapFrag"
         android:label="map_frag"
         tools:layout="@layout/frag_map" >
     </fragment>
     <fragment
         android:id="@+id/walletFrag"
-        android:name="com.parkingapp.hulapark.Fragments.WalletFrag"
+        android:name="com.parkingapp.hulapark.FragmentContainers.WalletFrag"
         android:label="wallet_frag"
         tools:layout="@layout/frag_wallet" />
     <fragment
         android:id="@+id/historyFrag"
-        android:name="com.parkingapp.hulapark.Fragments.HistoryFrag"
+        android:name="com.parkingapp.hulapark.FragmentContainers.HistoryFrag"
         android:label="history_frag"
         tools:layout="@layout/frag_history" />
 </navigation>
