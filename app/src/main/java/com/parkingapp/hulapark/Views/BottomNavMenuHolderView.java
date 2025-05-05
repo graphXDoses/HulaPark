@@ -12,6 +12,7 @@ import android.util.Log;
 
 import androidx.annotation.Dimension;
 
+import com.airbnb.lottie.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.R;
 public class BottomNavMenuHolderView extends BottomNavigationView
