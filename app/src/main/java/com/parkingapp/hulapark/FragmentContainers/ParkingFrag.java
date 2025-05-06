@@ -1,13 +1,18 @@
 package com.parkingapp.hulapark.FragmentContainers;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.Activities.AdminScreen;
+import com.parkingapp.hulapark.Activities.HomeScreen;
 import com.parkingapp.hulapark.R;
 
 /**
@@ -61,6 +66,13 @@ public class ParkingFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_parking, container, false);
+        View view = inflater.inflate(R.layout.frag_parking, container, false);
+
+        ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), AdminScreen.class);
+            startActivity(intent);
+        });
+
+        return view;
     }
 }

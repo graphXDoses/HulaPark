@@ -10,14 +10,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.parkingapp.hulapark.databinding.ActivitySplashBinding;
+import com.parkingapp.hulapark.databinding.ActivitySplashScreenBinding;
 
 public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        ActivitySplashScreenBinding binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Removing status bar

@@ -11,18 +11,19 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.databinding.ActivityHomeBinding;
+import com.parkingapp.hulapark.UserType;
+import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener
 {
-    private ActivityHomeBinding binding;
+    private ActivityHomeScreenBinding binding;
     private NavController navController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Navbar
@@ -38,9 +39,9 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
             if(isChecked)
             {
-                CommonFragUtils.FragmentSwapper.setZeta(1);
+                CommonFragUtils.FragmentSwapper.setUserType(UserType.USER);
             } else {
-                CommonFragUtils.FragmentSwapper.setZeta(0);
+                CommonFragUtils.FragmentSwapper.setUserType(UserType.GUEST);
             }
             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);

@@ -1,6 +1,5 @@
 package com.parkingapp.hulapark;
 
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
 
 import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
@@ -12,15 +11,15 @@ public class CommonFragUtils
     private BottomNavMenuHolderView bottomNavMenu;
     private NavController NC_BottomNavMenu;
 
-    public int getZeta() {
-        return Zeta;
+    public UserType getUserType() {
+        return user_type;
     }
 
-    public void setZeta(int zeta) {
-        Zeta = zeta;
+    public void setUserType(UserType type) {
+        user_type = type;
     }
 
-    private int Zeta = 0;
+    private UserType user_type = UserType.GUEST;
 
     public NavController getNC_Parking() {
         return NC_Parking;

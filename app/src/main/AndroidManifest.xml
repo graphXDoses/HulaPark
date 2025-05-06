@@ -15,7 +15,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_hulapark_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HulaPark" >
+        android:theme="@style/Theme.HulaPark">
+        <activity
+            android:name=".Activities.AdminScreen"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.SplashScreen"
             android:exported="true"
@@ -33,7 +39,7 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,7 +64,7 @@ public class GuestWalletFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view;
-        if(CommonFragUtils.FragmentSwapper.getZeta() == 0)
+        if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
         {
             view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
         } else {
