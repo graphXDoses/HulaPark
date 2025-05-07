@@ -1,18 +1,19 @@
 package com.parkingapp.hulapark.Activities;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import com.parkingapp.hulapark.R;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AdminScreen extends AppCompatActivity {
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import com.parkingapp.hulapark.R;
+
+public class AuthScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_screen);
+        setContentView(R.layout.activity_auth_screen);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
@@ -20,6 +21,6 @@ public class AdminScreen extends AppCompatActivity {
         View customView = getSupportActionBar().getCustomView();
 
         TextView titleTextView = customView.findViewById(R.id.tvActivityTitle);
-        titleTextView.setText(R.string.admin_activity_title);
+        titleTextView.setText(R.string.auth_activity_title);
     }
 }

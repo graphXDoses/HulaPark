@@ -23,5 +23,9 @@
     <string name="info_history_txt1">Προβολή πλήρους ιστορικού συναλλαγών</string>
     <string name="info_history_txt2">Προβολή στατιστικών χρήσης</string>
 
+    <string name="admin_activity_title">Admin Page</string>
+    <string name="auth_activity_title">Authentication</string>
+
     <string name="admin_landing">Welcome to <b>Admin Page</b></string>
+    <string name="auth_landing">Please, <b>authenticate</b> yourself!</string>
 </resources>

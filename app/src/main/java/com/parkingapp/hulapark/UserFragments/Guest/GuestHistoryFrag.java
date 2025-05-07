@@ -1,5 +1,6 @@
 package com.parkingapp.hulapark.UserFragments.Guest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.Activities.AdminScreen;
+import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.UserType;
@@ -70,6 +73,12 @@ public class GuestHistoryFrag extends Fragment {
         } else {
             view = inflater.inflate(R.layout.frag_user_history, container, false);
         }
+
+        view.findViewById(R.id.singIn2).setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), AuthScreen.class);
+            startActivity(intent);
+        });
+
         return view;
     }
 }

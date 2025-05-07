@@ -17,9 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HulaPark">
         <activity
+            android:name=".Activities.AuthScreen"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HulaPark.WithTopBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Activities.AdminScreen"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.HulaPark.WithTopBar"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
