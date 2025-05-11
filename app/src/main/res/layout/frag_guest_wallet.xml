@@ -95,56 +95,15 @@
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/walletAccBtns"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/frag_guest_auth_btns"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoBoxWallet">
+        app:layout_constraintTop_toBottomOf="@+id/infoBoxWallet"
+    />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/singIn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="50dp"
-            android:stateListAnimator="@null"
-            android:text="@string/singIn"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:elevation="8dp"
-            app:backgroundTint="@color/yellow"
-            app:icon="@drawable/ic_singin"
-            app:iconGravity="textStart"
-            app:iconPadding="15dp"
-            app:iconTint="@color/beige"
-            app:cornerRadius="10dp"
-            tools:ignore="RtlCompat" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/singUp"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:stateListAnimator="@null"
-            android:text="@string/singUp"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:elevation="8dp"
-            app:backgroundTint="@color/yellow"
-            app:icon="@drawable/ic_singup"
-            app:iconGravity="textStart"
-            app:iconPadding="15dp"
-            app:iconTint="@color/beige"
-            app:cornerRadius="10dp"
-            tools:ignore="RtlCompat"
-        />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

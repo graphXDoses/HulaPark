@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Activities.AdminScreen;
 import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
@@ -70,14 +69,17 @@ public class GuestHistoryFrag extends Fragment {
         if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
         {
             view = inflater.inflate(R.layout.frag_guest_history, container, false);
+            view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
+                Intent intent = new Intent(getContext(), AuthScreen.class);
+                startActivity(intent);
+            });
+            view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
+                Intent intent = new Intent(getContext(), AuthScreen.class);
+                startActivity(intent);
+            });
         } else {
             view = inflater.inflate(R.layout.frag_user_history, container, false);
         }
-
-        view.findViewById(R.id.singIn2).setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), AuthScreen.class);
-            startActivity(intent);
-        });
 
         return view;
     }

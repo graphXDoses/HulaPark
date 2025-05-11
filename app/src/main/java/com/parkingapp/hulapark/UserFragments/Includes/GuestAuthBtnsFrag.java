@@ -1,6 +1,5 @@
-package com.parkingapp.hulapark.UserFragments.Guest;
+package com.parkingapp.hulapark.UserFragments.Includes;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,17 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Activities.AuthScreen;
-import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GuestWalletFrag#newInstance} factory method to
+ * Use the {@link GuestAuthBtnsFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GuestWalletFrag extends Fragment {
+public class GuestAuthBtnsFrag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +26,7 @@ public class GuestWalletFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public GuestWalletFrag() {
+    public GuestAuthBtnsFrag() {
         // Required empty public constructor
     }
 
@@ -40,11 +36,11 @@ public class GuestWalletFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GuestWalletFrag.
+     * @return A new instance of fragment GuestAuthBtnsFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static GuestWalletFrag newInstance(String param1, String param2) {
-        GuestWalletFrag fragment = new GuestWalletFrag();
+    public static GuestAuthBtnsFrag newInstance(String param1, String param2) {
+        GuestAuthBtnsFrag fragment = new GuestAuthBtnsFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,21 +61,7 @@ public class GuestWalletFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view;
-        if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
-        {
-            view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
-            view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
-                startActivity(intent);
-            });
-            view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
-                startActivity(intent);
-            });
-        } else {
-            view = inflater.inflate(R.layout.frag_user_wallet, container, false);
-        }
+        View view = inflater.inflate(R.layout.frag_guest_auth_btns, container, false);
 
         return view;
     }

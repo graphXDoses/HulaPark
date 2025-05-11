@@ -4,41 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/beige"
-    tools:context=".Activities.AdminScreen">
+    tools:context=".UserFragments.Includes.GuestAuthBtnsFrag">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_marginHorizontal="50dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+    >
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/One"
+            android:id="@+id/SignInButton"
             style="@style/AuthButton.SignIn"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/Two"
+            android:id="@+id/SignUpButton"
             style="@style/AuthButton.SignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/Three"
-            style="@style/AuthButton.Logout"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

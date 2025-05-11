@@ -28,4 +28,6 @@
 
     <string name="admin_landing">Welcome to <b>Admin Page</b></string>
     <string name="auth_landing">Please, <b>authenticate</b> yourself!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
