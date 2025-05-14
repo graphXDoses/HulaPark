@@ -9,13 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mapbox.geojson.Point;
-import com.mapbox.maps.CameraOptions;
-import com.mapbox.maps.CustomGeometrySourceOptions;
-import com.mapbox.maps.MapView;
-import com.mapbox.maps.Style;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.WarningDialogBox;
+
+import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.CustomZoomButtonsController;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +73,9 @@ public class MapFrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configuration.getInstance().load(getContext().getApplicationContext(),
+                PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext()));
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -81,18 +97,68 @@ public class MapFrag extends Fragment {
                     .show();
         });
 
-        map.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                map.getMapboxMap().setCamera(
-                        new CameraOptions.Builder()
-                                .center(Point.fromLngLat(-157.848, 21.297))
-                                .zoom(12.28)
-                                .build()
-                );
-            }
-        });
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+        map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
+
+        GeoPoint startPoint = new GeoPoint(21.3123319465878, -157.860639202242); // San Francisco
+        map.getController().setZoom(12.28);
+        map.getController().setCenter(startPoint);
+        loadGeoJsonFromAssets();
 
         return view;
+    }
+
+    private void loadGeoJsonFromAssets() {
+        try {
+            InputStream is = getResources().openRawResource(R.raw.parkingspots);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder builder = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+
+            String geoJsonStr = builder.toString();
+            JSONObject geoJson = new JSONObject(geoJsonStr);
+            JSONArray features = geoJson.getJSONArray("features");
+
+            for (int i = 0; i < features.length(); i++) {
+                JSONObject feature = features.getJSONObject(i);
+                JSONObject geometry = feature.getJSONObject("geometry");
+                String type = geometry.getString("type");
+
+                if ("Point".equals(type)) {
+                    JSONArray coordinates = geometry.getJSONArray("coordinates");
+                    double lon = coordinates.getDouble(0);
+                    double lat = coordinates.getDouble(1);
+
+                    System.out.println("Adding marker at: " + lat + ", " + lon);
+
+                    Marker marker = new Marker(map);
+                    marker.setPosition(new GeoPoint(lat, lon));
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                    JSONObject properties = feature.getJSONObject("properties");
+                    String name = properties.optString("name", "Unknown");
+                    String description = properties.optString("description", "No description available.");
+
+                    marker.setTitle(name);
+                    marker.setSubDescription(description);
+
+                    // Optional: show the info window when marker is clicked
+                    marker.setOnMarkerClickListener((Marker m, MapView mapView) -> {
+                        m.showInfoWindow();
+                        return true;
+                    });
+                    map.getOverlays().add(marker);
+                }
+            }
+
+            map.invalidate();
+
+        } catch (IOException | JSONException e) {
+            System.out.println("Error loading GeoJSON: ");
+        }
     }
 }

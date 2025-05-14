@@ -50,4 +50,6 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.2.0'
     // Multi Dex Enable
     implementation 'androidx.multidex:multidex:2.0.1'
+    // OSM
+    implementation 'org.osmdroid:osmdroid-android:6.1.16'
 }
