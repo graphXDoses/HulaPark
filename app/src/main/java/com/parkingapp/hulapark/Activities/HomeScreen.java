@@ -8,12 +8,16 @@ import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.UserType;
+import com.parkingapp.hulapark.WarningDialogBox;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 import java.util.HashMap;
@@ -24,6 +28,11 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private NavController navController;
     private final NavOptions.Builder navBuilder =  new NavOptions.Builder();
     private final HashMap<Integer, Integer> animatorMap = new HashMap<Integer, Integer>();
+    private static final int BACK_PRESS_INTERVAL = 2000;
+    private long lastBackPressedTime = 0;
+    private Toast backToast;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable resetBackPressedFlag;
 
 
     @Override
@@ -53,6 +62,8 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
         });
 
+        WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
+
         animatorMap.put(R.id.parkingFrag, 0);
         animatorMap.put(R.id.mapFrag, 1);
         animatorMap.put(R.id.walletFrag, 2);
@@ -60,8 +71,28 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     }
 
     @Override
-    public void onBackPressed() {
-        finish(); // Close the app
+    public void onBackPressed()
+    {
+        long currentTime = System.currentTimeMillis();
+        backToast = Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT);
+
+        if (currentTime - lastBackPressedTime < BACK_PRESS_INTERVAL) {
+            // Avoid stacking
+            if (backToast != null) backToast.cancel();
+            handler.removeCallbacks(resetBackPressedFlag);
+            finish();
+        } else {
+            lastBackPressedTime = currentTime;
+            if (backToast != null) backToast.cancel();
+            backToast.show();
+
+            // Reset the flag after the toast duration
+            if (resetBackPressedFlag == null) {
+                resetBackPressedFlag = () -> lastBackPressedTime = 0;
+            }
+            handler.removeCallbacks(resetBackPressedFlag);
+            handler.postDelayed(resetBackPressedFlag, BACK_PRESS_INTERVAL);
+        }
     }
 
     @Override

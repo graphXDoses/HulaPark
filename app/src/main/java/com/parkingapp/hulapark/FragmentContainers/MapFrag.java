@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.CameraOptions;
+import com.mapbox.maps.CustomGeometrySourceOptions;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.Style;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.WarningDialogBox;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,7 +76,9 @@ public class MapFrag extends Fragment {
 
         view.findViewById(R.id.mapFindMyLocation).setOnClickListener(v ->
         {
-//            CommonFragUtils.FragmentSwapper.getBottomNavMenu().setSelectedItemId(R.id.nav_history);
+            new WarningDialogBox(getContext()).builder()
+                    .setDescription(getString(R.string.locationFinderNotImplemented))
+                    .show();
         });
 
         map.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {

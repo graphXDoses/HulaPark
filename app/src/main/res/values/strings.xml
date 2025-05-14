@@ -15,7 +15,6 @@
 
     <string name="info_praking_txt1">Πιο εύκολη &amp; γρήγορη πληρωμή στάθμευσης</string>
     <string name="info_praking_txt2">Παρακολούθηση τρεχόντων σταθμεύσεων &amp; ειδοποιήσεις</string>
-    <string name="info_praking_txt3">Δυνατότητα επέκτασης ή πρόωρης διακοπής</string>
 
     <string name="info_wallet_txt1">Έλεγχος υπολοίπου προτοφολιού</string>
     <string name="info_wallet_txt2">Εύκολη και γρήγορη αύξηση υπολοίπου</string>
@@ -25,9 +24,9 @@
 
     <string name="admin_activity_title">Admin Page</string>
     <string name="auth_activity_title">Authentication</string>
+    <string name="initparking_activity_title">Έναρξη Στάθμευσης</string>
 
     <string name="admin_landing">Welcome to <b>Admin Page</b></string>
     <string name="auth_landing">Please, <b>authenticate</b> yourself!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="locationFinderNotImplemented">Δυστυχώς, η υπηρεσία εύρεσης της τοποθεσίας σας δεν έχει υλοποιηθεί ακόμα.</string>
 </resources>

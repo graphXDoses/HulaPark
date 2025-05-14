@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.Activities.AdminScreen;
 import com.parkingapp.hulapark.Activities.HomeScreen;
+import com.parkingapp.hulapark.Activities.InitParkingScreen;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.WarningDialogBox;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +71,7 @@ public class ParkingFrag extends Fragment {
         View view = inflater.inflate(R.layout.frag_parking, container, false);
 
         ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), AdminScreen.class);
+            Intent intent = new Intent(getActivity(), InitParkingScreen.class);
             startActivity(intent);
         });
 
