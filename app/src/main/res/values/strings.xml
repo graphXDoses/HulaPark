@@ -29,4 +29,10 @@
     <string name="admin_landing">Welcome to <b>Admin Page</b></string>
     <string name="auth_landing">Please, <b>authenticate</b> yourself!</string>
     <string name="locationFinderNotImplemented">Δυστυχώς, η υπηρεσία εύρεσης της τοποθεσίας σας δεν έχει υλοποιηθεί ακόμα.</string>
+
+    <string name="init_pariking_plate">Πινακίδα <b><font color="#ff0000">*</font></b></string>
+    <string name="init_pariking_plate_h">πχ. ΝΑΒ1234</string>
+    <string name="init_pariking_spot">Τοποθεσία <b><font color="#ff0000">*</font></b></string>
+    <string name="init_pariking_spot_h">Επιλέξτε την βολική προς εσάς τοποθεσία απο τη λίστα, ή χρησιμοποιόντας τον χάρτη</string>
+    <string name="init_pariking_duration">Διάρκεια <b><font color="#ff0000">*</font></b></string>
 </resources>
