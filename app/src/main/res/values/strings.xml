@@ -4,7 +4,7 @@
     <string name="navstr_parking">Στάθμευση</string>
     <string name="navstr_map">Χάρτης</string>
     <string name="navstr_wallet">Πορτοφόλι</string>
-    <string name="navstr_history">Ιστορικό</string>
+    <string name="navstr_statistics">Στατιστικά</string>
 
     <string name="button_new_parking">ΝΕΑ ΣΤΑΘΜΕΥΣΗ</string>
 
@@ -14,13 +14,13 @@
     <string name="singUp">Εγγραφή</string>
 
     <string name="info_praking_txt1">Πιο εύκολη &amp; γρήγορη πληρωμή στάθμευσης</string>
-    <string name="info_praking_txt2">Παρακολούθηση τρεχόντων σταθμεύσεων &amp; ειδοποιήσεις</string>
+    <string name="info_praking_txt2">Παρακολούθηση τρεχόντων σταθμεύσεων</string>
 
     <string name="info_wallet_txt1">Έλεγχος υπολοίπου προτοφολιού</string>
     <string name="info_wallet_txt2">Εύκολη και γρήγορη αύξηση υπολοίπου</string>
 
-    <string name="info_history_txt1">Προβολή πλήρους ιστορικού συναλλαγών</string>
-    <string name="info_history_txt2">Προβολή στατιστικών χρήσης</string>
+    <string name="info_statistics_txt1">Προβολή πλήρους ιστορικού συναλλαγών</string>
+    <string name="info_statistics_txt2">Προβολή στατιστικών χρήσης</string>
 
     <string name="admin_activity_title">Admin Page</string>
     <string name="auth_activity_title">Authentication</string>
@@ -35,4 +35,7 @@
     <string name="init_pariking_spot">Τοποθεσία <b><font color="#ff0000">*</font></b></string>
     <string name="init_pariking_spot_h">Επιλέξτε την βολική προς εσάς τοποθεσία απο τη λίστα, ή χρησιμοποιόντας τον χάρτη</string>
     <string name="init_pariking_duration">Διάρκεια <b><font color="#ff0000">*</font></b></string>
+
+    <string name="auth_email">Email <b><font color="#ff0000">*</font></b></string>
+    <string name="auth_password">Password <b><font color="#ff0000">*</font></b></string>
 </resources>

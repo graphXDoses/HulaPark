@@ -11,16 +11,9 @@ import com.parkingapp.hulapark.R;
 public class AuthScreen extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_screen);
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.abs_layout);
-
-        View customView = getSupportActionBar().getCustomView();
-
-        TextView titleTextView = customView.findViewById(R.id.tvActivityTitle);
-        titleTextView.setText(R.string.auth_activity_title);
     }
 }

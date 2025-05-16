@@ -1,6 +1,5 @@
 package com.parkingapp.hulapark.UserFragments.Guest;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,17 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Activities.AuthScreen;
-import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GuestHistoryFrag#newInstance} factory method to
+ * Use the {@link GuestAuthSignUpFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GuestHistoryFrag extends Fragment {
+public class GuestAuthSignUpFrag extends Fragment
+{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +27,8 @@ public class GuestHistoryFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public GuestHistoryFrag() {
+    public GuestAuthSignUpFrag()
+    {
         // Required empty public constructor
     }
 
@@ -40,11 +38,12 @@ public class GuestHistoryFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GuestHistory.
+     * @return A new instance of fragment GuestAuthSignUpFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static GuestHistoryFrag newInstance(String param1, String param2) {
-        GuestHistoryFrag fragment = new GuestHistoryFrag();
+    public static GuestAuthSignUpFrag newInstance(String param1, String param2)
+    {
+        GuestAuthSignUpFrag fragment = new GuestAuthSignUpFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,9 +52,11 @@ public class GuestHistoryFrag extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -63,24 +64,9 @@ public class GuestHistoryFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        View view;
-        if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
-        {
-            view = inflater.inflate(R.layout.frag_guest_history, container, false);
-            view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
-                startActivity(intent);
-            });
-            view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
-                startActivity(intent);
-            });
-        } else {
-            view = inflater.inflate(R.layout.frag_user_history, container, false);
-        }
-
-        return view;
+        return inflater.inflate(R.layout.frag_guest_auth_signup, container, false);
     }
 }

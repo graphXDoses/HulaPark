@@ -67,7 +67,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         animatorMap.put(R.id.parkingFrag, 0);
         animatorMap.put(R.id.mapFrag, 1);
         animatorMap.put(R.id.walletFrag, 2);
-        animatorMap.put(R.id.historyFrag, 3);
+        animatorMap.put(R.id.statisticsFrag, 3);
     }
 
     @Override
@@ -109,8 +109,8 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
             case R.id.nav_wallet:
                 navController.navigate(R.id.walletFrag, null, setNavBuilderAnimations(R.id.walletFrag));
                 break;
-            case R.id.nav_history:
-                navController.navigate(R.id.historyFrag, null, setNavBuilderAnimations(R.id.historyFrag));
+            case R.id.nav_statistics:
+                navController.navigate(R.id.statisticsFrag, null, setNavBuilderAnimations(R.id.statisticsFrag));
                 break;
         }
         binding.BottomNavBar.setBubbleX(findViewById(id).getX());
