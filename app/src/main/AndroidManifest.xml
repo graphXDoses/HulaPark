@@ -20,7 +20,7 @@
             android:name=".Activities.AuthScreen"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HulaPark.WithTopBar"
+            android:theme="@style/Theme.HulaPark"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity

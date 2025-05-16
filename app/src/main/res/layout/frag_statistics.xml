@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentContainers.HistoryFrag">
+    tools:context=".FragmentContainers.StatisticsFrag">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/history_nav_frag"
+        app:navGraph="@navigation/statistics_nav_frag"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

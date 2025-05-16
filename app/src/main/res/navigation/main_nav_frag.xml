@@ -23,8 +23,8 @@
         android:label="wallet_frag"
         tools:layout="@layout/frag_wallet" />
     <fragment
-        android:id="@+id/historyFrag"
-        android:name="com.parkingapp.hulapark.FragmentContainers.HistoryFrag"
-        android:label="history_frag"
-        tools:layout="@layout/frag_history" />
+        android:id="@+id/statisticsFrag"
+        android:name="com.parkingapp.hulapark.FragmentContainers.StatisticsFrag"
+        android:label="statistics_frag"
+        tools:layout="@layout/frag_statistics" />
 </navigation>

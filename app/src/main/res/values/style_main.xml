@@ -10,6 +10,18 @@
         <item name="android:height">@dimen/_40sdp</item>
     </style>
 
+    <style name="App.Custom.AuthTab" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="App.Custom.AuthTabActive" parent="App.Custom.AuthTab">
+        <item name="android:color">@color/white</item>
+    </style>
+
+    <style name="App.Custom.AuthTabInactive" parent="App.Custom.AuthTab">
+        <item name="android:color">@color/yellow</item>
+    </style>
+
     <style name="AuthButton" parent="Widget.MaterialComponents.Button">
         <item name="android:stateListAnimator">@null</item>
         <item name="android:textAlignment">center</item>
@@ -48,5 +60,13 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/beige</item>
         <item name="android:paddingVertical" tools:targetApi="o">15dp</item>
+    </style>
+
+    <style name="customTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

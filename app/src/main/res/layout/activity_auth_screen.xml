@@ -6,14 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AuthScreen">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/auth_landing"
-        android:textSize="20sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/authTopBarArea"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/green_leaf"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:outlineAmbientShadowColor="@android:color/transparent"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            app:compatShadowEnabled="false"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemTextAppearanceActive="@style/App.Custom.AuthTabActive"
+            app:itemTextAppearanceInactive="@style/App.Custom.AuthTabInactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:itemTextColor="@drawable/auth_nav_active_frag_text"
+            app:itemIconTint="@drawable/auth_nav_active_frag_icon"
+            app:itemIconSize="24sp"
+            app:itemRippleColor="@android:color/transparent"
+            app:customIndicatorHeight="12dp"
+            app:menu="@menu/auth_nav_menu"
+            app:itemPaddingBottom="20dp"
+            app:itemPaddingTop="32dp"
+            android:defaultFocusHighlightEnabled="false"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:id="@+id/authActiveFrag"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/authTopBarArea"
+        app:navGraph="@navigation/auth_nav_frag"
+    />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
