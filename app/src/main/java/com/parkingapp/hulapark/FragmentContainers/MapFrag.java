@@ -2,25 +2,21 @@ package com.parkingapp.hulapark.FragmentContainers;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
+import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.GeoJsonModels.Feature;
-import com.parkingapp.hulapark.Utilities.GeoJsonModels.GeoJsonData;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
+import com.parkingapp.hulapark.Utilities.Map.OsmMapModifier;
 import com.parkingapp.hulapark.WarningDialogBox;
 
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -28,11 +24,6 @@ import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,54 +94,33 @@ public class MapFrag extends Fragment {
         map = view.findViewById(R.id.streetMap);
 
         loadMap(map);
-        List<GeoPoint> parkingSpots = parseGeoJsonData(R.raw.parkingspots);
-        loadMapMarkers(parkingSpots);
-
+        GeoJsonDataModel model = CommonFragUtils.FragmentSwapper.getGeoLocModel();
+        loadMapMarkers(model.data.features);
         map.invalidate();
 
         return view;
     }
 
-    private void loadMap(MapView mapView){
-        map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setMultiTouchControls(true);
-        map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
+    private void loadMap(MapView mapView)
+    {
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setMultiTouchControls(true);
+        mapView.setTilesScaledToDpi(true);
+        mapView.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
 
-        GeoPoint startPoint = new GeoPoint(21.3123319465878, -157.860639202242);
-        map.getController().setZoom(12.28);
-        map.getController().setCenter(startPoint);
+        mapView.getController().setCenter(new GeoPoint(21.309884, -157.858140));
+        mapView.getController().setZoom(14);
     }
 
-    private List<GeoPoint> parseGeoJsonData(final int resourceID) {
-        List<GeoPoint> geoPoints = new ArrayList<>();
-
-        try {
-            InputStream is = getResources().openRawResource(resourceID);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            Gson gson = new Gson();
-
-            GeoJsonData geoData = gson.fromJson(reader, GeoJsonData.class);
-
-            for (Feature feature : geoData.features) {
-                if ("Point".equals(feature.geometry.type)) {
-                    List<Double> coords = feature.geometry.coordinates;
-                    double lon = coords.get(0);
-                    double lat = coords.get(1);
-                    geoPoints.add(new GeoPoint(lat, lon));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error loading GeoJSON: " + e.getMessage());
-        }
-
-        return geoPoints;
-    }
-
-    private void loadMapMarkers(List<GeoPoint> geoPoints) {
-        for (GeoPoint point : geoPoints) {
+    private void loadMapMarkers(List<Feature> features) {
+        for (Feature feature : features)
+        {
             Marker marker = new Marker(map);
+            List<Double> co = feature.geometry.coordinates;
 
+            GeoPoint point = new GeoPoint(co.get(1), co.get(0));
             marker.setPosition(point);
+            marker.setTitle(feature.properties.name);
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setOnMarkerClickListener((m, mapView) -> {
                 m.showInfoWindow();
