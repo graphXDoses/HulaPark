@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.Activities.AuthScreen;
-import com.parkingapp.hulapark.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.UserType;
+import com.parkingapp.hulapark.Utilities.UserType;
 
 /**
  * A simple {@link Fragment} subclass.

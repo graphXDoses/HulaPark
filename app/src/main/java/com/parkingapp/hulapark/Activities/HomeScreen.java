@@ -6,7 +6,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,11 +13,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parkingapp.hulapark.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.UserType;
-import com.parkingapp.hulapark.Utilities.Map.OsmMapModifier;
-import com.parkingapp.hulapark.WarningDialogBox;
+import com.parkingapp.hulapark.Utilities.UserType;
+import com.parkingapp.hulapark.Utilities.WarningDialogBox;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 import java.util.HashMap;

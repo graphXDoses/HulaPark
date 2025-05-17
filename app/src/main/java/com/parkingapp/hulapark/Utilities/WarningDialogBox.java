@@ -1,11 +1,12 @@
-package com.parkingapp.hulapark;
+package com.parkingapp.hulapark.Utilities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.parkingapp.hulapark.R;
 
 import org.jetbrains.annotations.NotNull;
 

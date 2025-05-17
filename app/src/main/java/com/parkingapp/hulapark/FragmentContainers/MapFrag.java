@@ -4,26 +4,31 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.CommonFragUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
-import com.parkingapp.hulapark.Utilities.Map.OsmMapModifier;
-import com.parkingapp.hulapark.WarningDialogBox;
+import com.parkingapp.hulapark.Utilities.WarningDialogBox;
 
 import android.preference.PreferenceManager;
+import android.widget.TextView;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
+import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,6 +48,8 @@ public class MapFrag extends Fragment {
     private String mParam2;
 
     private MapView map;
+
+    private HashMap<Marker, Feature> markFeatures;
     public MapFrag() {
         // Required empty public constructor
     }
@@ -95,6 +102,7 @@ public class MapFrag extends Fragment {
 
         loadMap(map);
         GeoJsonDataModel model = CommonFragUtils.FragmentSwapper.getGeoLocModel();
+
         loadMapMarkers(model.data.features);
         map.invalidate();
 
@@ -109,10 +117,12 @@ public class MapFrag extends Fragment {
         mapView.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
 
         mapView.getController().setCenter(new GeoPoint(21.309884, -157.858140));
-        mapView.getController().setZoom(14);
+        mapView.getController().setZoom(13);
     }
 
-    private void loadMapMarkers(List<Feature> features) {
+    private void loadMapMarkers(List<Feature> features)
+    {
+        markFeatures = new HashMap<>();
         for (Feature feature : features)
         {
             Marker marker = new Marker(map);
@@ -123,9 +133,24 @@ public class MapFrag extends Fragment {
             marker.setTitle(feature.properties.name);
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setOnMarkerClickListener((m, mapView) -> {
-                m.showInfoWindow();
+                Feature f = markFeatures.get(m);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                View view = getLayoutInflater().from(getContext()).inflate(R.layout.frag_map_display_spot_details, null);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.show();
+
+                mapView.getController().animateTo(point);
+
+                ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
+                ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.id);
+
+                ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
+                    bottomSheetDialog.dismiss();
+                });
+
                 return true;
             });
+            markFeatures.put(marker, feature);
 
             map.getOverlays().add(marker);
         }
