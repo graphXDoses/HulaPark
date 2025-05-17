@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.UserType;
+import com.parkingapp.hulapark.Utilities.Map.OsmMapModifier;
 import com.parkingapp.hulapark.WarningDialogBox;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
@@ -63,6 +64,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         });
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
+        CommonFragUtils.FragmentSwapper.createGeoLocModelFromGeoJson(R.raw.parkingspots, getApplicationContext());
 
         animatorMap.put(R.id.parkingFrag, 0);
         animatorMap.put(R.id.mapFrag, 1);
