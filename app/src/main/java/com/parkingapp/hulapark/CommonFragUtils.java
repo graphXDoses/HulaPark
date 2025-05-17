@@ -1,8 +1,17 @@
 package com.parkingapp.hulapark;
 
+import android.content.Context;
+
 import androidx.navigation.NavController;
 
+import com.google.gson.Gson;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class CommonFragUtils
 {
@@ -10,6 +19,7 @@ public class CommonFragUtils
     private CommonFragUtils() { }
     private BottomNavMenuHolderView bottomNavMenu;
     private NavController NC_BottomNavMenu;
+    private GeoJsonDataModel geoJsonDataModel;
 
     public UserType getUserType() {
         return user_type;
@@ -48,5 +58,22 @@ public class CommonFragUtils
     public NavController getNC_BottomNavMenu()
     {
         return NC_BottomNavMenu;
+    }
+
+    public GeoJsonDataModel getGeoLocModel()
+    {
+        return geoJsonDataModel;
+    }
+
+    public void createGeoLocModelFromGeoJson(final int resID, Context context)
+    {
+        InputStream is = context.getResources().openRawResource(resID);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        Gson gson = new Gson();
+
+        FeatureCollection collection = gson.fromJson(reader, FeatureCollection.class);
+
+        geoJsonDataModel = new GeoJsonDataModel();
+        geoJsonDataModel.data = collection;
     }
 }
