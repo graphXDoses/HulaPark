@@ -6,16 +6,12 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Activities.AdminScreen;
-import com.parkingapp.hulapark.Activities.HomeScreen;
 import com.parkingapp.hulapark.Activities.InitParkingScreen;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.WarningDialogBox;
 
 /**
  * A simple {@link Fragment} subclass.
