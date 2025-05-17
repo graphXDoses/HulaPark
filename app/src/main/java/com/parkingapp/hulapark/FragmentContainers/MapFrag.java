@@ -130,7 +130,7 @@ public class MapFrag extends Fragment {
 
             GeoPoint point = new GeoPoint(co.get(1), co.get(0));
             marker.setPosition(point);
-            marker.setTitle(feature.properties.name);
+            marker.setIcon(getResources().getDrawable(R.drawable.map_location_circle));
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setOnMarkerClickListener((m, mapView) -> {
                 Feature f = markFeatures.get(m);
@@ -139,6 +139,11 @@ public class MapFrag extends Fragment {
                 bottomSheetDialog.setContentView(view);
                 bottomSheetDialog.show();
 
+                map.getOverlays().remove(m);
+                m.setIcon(getResources().getDrawable(R.drawable.map_location_parking_active));
+                map.getOverlays().add(m);
+                map.invalidate();
+
                 mapView.getController().animateTo(point);
 
                 ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
@@ -146,6 +151,11 @@ public class MapFrag extends Fragment {
 
                 ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
                     bottomSheetDialog.dismiss();
+                });
+
+                bottomSheetDialog.setOnDismissListener(dialogInterface -> {
+                    m.setIcon(getResources().getDrawable(R.drawable.map_location_circle));
+                    map.invalidate();
                 });
 
                 return true;
