@@ -145,10 +145,10 @@ public class MapFrag extends Fragment {
                 map.getOverlays().add(m);
                 map.invalidate();
 
-                double currentZoomLevel = map.getZoomLevelDouble();
+                double previousZoomLevel = map.getZoomLevelDouble();
                 mapView.getController().animateTo(
                         point,
-                        currentZoomLevel + 0.40,
+                        previousZoomLevel + 0.40,
                         750L);
 
                 ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
@@ -158,7 +158,7 @@ public class MapFrag extends Fragment {
                     bottomSheetDialog.dismiss();
                     mapView.getController().animateTo(
                             point,
-                            currentZoomLevel- 0.40,
+                            previousZoomLevel,
                             750L);
                 });
 
