@@ -20,6 +20,7 @@ import com.parkingapp.hulapark.Utilities.WarningDialogBox;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -117,7 +118,7 @@ public class MapFrag extends Fragment {
         mapView.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
 
         mapView.getController().setCenter(new GeoPoint(21.309884, -157.858140));
-        mapView.getController().setZoom(13);
+        mapView.getController().setZoom(13.0);
     }
 
     private void loadMapMarkers(List<Feature> features)
@@ -144,13 +145,21 @@ public class MapFrag extends Fragment {
                 map.getOverlays().add(m);
                 map.invalidate();
 
-                mapView.getController().animateTo(point);
+                double currentZoomLevel = map.getZoomLevelDouble();
+                mapView.getController().animateTo(
+                        point,
+                        currentZoomLevel + 0.40,
+                        750L);
 
                 ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
                 ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.id);
 
                 ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
                     bottomSheetDialog.dismiss();
+                    mapView.getController().animateTo(
+                            point,
+                            currentZoomLevel- 0.40,
+                            750L);
                 });
 
                 bottomSheetDialog.setOnDismissListener(dialogInterface -> {
