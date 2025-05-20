@@ -7,14 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.AES.AESHelper;
+import com.stripe.android.view.CardNumberEditText;
+import com.stripe.android.view.CvcEditText;
+import com.stripe.android.view.ExpiryDateEditText;
+import com.stripe.android.view.PostalCodeEditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WalletFrag#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WalletFrag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +30,14 @@ public class WalletFrag extends Fragment {
 
     public WalletFrag() {
         // Required empty public constructor
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     /**
@@ -49,18 +59,53 @@ public class WalletFrag extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_wallet, container, false);
+        View view = inflater.inflate(R.layout.frag_wallet, container, false);
+
+        CardNumberEditText cardNumberEditText = (CardNumberEditText)view.findViewById(R.id.cardNumberEditText);
+        ExpiryDateEditText expiryDateEditText = (ExpiryDateEditText)view.findViewById(R.id.expiryDateEditText);
+        CvcEditText cvcEditText = (CvcEditText)view.findViewById(R.id.cvcEditText);
+        PostalCodeEditText postalCodeEditText = (PostalCodeEditText)view.findViewById(R.id.postalCodeEditText);
+
+        Button payBtn = view.findViewById(R.id.paymentBtn);
+        payBtn.setOnClickListener(v -> {
+            String cardNumber = cardNumberEditText.getText().toString();
+            String expiryDate = expiryDateEditText.getText().toString();
+            String cvc = cvcEditText.getText().toString();
+            String postalCode = postalCodeEditText.getText().toString();
+
+            CardInfo cardInfo = new CardInfo(cardNumber, expiryDate, cvc, postalCode);
+            Gson gson = new Gson();
+            String json = gson.toJson(cardInfo);
+
+            String encrypted;
+            String decrypted;
+            try {
+                encrypted = AESHelper.encrypt(json);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                decrypted = AESHelper.decrypt(encrypted);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            /*System.out.println(cardNumber);
+            System.out.println(expiryDate);
+            System.out.println(cvc);
+            System.out.println(postalCode);*/
+            System.out.println(json);
+            System.out.println(encrypted);
+            System.out.println(decrypted);
+
+            System.out.println("work!!!!!!!!!!!!!!!!!!!!!");
+        });
+
+        return view;
     }
 }
