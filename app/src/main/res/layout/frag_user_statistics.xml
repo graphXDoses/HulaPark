@@ -41,4 +41,18 @@
 
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:id="@+id/statsActiveFrag"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintTop_toBottomOf="@+id/statsTopBarArea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:navGraph="@navigation/category_statistics_nav_frag"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

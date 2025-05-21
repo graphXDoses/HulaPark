@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_statistics_nav_frag"
+    app:startDestination="@id/userStatisticsGenStatsFrag">
+
+    <fragment
+        android:id="@+id/userStatisticsGenStatsFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.User.UserStatisticsGenStatsFrag"
+        android:label="frag_user_statistics_gen_stats"
+        tools:layout="@layout/frag_user_statistics_gen_stats" />
+    <fragment
+        android:id="@+id/userStatisticsHistoryFrag"
+        android:name="com.parkingapp.hulapark.UserFragments.User.UserStatisticsHistoryFrag"
+        android:label="frag_user_statistics_history"
+        tools:layout="@layout/frag_user_statistics_history" />
+</navigation>
