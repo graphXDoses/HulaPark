@@ -1,16 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserFragments.User.UserWalletFrag">
 
+    
+    <LinearLayout
+        android:id="@+id/walletBalanceArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="25dp"
+        android:layout_marginHorizontal="-10dp"
+        android:background="@drawable/bg_top_fixeddrawer"
+        android:elevation="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@color/gray_600"
-        android:text="@string/navstr_wallet" />
+        android:layout_height="wrap_content"
+        android:text="Διαθέσιμο υπόλοιπο" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:textSize="26dp"
+            android:layout_marginRight="10dp"
+            />
+    <com.parkingapp.hulapark.Views.SpannableTextView
+        android:id="@+id/walletCurrentBallance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:text="0.00"
+        />
+       </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/walletBalanceIncrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Αύξηση υπολοίπου"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/walletBalanceArea"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/walletBalanceIncrease"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/walletAddByTenBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10$"
+            />
+    
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/walletAddByTwentyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20$"
+        />
+    
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/walletAddByFiftyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50$"
+        />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
