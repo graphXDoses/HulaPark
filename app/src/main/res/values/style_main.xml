@@ -10,16 +10,8 @@
         <item name="android:height">@dimen/_40sdp</item>
     </style>
 
-    <style name="App.Custom.AuthTab" parent="Widget.MaterialComponents.TextView">
+    <style name="App.Custom.TopNavTextSize" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="App.Custom.AuthTabActive" parent="App.Custom.AuthTab">
-        <item name="android:color">@color/white</item>
-    </style>
-
-    <style name="App.Custom.AuthTabInactive" parent="App.Custom.AuthTab">
-        <item name="android:color">@color/yellow</item>
     </style>
 
     <style name="AuthButton" parent="Widget.MaterialComponents.Button">

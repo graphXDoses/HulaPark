@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserFragments.User.UserStatisticsFrag">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statsTopBarArea"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@color/gray_600"
-        android:text="@string/navstr_statistics" />
+        android:layout_height="80dp"
+        android:background="@color/yellow"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-</FrameLayout>
+        <com.parkingapp.hulapark.Views.TopNavMenuHolderView
+            android:id="@+id/statsNavMenuHolderView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:compatShadowEnabled="false"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
+            app:itemTextAppearanceInactive="@style/App.Custom.TopNavTextSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:itemTextColor="@drawable/stats_nav_active_frag_text"
+            app:itemIconTint="@drawable/stats_nav_active_frag_icon"
+            app:itemIconSize="24sp"
+            app:itemRippleColor="@android:color/transparent"
+            app:customIndicatorHeight="12dp"
+            app:menu="@menu/stats_top_nav_menu"
+            app:itemPaddingBottom="16dp"
+            app:itemPaddingTop="16dp"
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

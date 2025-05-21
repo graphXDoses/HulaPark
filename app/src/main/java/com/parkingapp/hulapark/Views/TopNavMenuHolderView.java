@@ -15,17 +15,13 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.R;
 
-public class AuthNavMenuHolderView extends BottomNavigationView
+public class TopNavMenuHolderView extends BottomNavigationView
 {
     private Path mPath;
     private Paint mPaint;
-    public int mNavigationBarWidth;
-    public int mNavigationBarHeight;
     private Context context;
     private int itemCount = 1;
-    private int indicatorWidth, indicatorHeight;
-    private float Xoffset = 0.0f;
-
+    private int indicatorHeight;
 
     private int selectedIndex = 0;
     private float indicatorLeft = 0;
@@ -33,17 +29,17 @@ public class AuthNavMenuHolderView extends BottomNavigationView
 
     final float scale = getContext().getResources().getDisplayMetrics().density;
 
-    public AuthNavMenuHolderView(Context context) {
+    public TopNavMenuHolderView(Context context) {
         super(context);
         this.context = context;
         init(null);
     }
-    public AuthNavMenuHolderView(Context context, AttributeSet attrs) {
+    public TopNavMenuHolderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init(attrs);
     }
-    public AuthNavMenuHolderView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TopNavMenuHolderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         init(attrs);
@@ -53,22 +49,20 @@ public class AuthNavMenuHolderView extends BottomNavigationView
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        setWillNotDraw(false);
+//        setWillNotDraw(false);
 
         if (attrs != null)
         {
             Resources resources = getResources();
 
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AuthNavMenuHolderView);
-            mPaint.setColor(resources.getColor(R.color.yellow));
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TopNavMenuHolderView);
+            mPaint.setColor(resources.getColor(R.color.orange));
 //            mPaint.setColor(typedArray.getColor(R., resources.getColor(R.color.green_leaf)));
-            indicatorHeight = (int)(typedArray.getDimension(R.styleable.AuthNavMenuHolderView_customIndicatorHeight, toPX(10)));
+            indicatorHeight = (int)(typedArray.getDimension(R.styleable.TopNavMenuHolderView_customIndicatorHeight, toPX(10)));
 
             typedArray.recycle();
         }
 
-        itemCount = getMenu().size();
-        itemCount = itemCount <= 0 ? 1 : itemCount;
         setBackgroundColor(Color.TRANSPARENT);
     }
 

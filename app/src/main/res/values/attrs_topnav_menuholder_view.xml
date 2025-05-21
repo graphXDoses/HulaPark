@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="AuthNavMenuHolderView">
+    <declare-styleable name="TopNavMenuHolderView">
         <attr name="customIndicatorHeight" format="dimension" />
     </declare-styleable>
 </resources>

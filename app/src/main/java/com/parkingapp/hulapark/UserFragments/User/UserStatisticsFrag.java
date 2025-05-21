@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +27,8 @@ public class UserStatisticsFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TopNavMenuHolderView statsNavMenuHolderView;
 
     public UserStatisticsFrag() {
         // Required empty public constructor
@@ -61,6 +65,23 @@ public class UserStatisticsFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_user_statistics, container, false);
+        View view = inflater.inflate(R.layout.frag_user_statistics, container, false);
+
+        statsNavMenuHolderView = (TopNavMenuHolderView) view.findViewById(R.id.statsNavMenuHolderView);
+        statsNavMenuHolderView.attachIndicatorToSelection();
+
+        statsNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
+            int index = findItemIndex(item.getItemId());
+            statsNavMenuHolderView.animateIndicatorToIndex(index);
+            return true;
+        });
+        return view;
+    }
+    private int findItemIndex(int itemId){
+        Menu menu = statsNavMenuHolderView.getMenu();
+        for(int i = 0; i < menu.size(); i++){
+            if(menu.getItem(i).getItemId() == itemId) return i;
+        }
+        return  -1;
     }
 }

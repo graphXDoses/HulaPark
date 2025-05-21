@@ -2,17 +2,14 @@ package com.parkingapp.hulapark.Activities;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Views.AuthNavMenuHolderView;
+import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
 
 public class AuthScreen extends AppCompatActivity
 {
-    private AuthNavMenuHolderView authNavMenuHolderView;
+    private TopNavMenuHolderView topNavMenuHolderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,8 +17,8 @@ public class AuthScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_screen);
 
-        authNavMenuHolderView = (AuthNavMenuHolderView)findViewById(R.id.authNavMenuHolderView);
-        authNavMenuHolderView.attachIndicatorToSelection();
+        topNavMenuHolderView = (TopNavMenuHolderView)findViewById(R.id.authNavMenuHolderView);
+        topNavMenuHolderView.attachIndicatorToSelection();
 
         Boolean isSignUpIntent = false;
 
@@ -35,17 +32,17 @@ public class AuthScreen extends AppCompatActivity
             }
         }
 
-        authNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
+        topNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
             int index = findItemIndex(item.getItemId());
-            authNavMenuHolderView.animateIndicatorToIndex(index);
+            topNavMenuHolderView.animateIndicatorToIndex(index);
             return true;
         });
 
-        authNavMenuHolderView.setSelectedItemId(isSignUpIntent ?R.id.auth_nav_signup : R.id.auth_nav_signin);
+        topNavMenuHolderView.setSelectedItemId(isSignUpIntent ?R.id.auth_nav_signup : R.id.auth_nav_signin);
     }
 
     private int findItemIndex(int itemId) {
-        Menu menu = authNavMenuHolderView.getMenu();
+        Menu menu = topNavMenuHolderView.getMenu();
         for (int i = 0; i < menu.size(); i++) {
             if (menu.getItem(i).getItemId() == itemId) return i;
         }
