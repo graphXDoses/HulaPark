@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
     >
 
-        <com.parkingapp.hulapark.Views.AuthNavMenuHolderView
+        <com.parkingapp.hulapark.Views.TopNavMenuHolderView
             android:id="@+id/authNavMenuHolderView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -26,8 +26,8 @@
             android:outlineSpotShadowColor="@android:color/transparent"
             app:compatShadowEnabled="false"
             app:itemHorizontalTranslationEnabled="true"
-            app:itemTextAppearanceActive="@style/App.Custom.AuthTabActive"
-            app:itemTextAppearanceInactive="@style/App.Custom.AuthTabInactive"
+            app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
+            app:itemTextAppearanceInactive="@style/App.Custom.TopNavTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
