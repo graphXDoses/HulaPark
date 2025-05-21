@@ -25,8 +25,11 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="32dp"
             android:hint="@string/init_pariking_plate"
-            app:errorEnabled="true"
-            app:helperText="@string/init_pariking_plate_h">
+            app:helperText="@string/init_pariking_plate_h"
+            app:counterEnabled="true"
+            app:counterMaxLength="7"
+            app:counterTextColor="@android:color/transparent"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -35,7 +38,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/init_pariking_spot"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="50dp"
@@ -44,14 +47,15 @@
             app:helperText="@string/init_pariking_spot_h"
         >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="none"
             />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/init_pariking_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,10 +63,10 @@
             android:layout_marginTop="32dp"
             android:hint="@string/init_pariking_duration"
             >
-
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="none"
             />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton

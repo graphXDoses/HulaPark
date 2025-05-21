@@ -1,5 +1,6 @@
 package com.parkingapp.hulapark.UserFragments.Includes;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.R;
 
 /**

@@ -70,11 +70,11 @@ public class GuestWalletFrag extends Fragment {
         {
             view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
             view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
+                Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", false);
                 startActivity(intent);
             });
             view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class);
+                Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", true);
                 startActivity(intent);
             });
         } else {

@@ -25,6 +25,7 @@
     <string name="admin_activity_title">Admin Page</string>
     <string name="auth_activity_title">Authentication</string>
     <string name="initparking_activity_title">Έναρξη Στάθμευσης</string>
+    <string name="finishparking_activity_title">Ολοκλήρωση Στάθμευσης</string>
 
     <string name="admin_landing">Welcome to <b>Admin Page</b></string>
     <string name="auth_landing">Please, <b>authenticate</b> yourself!</string>
@@ -38,4 +39,6 @@
 
     <string name="auth_email">Email <b><font color="#ff0000">*</font></b></string>
     <string name="auth_password">Password <b><font color="#ff0000">*</font></b></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
