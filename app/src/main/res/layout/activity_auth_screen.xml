@@ -17,7 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
     >
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.parkingapp.hulapark.Views.AuthNavMenuHolderView
+            android:id="@+id/authNavMenuHolderView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@android:color/transparent"
@@ -35,7 +36,7 @@
             app:itemIconTint="@drawable/auth_nav_active_frag_icon"
             app:itemIconSize="24sp"
             app:itemRippleColor="@android:color/transparent"
-            app:customIndicatorHeight="12dp"
+            app:customIndicatorHeight="6dp"
             app:menu="@menu/auth_nav_menu"
             app:itemPaddingBottom="20dp"
             app:itemPaddingTop="32dp"

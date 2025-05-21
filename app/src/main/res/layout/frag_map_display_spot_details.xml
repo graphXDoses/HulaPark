@@ -52,7 +52,8 @@
                 android:id="@+id/displaySpotDismissBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DISMISS" />
+                style="@style/ModalBottomSheet.SelectButton"
+            />
         </LinearLayout>
 
     </LinearLayout>

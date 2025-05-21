@@ -38,6 +38,13 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".Activities.FinishParkingScreen"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HulaPark.WithTopBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Activities.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
