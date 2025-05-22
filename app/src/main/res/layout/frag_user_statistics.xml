@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UserFragments.User.UserStatisticsFrag">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statsTopBarArea"
         android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
             app:itemTextAppearanceInactive="@style/App.Custom.TopNavTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:itemTextColor="@drawable/stats_nav_active_frag_text"
@@ -37,8 +39,6 @@
             app:menu="@menu/stats_top_nav_menu"
             app:itemPaddingBottom="16dp"
             app:itemPaddingTop="16dp"
-
-
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -48,11 +48,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintTop_toBottomOf="@+id/statsTopBarArea"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsTopBarArea"
         app:navGraph="@navigation/category_statistics_nav_frag"
-        />
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

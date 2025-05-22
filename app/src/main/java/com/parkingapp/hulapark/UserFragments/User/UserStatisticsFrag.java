@@ -67,7 +67,7 @@ public class UserStatisticsFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_user_statistics, container, false);
 
-        statsNavMenuHolderView = (TopNavMenuHolderView) view.findViewById(R.id.statsNavMenuHolderView);
+        statsNavMenuHolderView = (TopNavMenuHolderView)view.findViewById(R.id.statsNavMenuHolderView);
         statsNavMenuHolderView.attachIndicatorToSelection();
 
         statsNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
@@ -75,13 +75,15 @@ public class UserStatisticsFrag extends Fragment {
             statsNavMenuHolderView.animateIndicatorToIndex(index);
             return true;
         });
+
         return view;
     }
-    private int findItemIndex(int itemId){
+
+    private int findItemIndex(int itemId) {
         Menu menu = statsNavMenuHolderView.getMenu();
-        for(int i = 0; i < menu.size(); i++){
-            if(menu.getItem(i).getItemId() == itemId) return i;
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.getItem(i).getItemId() == itemId) return i;
         }
-        return  -1;
+        return -1;
     }
 }
