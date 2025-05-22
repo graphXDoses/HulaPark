@@ -2,14 +2,13 @@ package com.parkingapp.hulapark.Activities;
 
 import android.os.Bundle;
 import android.view.Menu;
-
 import androidx.appcompat.app.AppCompatActivity;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
 
 public class AuthScreen extends AppCompatActivity
 {
-    private TopNavMenuHolderView topNavMenuHolderView;
+    private TopNavMenuHolderView authNavMenuHolderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -17,8 +16,8 @@ public class AuthScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_screen);
 
-        topNavMenuHolderView = (TopNavMenuHolderView)findViewById(R.id.authNavMenuHolderView);
-        topNavMenuHolderView.attachIndicatorToSelection();
+        authNavMenuHolderView = (TopNavMenuHolderView)findViewById(R.id.authNavMenuHolderView);
+        authNavMenuHolderView.attachIndicatorToSelection();
 
         Boolean isSignUpIntent = false;
 
@@ -32,17 +31,17 @@ public class AuthScreen extends AppCompatActivity
             }
         }
 
-        topNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
+        authNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
             int index = findItemIndex(item.getItemId());
-            topNavMenuHolderView.animateIndicatorToIndex(index);
+            authNavMenuHolderView.animateIndicatorToIndex(index);
             return true;
         });
 
-        topNavMenuHolderView.setSelectedItemId(isSignUpIntent ?R.id.auth_nav_signup : R.id.auth_nav_signin);
+        authNavMenuHolderView.setSelectedItemId(isSignUpIntent ?R.id.auth_nav_signup : R.id.auth_nav_signin);
     }
 
     private int findItemIndex(int itemId) {
-        Menu menu = topNavMenuHolderView.getMenu();
+        Menu menu = authNavMenuHolderView.getMenu();
         for (int i = 0; i < menu.size(); i++) {
             if (menu.getItem(i).getItemId() == itemId) return i;
         }

@@ -23,6 +23,7 @@ public class TopNavMenuHolderView extends BottomNavigationView
     private int itemCount = 1;
     private int indicatorHeight;
 
+
     private int selectedIndex = 0;
     private float indicatorLeft = 0;
     private float indicatorRight = 0;
