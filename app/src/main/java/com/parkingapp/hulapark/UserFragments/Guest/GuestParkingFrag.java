@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.UserType;
@@ -69,6 +70,8 @@ public class GuestParkingFrag extends Fragment {
             view = inflater.inflate(R.layout.frag_guest_parking, container, false);
         } else {
             view = inflater.inflate(R.layout.frag_user_parking, container, false);
+
+            ((CircularProgressIndicator)view.findViewById(R.id.progress_circular)).setProgress(65, true);
         }
 
         return view;
