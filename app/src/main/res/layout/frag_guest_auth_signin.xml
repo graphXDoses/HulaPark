@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UserFragments.Guest.GuestAuthSignInFrag">
 
-
     <include
         android:id="@+id/include"
         layout="@layout/inc_guest_auth_inputfields"
@@ -15,16 +14,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/connectBtn"
-        style="@style/AuthButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/singIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
 </androidx.constraintlayout.widget.ConstraintLayout>

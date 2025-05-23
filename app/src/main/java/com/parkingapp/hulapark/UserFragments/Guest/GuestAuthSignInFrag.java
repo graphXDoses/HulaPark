@@ -2,7 +2,6 @@ package com.parkingapp.hulapark.UserFragments.Guest;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.R;
 
 /**
@@ -71,7 +71,11 @@ public class GuestAuthSignInFrag extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_guest_auth_signin, container, false);
 
-        view.findViewById(R.id.connectBtn).setOnClickListener(view1 -> {
+        MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
+
+        connectBtn.setText(R.string.singIn);
+
+        connectBtn.setOnClickListener(view1 -> {
             Toast.makeText(getContext(), "You succesfully signed in!", Toast.LENGTH_SHORT).show();
         });
 

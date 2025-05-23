@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.R;
 
 /**
@@ -67,6 +69,16 @@ public class GuestAuthSignUpFrag extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_guest_auth_signup, container, false);
+        View view = inflater.inflate(R.layout.frag_guest_auth_signup, container, false);
+
+        MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
+
+        connectBtn.setText(R.string.singUp);
+
+        connectBtn.setOnClickListener(view1 -> {
+            Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
+        });
+
+        return view;
     }
 }

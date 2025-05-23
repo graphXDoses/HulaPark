@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +18,8 @@ import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.UserType;
 import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +37,9 @@ public class GuestStatisticsFrag extends Fragment {
     private String mParam1;
     private String mParam2;
     private TopNavMenuHolderView statsNavMenuHolderView;
+    private NavController navController;
+    private final HashMap<Integer, Integer> animatorMap = new HashMap<Integer, Integer>();
+    private final NavOptions.Builder navBuilder =  new NavOptions.Builder();
 
     public GuestStatisticsFrag() {
         // Required empty public constructor
@@ -86,9 +94,30 @@ public class GuestStatisticsFrag extends Fragment {
             statsNavMenuHolderView = (TopNavMenuHolderView)view.findViewById(R.id.statsNavMenuHolderView);
             statsNavMenuHolderView.attachIndicatorToSelection();
 
+            animatorMap.put(R.id.userStatisticsGenStatsFrag, 0);
+            animatorMap.put(R.id.userStatisticsHistoryFrag, 1);
+
+            navController = Navigation.findNavController(view.findViewById(R.id.statsActiveFrag));
+
             statsNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
-                int index = findItemIndex(item.getItemId());
+                int id = item.getItemId();
+                int index = findItemIndex(id);
                 statsNavMenuHolderView.animateIndicatorToIndex(index);
+
+                switch (id)
+                {
+                    case(R.id.stats_top_nav_genstats):
+                    {
+                        navController.navigate(R.id.userStatisticsGenStatsFrag, null, setNavBuilderAnimations(R.id.userStatisticsGenStatsFrag));
+                        break;
+                    }
+                    case(R.id.stats_top_nav_history):
+                    {
+                        navController.navigate(R.id.userStatisticsHistoryFrag, null, setNavBuilderAnimations(R.id.userStatisticsHistoryFrag));
+                        break;
+                    }
+                }
+
                 return true;
             });
         }
@@ -102,5 +131,19 @@ public class GuestStatisticsFrag extends Fragment {
             if (menu.getItem(i).getItemId() == itemId) return i;
         }
         return -1;
+    }
+
+    private NavOptions setNavBuilderAnimations(int targetFragment)
+    {
+        int currentDestID = (int)navController.getCurrentDestination().getId();
+        int currentFragID = animatorMap.get(currentDestID);
+        int targetFragID = animatorMap.get(targetFragment);
+        int enter_anim = currentFragID > targetFragID ? R.anim.from_left : R.anim.from_right;
+        int exit_anim = currentFragID > targetFragID ? R.anim.to_right : R.anim.to_left;
+
+        return navBuilder.setEnterAnim(enter_anim)
+                .setExitAnim(exit_anim)
+                .setPopUpTo(currentDestID, true)
+                .build();
     }
 }

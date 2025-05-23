@@ -14,6 +14,7 @@ import com.parkingapp.hulapark.Utilities.ExtrasManager;
 import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
 import com.parkingapp.hulapark.databinding.ActivityAuthScreenBinding;
 
+import java.util.HashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -22,7 +23,9 @@ public class AuthScreen extends AppCompatActivity
     private TopNavMenuHolderView authNavMenuHolderView;
     private ActivityAuthScreenBinding binding;
     private NavController navController;
+    private final NavOptions.Builder navBuilder =  new NavOptions.Builder();
     private Boolean isSignUpIntent = false;
+    private final HashMap<Integer, Integer> animatorMap = new HashMap<Integer, Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,6 +33,9 @@ public class AuthScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         binding = ActivityAuthScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        animatorMap.put(R.id.geustAuthSignInFrag, 0);
+        animatorMap.put(R.id.guestAuthSignUpFrag, 1);
 
         findViewById(R.id.absBackBtn).setOnClickListener(view -> {
             finish();
@@ -49,27 +55,18 @@ public class AuthScreen extends AppCompatActivity
         authNavMenuHolderView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             int index = findItemIndex(id);
-            int currentDest = navController.getCurrentDestination().getId();
             authNavMenuHolderView.animateIndicatorToIndex(index);
 
             switch (id)
             {
                 case(R.id.auth_nav_signin):
                 {
-                    NavOptions navOptions = new NavOptions.Builder()
-                            .setPopUpTo(currentDest, true)
-                            .build();
-
-                    navController.navigate(R.id.geustAuthSignInFrag, null, navOptions);
+                    navController.navigate(R.id.geustAuthSignInFrag, null, setNavBuilderAnimations(R.id.geustAuthSignInFrag));
                     break;
                 }
                 case(R.id.auth_nav_signup):
                 {
-                    NavOptions navOptions = new NavOptions.Builder()
-                            .setPopUpTo(currentDest, true)
-                            .build();
-
-                    navController.navigate(R.id.guestAuthSignUpFrag, null, navOptions);
+                    navController.navigate(R.id.guestAuthSignUpFrag, null, setNavBuilderAnimations(R.id.guestAuthSignUpFrag));
                     break;
                 }
             }
@@ -86,5 +83,19 @@ public class AuthScreen extends AppCompatActivity
             if (menu.getItem(i).getItemId() == itemId) return i;
         }
         return -1;
+    }
+
+    private NavOptions setNavBuilderAnimations(int targetFragment)
+    {
+        int currentDestID = (int)navController.getCurrentDestination().getId();
+        int currentFragID = animatorMap.get(currentDestID);
+        int targetFragID = animatorMap.get(targetFragment);
+        int enter_anim = currentFragID > targetFragID ? R.anim.from_left : R.anim.from_right;
+        int exit_anim = currentFragID > targetFragID ? R.anim.to_right : R.anim.to_left;
+
+        return navBuilder.setEnterAnim(enter_anim)
+                         .setExitAnim(exit_anim)
+                         .setPopUpTo(currentDestID, true)
+                         .build();
     }
 }
