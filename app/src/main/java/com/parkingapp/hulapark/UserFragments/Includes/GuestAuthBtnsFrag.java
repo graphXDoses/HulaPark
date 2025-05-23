@@ -1,6 +1,5 @@
 package com.parkingapp.hulapark.UserFragments.Includes;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.R;
 
 /**
@@ -63,8 +61,6 @@ public class GuestAuthBtnsFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_guest_auth_btns, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.inc_guest_auth_btns, container, false);
     }
 }

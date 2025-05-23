@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/frag_guest_auth_inputfields"
+        layout="@layout/inc_guest_auth_inputfields"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
