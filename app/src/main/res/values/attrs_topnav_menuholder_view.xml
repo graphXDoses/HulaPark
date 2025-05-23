@@ -1,5 +1,6 @@
 <resources>
     <declare-styleable name="TopNavMenuHolderView">
         <attr name="customIndicatorHeight" format="dimension" />
+        <attr name="customIndicatorColor" format="color" />
     </declare-styleable>
 </resources>

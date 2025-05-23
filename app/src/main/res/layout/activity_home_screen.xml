@@ -11,7 +11,7 @@
         android:background="@color/orange"
         android:id="@+id/topBarArea"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="80dp"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Guest"
+                android:textColor="@color/beige"
                 android:textAlignment="center"
             />
 
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="User"
+                android:textColor="@color/beige"
                 android:textAlignment="center"
             />
         </LinearLayout>

@@ -80,7 +80,7 @@ public class UserStatisticsGenStatsFrag extends Fragment
                 "Δημιουργία Λογαριασμού",
                 "Συνολικά Έξοδα Σταθμευσεων",
                 "Σύνηθες Όχημα (Πανακίδα)",
-                "Συνήθης Χώρος Σταθμευσης"
+                "Συνήθης Χώρος Στάθμευσης"
         );
 
         ((ListView)view.findViewById(R.id.genStatsList)).setAdapter(new ArrayAdapter<String>(getContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, qq));

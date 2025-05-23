@@ -57,8 +57,8 @@ public class TopNavMenuHolderView extends BottomNavigationView
             Resources resources = getResources();
 
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TopNavMenuHolderView);
-            mPaint.setColor(resources.getColor(R.color.orange));
-//            mPaint.setColor(typedArray.getColor(R., resources.getColor(R.color.green_leaf)));
+//            mPaint.setColor(resources.getColor(R.color.orange));
+            mPaint.setColor(typedArray.getColor(R.styleable.TopNavMenuHolderView_customIndicatorColor, resources.getColor(R.color.yellow)));
             indicatorHeight = (int)(typedArray.getDimension(R.styleable.TopNavMenuHolderView_customIndicatorHeight, toPX(10)));
 
             typedArray.recycle();

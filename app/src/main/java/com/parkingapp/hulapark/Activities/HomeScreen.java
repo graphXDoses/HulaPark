@@ -43,13 +43,13 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
-        CommonFragUtils.FragmentSwapper.setBottomNavMenu(binding.BottomNavBar);
+//        CommonFragUtils.FragmentSwapper.setBottomNavMenu(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
 
         // NavControllers
-        NavController parking_nc = Navigation.findNavController(findViewById(R.id.parkingFragContainer));
-        CommonFragUtils.FragmentSwapper.setNC_Parking(parking_nc);
+//        NavController parking_nc = Navigation.findNavController(findViewById(R.id.parkingFragContainer));
+//        CommonFragUtils.FragmentSwapper.setNC_Parking(parking_nc);
         binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
             if(isChecked)
             {

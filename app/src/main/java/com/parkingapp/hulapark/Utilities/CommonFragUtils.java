@@ -31,24 +31,24 @@ public class CommonFragUtils
 
     private UserType user_type = UserType.GUEST;
 
-    public NavController getNC_Parking() {
-        return NC_Parking;
-    }
+//    public NavController getNC_Parking() {
+//        return NC_Parking;
+//    }
 
-    public void setNC_Parking(NavController NC_Parking) {
-        this.NC_Parking = NC_Parking;
-    }
+//    public void setNC_Parking(NavController NC_Parking) {
+//        this.NC_Parking = NC_Parking;
+//    }
 
-    private NavController NC_Parking;
+//    private NavController NC_Parking;
 
-    public BottomNavMenuHolderView getBottomNavMenu() {
-        return bottomNavMenu;
-    }
-
-    public void setBottomNavMenu(BottomNavMenuHolderView bottomNavMenu)
-    {
-        this.bottomNavMenu = bottomNavMenu;
-    }
+//    public BottomNavMenuHolderView getBottomNavMenu() {
+//        return bottomNavMenu;
+//    }
+//
+//    public void setBottomNavMenu(BottomNavMenuHolderView bottomNavMenu)
+//    {
+//        this.bottomNavMenu = bottomNavMenu;
+//    }
 
     public void setNC_BottomNavMenu(NavController NC_BottomNavMenu)
     {

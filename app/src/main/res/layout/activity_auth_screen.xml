@@ -17,13 +17,21 @@
         app:layout_constraintTop_toTopOf="parent"
     >
 
+
+        <include
+            layout="@layout/abs_backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.parkingapp.hulapark.Views.TopNavMenuHolderView
             android:id="@+id/authNavMenuHolderView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="60dp"
             android:background="@android:color/transparent"
-            android:outlineAmbientShadowColor="@android:color/transparent"
-            android:outlineSpotShadowColor="@android:color/transparent"
             app:compatShadowEnabled="false"
             app:itemHorizontalTranslationEnabled="true"
             app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
@@ -36,11 +44,9 @@
             app:itemIconTint="@drawable/auth_nav_active_frag_icon"
             app:itemIconSize="24sp"
             app:itemRippleColor="@android:color/transparent"
-            app:customIndicatorHeight="6dp"
+            app:customIndicatorHeight="4dp"
             app:menu="@menu/auth_nav_menu"
             app:itemPaddingBottom="20dp"
-            app:itemPaddingTop="32dp"
-            android:defaultFocusHighlightEnabled="false"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
