@@ -8,10 +8,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ExtrasManager;
 import com.parkingapp.hulapark.databinding.ActivityFinishParkingScreenBinding;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
+
+import java.time.LocalDateTime;
 
 public class FinishParkingScreen extends AppCompatActivity
 {
@@ -52,6 +56,7 @@ public class FinishParkingScreen extends AppCompatActivity
             Intent intent = new Intent(this, HomeScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(2)));
             FinishParkingScreen.this.finish();
         });
         binding.cancelPaymentBtn.setOnClickListener(view -> {

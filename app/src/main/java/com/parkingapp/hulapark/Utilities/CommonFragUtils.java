@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.navigation.NavController;
 
 import com.google.gson.Gson;
+import com.parkingapp.hulapark.Adapters.ParkingCardAdapter;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
@@ -30,6 +31,13 @@ public class CommonFragUtils
     }
 
     private UserType user_type = UserType.GUEST;
+
+    private ParkingCardAdapter parkingCardAdapter = new ParkingCardAdapter();
+
+    public ParkingCardAdapter getParkingCardAdapter()
+    {
+        return parkingCardAdapter;
+    }
 
 //    public NavController getNC_Parking() {
 //        return NC_Parking;

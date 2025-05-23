@@ -2,16 +2,26 @@ package com.parkingapp.hulapark.UserFragments.Guest;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.parkingapp.hulapark.Adapters.ParkingCardAdapter;
+import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.UserType;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +81,12 @@ public class GuestParkingFrag extends Fragment {
         } else {
             view = inflater.inflate(R.layout.frag_user_parking, container, false);
 
-            ((CircularProgressIndicator)view.findViewById(R.id.progress_circular)).setProgress(65, true);
+            RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
+
+            rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
+            LinearLayoutManager ll = new LinearLayoutManager(getContext());
+            ll.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rcv.setLayoutManager(ll);
         }
 
         return view;
