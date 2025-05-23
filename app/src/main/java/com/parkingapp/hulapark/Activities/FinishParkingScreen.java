@@ -9,13 +9,23 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.ExtrasManager;
+import com.parkingapp.hulapark.databinding.ActivityFinishParkingScreenBinding;
+import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
-public class FinishParkingScreen extends AppCompatActivity {
+public class FinishParkingScreen extends AppCompatActivity
+{
+    private ActivityFinishParkingScreenBinding binding;
+    private String plateNumber = "";
+    private String parkingSpot = "";
+    private String parkingDuration = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finish_parking_screen);
+        binding = ActivityFinishParkingScreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+//        setContentView(R.layout.activity_finish_parking_screen);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
@@ -25,10 +35,26 @@ public class FinishParkingScreen extends AppCompatActivity {
         TextView titleTextView = customView.findViewById(R.id.tvActivityTitle);
         titleTextView.setText(R.string.finishparking_activity_title);
 
-        findViewById(R.id.payBtn).setOnClickListener(view -> {
+        // UI elements
+
+        ExtrasManager.getPassedExtras(savedInstanceState, getIntent(), (e) ->
+        {
+            plateNumber = e.getString("INIT_PARKING_PLATE_NUMBER");
+            parkingSpot = e.getString("INIT_PARKING_PARKING_SPOT");
+            parkingDuration = e.getString("INIT_PARKING_PARKING_DURATION");
+        });
+
+        binding.finishPlateNumber.setText(plateNumber);
+        binding.finishParkingId.setText(parkingSpot);
+        binding.finishParikingDuration.setText(parkingDuration);
+
+        binding.commitPaymentBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, HomeScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            FinishParkingScreen.this.finish();
+        });
+        binding.cancelPaymentBtn.setOnClickListener(view -> {
             FinishParkingScreen.this.finish();
         });
     }
