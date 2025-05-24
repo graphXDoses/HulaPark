@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,7 +153,7 @@ public class MapFrag extends Fragment {
                         750L);
 
                 ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
-                ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.id);
+                ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
 
                 ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
                     bottomSheetDialog.dismiss();

@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
+import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,9 +47,16 @@ public class InitParkingScreen extends AppCompatActivity
 
         findViewById(R.id.transitToPaymentBtn).setOnClickListener(view -> {
             Intent intent = new Intent(this, FinishParkingScreen.class);
+
+            Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoLocModel()
+                                    .data.features.stream().filter(feature -> feature.properties.address.equals(parkingSpot.getText().toString()))
+                                    .collect(Collectors.toList()).get(0);
+
+            String parkingDurationString = String.valueOf(ParkingHoursSpan.fromString(parkingDuration.getText().toString()).getMinutes());
+
             intent.putExtra("INIT_PARKING_PLATE_NUMBER", plateNumber.getText().toString());
-            intent.putExtra("INIT_PARKING_PARKING_SPOT", parkingSpot.getText().toString());
-            intent.putExtra("INIT_PARKING_PARKING_DURATION", parkingDuration.getText().toString());
+            intent.putExtra("INIT_PARKING_PARKING_SPOT", sectorFeature.properties.sectorID);
+            intent.putExtra("INIT_PARKING_PARKING_DURATION", parkingDurationString);
             startActivity(intent);
         });
 
@@ -57,14 +66,9 @@ public class InitParkingScreen extends AppCompatActivity
                 .map(feature -> feature.properties.address)
                 .collect(Collectors.toList());
 
-        List<String> hours = Arrays.asList(30, 60, 90, 120, 150, 180 , 210, 240).stream()
-                            .map(i ->
-                            {
-                                String postfix = i % 60 == 30 ? "½" : "";
-                                postfix += i / 60 <= 1 ? " ώρα" : " ώρες";
-                                return (i / 60 == 0 ? "" : i / 60) + postfix;
-                            })
-                            .collect(Collectors.toList());
+        List<String> hours = Arrays.stream(ParkingHoursSpan.values())
+                                   .map(h -> h.toString())
+                                   .collect(Collectors.toList());
 
         parkingSpot.setAdapter(new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, addresses));
         parkingDuration.setAdapter(new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, hours));

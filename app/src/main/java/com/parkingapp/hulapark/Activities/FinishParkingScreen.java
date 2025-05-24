@@ -12,6 +12,7 @@ import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ExtrasManager;
+import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
 import com.parkingapp.hulapark.databinding.ActivityFinishParkingScreenBinding;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
@@ -56,11 +57,13 @@ public class FinishParkingScreen extends AppCompatActivity
             Intent intent = new Intent(this, HomeScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            ParkingCardModel cardModel = new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(2));
+            int minutes = ParkingHoursSpan.fromString(parkingDuration).getMinutes(CommonFragUtils.FragmentSwapper.hourScale);
+
+            ParkingCardModel cardModel = new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(minutes));
             cardModel.setPlateNumber(plateNumber)
                      .setLocationID(parkingSpot)
                      .setChargedHours(parkingDuration)
-                     .setPrice("0.85 $");
+                     .setPrice("0.85");
             CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
 
             startActivity(intent);

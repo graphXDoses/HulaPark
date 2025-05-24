@@ -5,7 +5,8 @@ import android.content.Context;
 import androidx.navigation.NavController;
 
 import com.google.gson.Gson;
-import com.parkingapp.hulapark.Adapters.ParkingCardAdapter;
+import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
+import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
@@ -17,6 +18,8 @@ import java.io.InputStreamReader;
 public class CommonFragUtils
 {
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
+    public static final int hourScale = 24;
+
     private CommonFragUtils() { }
     private BottomNavMenuHolderView bottomNavMenu;
     private NavController NC_BottomNavMenu;
@@ -32,11 +35,17 @@ public class CommonFragUtils
 
     private UserType user_type = UserType.GUEST;
 
-    private ParkingCardAdapter parkingCardAdapter = new ParkingCardAdapter();
+    private OngoingParkingCardAdapter ongoingParkingCardAdapter = new OngoingParkingCardAdapter();
+    private HistoryParkingCardAdapter historyParkingCardAdapter = new HistoryParkingCardAdapter();
 
-    public ParkingCardAdapter getParkingCardAdapter()
+    public OngoingParkingCardAdapter getParkingCardAdapter()
     {
-        return parkingCardAdapter;
+        return ongoingParkingCardAdapter;
+    }
+
+    public HistoryParkingCardAdapter getHistoryParkingCardAdapter()
+    {
+        return historyParkingCardAdapter;
     }
 
 //    public NavController getNC_Parking() {

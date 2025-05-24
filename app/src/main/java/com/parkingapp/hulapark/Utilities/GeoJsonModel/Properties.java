@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class Properties
 {
     @SerializedName("OBJECTID")
-    public int objectId;
+    public int objectID;
 
     @SerializedName("ID")
-    public String id;
+    public String ID;
 
     @SerializedName("NAME")
     public String name;
@@ -42,4 +42,7 @@ public class Properties
 
     @SerializedName("OWN")
     public String owner;
+
+    @SerializedName("SECTORID")
+    public String sectorID;
 }

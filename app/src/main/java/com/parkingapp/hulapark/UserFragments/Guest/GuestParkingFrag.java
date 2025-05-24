@@ -2,28 +2,19 @@ package com.parkingapp.hulapark.UserFragments.Guest;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parkingapp.hulapark.Adapters.ParkingCardAdapter;
-import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.UserType;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -3,12 +3,23 @@ package com.parkingapp.hulapark.UserFragments.User;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
+import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +78,14 @@ public class UserStatisticsHistoryFrag extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_user_statistics_history, container, false);
+        View view = inflater.inflate(R.layout.frag_user_statistics_history, container, false);
+
+        // Set Adapter
+        RecyclerView rcv = (RecyclerView)view.findViewById(R.id.historyRecycleList);
+        rcv.setAdapter(CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter());
+        LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rcv.setLayoutManager(ll);
+
+        return view;
     }
 }

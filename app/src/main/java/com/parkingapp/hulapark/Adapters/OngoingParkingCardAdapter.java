@@ -13,20 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ParkingTimeManager;
 
 import java.util.ArrayList;
 
-public class ParkingCardAdapter extends RecyclerView.Adapter<ParkingCardAdapter.ViewHolder> {
+public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParkingCardAdapter.ViewHolder> {
     private ArrayList<ParkingCardModel> items;
     private Context context;
 
-    public ParkingCardAdapter()
+    public OngoingParkingCardAdapter()
     {
         this.items = new ArrayList<>();
     }
 
-    public ParkingCardAdapter(ArrayList<ParkingCardModel> items)
+    public OngoingParkingCardAdapter(ArrayList<ParkingCardModel> items)
     {
         this.items = items;
     }
@@ -37,20 +38,32 @@ public class ParkingCardAdapter extends RecyclerView.Adapter<ParkingCardAdapter.
         notifyItemInserted(getItemCount());
     }
 
+    public void popCard(ParkingCardModel cardModel)
+    {
+        int position = items.indexOf(cardModel);
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_parking_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_parking_card_ongoing, parent, false);
         return new ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ParkingCardAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull OngoingParkingCardAdapter.ViewHolder holder, int position)
     {
         ParkingCardModel thisCard = items.get(position);
-        holder.timecounter_tv.setText(thisCard.getDurationAsString());
+
+        holder.plate_number.setText(thisCard.getPlateNumber());
+        holder.location_id.setText(thisCard.getLocationID());
+
+        holder.charged_hours.setText(thisCard.getChargedHours());
+        holder.price.setText(thisCard.getPrice());
 
         int start = (int)thisCard.getStaticDuration().toMillis();
 
@@ -64,22 +77,13 @@ public class ParkingCardAdapter extends RecyclerView.Adapter<ParkingCardAdapter.
 
                 diff = (start - remainingMillis) * 100;
                 holder.progress.setProgress(diff / start, true);
-
-                holder.plate_number.setText(thisCard.getPlateNumber());
-                holder.location_id.setText(thisCard.getLocationID());
-
-                holder.charged_hours.setText(thisCard.getChargedHours());
-                holder.price.setText(thisCard.getPrice());
             }
 
             @Override
             public boolean onFinish()
             {
-                int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    items.remove(adapterPosition);
-                    notifyItemRemoved(adapterPosition);
-                }
+                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().popCard(thisCard);
+                CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().pushCard(thisCard);
 
                 Toast.makeText(context, "Parking Finished!", Toast.LENGTH_SHORT).show();
                 return true;
@@ -105,12 +109,12 @@ public class ParkingCardAdapter extends RecyclerView.Adapter<ParkingCardAdapter.
         public ViewHolder(View view)
         {
             super(view);
-            timecounter_tv = (view.findViewById(R.id.parkingcard_timecounter_tv));
-            progress = (view.findViewById(R.id.parkingcard_progress));
-            plate_number = (view.findViewById(R.id.parkingcard_plate_number));
-            location_id = (view.findViewById(R.id.parkingcard_location_id));
-            charged_hours = (view.findViewById(R.id.parkingcard_charged_hours));
-            price = (view.findViewById(R.id.parkingcard_price));
+            timecounter_tv = (view.findViewById(R.id.ongoing_parkingcard_timecounter_tv));
+            progress = (view.findViewById(R.id.ongoing_parkingcard_progress));
+            plate_number = (view.findViewById(R.id.ongoing_parkingcard_plate_number));
+            location_id = (view.findViewById(R.id.ongoing_parkingcard_sector_id));
+            charged_hours = (view.findViewById(R.id.ongoing_parkingcard_charged_hours));
+            price = (view.findViewById(R.id.ongoing_parkingcard_price));
 //            view.invalidate();
         }
 

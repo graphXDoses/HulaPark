@@ -27,7 +27,7 @@
             android:paddingVertical="20dp">
 
             <TextView
-                android:id="@+id/parkingcard_timecounter_tv"
+                android:id="@+id/ongoing_parkingcard_timecounter_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:34:25"
@@ -42,7 +42,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/parkingcard_progress"
+                    android:id="@+id/ongoing_parkingcard_progress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:progress="60"
@@ -67,7 +67,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/parkingcard_plate_number"
+                        android:id="@+id/ongoing_parkingcard_plate_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -85,7 +85,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/parkingcard_location_id"
+                        android:id="@+id/ongoing_parkingcard_sector_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -111,7 +111,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/parkingcard_charged_hours"
+                        android:id="@+id/ongoing_parkingcard_charged_hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -119,7 +119,17 @@
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/green_leaf"
                         android:gravity="center"
-                        android:text="1 ώρα"
+                        android:text="30"
+                        android:textColor="@color/green_leaf"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingLeft="3dp"
+                        android:gravity="center"
+                        android:text="'"
                         android:textColor="@color/green_leaf"
                         android:textSize="18sp" />
 
@@ -129,7 +139,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/parkingcard_price"
+                        android:id="@+id/ongoing_parkingcard_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -137,7 +147,18 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green_leaf"
                         android:gravity="center"
-                        android:text="0.85 $"
+                        android:text="0.85"
+                        android:textColor="@color/green_leaf"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dp"
+                        android:layout_gravity="end"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:text="$"
                         android:textColor="@color/green_leaf"
                         android:textSize="18sp" />
                 </LinearLayout>
