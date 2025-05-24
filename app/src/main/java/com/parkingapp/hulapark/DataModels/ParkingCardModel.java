@@ -17,6 +17,55 @@ public class ParkingCardModel
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Map<Integer, Runnable> timerRunnables = new HashMap<>();
 
+    private String plate_number = "";
+    private String location_id = "";
+    private String charged_hours = "";
+    private String price = "";
+
+    public String getPlateNumber()
+    {
+        return plate_number;
+    }
+
+    public ParkingCardModel setPlateNumber(String plate_number)
+    {
+        this.plate_number = plate_number;
+        return this;
+    }
+
+    public String getLocationID()
+    {
+        return location_id;
+    }
+
+    public ParkingCardModel setLocationID(String location_id)
+    {
+        this.location_id = location_id;
+        return this;
+    }
+
+    public String getChargedHours()
+    {
+        return charged_hours;
+    }
+
+    public ParkingCardModel setChargedHours(String charged_hours)
+    {
+        this.charged_hours = charged_hours;
+        return this;
+    }
+
+    public String getPrice()
+    {
+        return price;
+    }
+
+    public ParkingCardModel setPrice(String price)
+    {
+        this.price = price;
+        return this;
+    }
+
     public ParkingCardModel(LocalDateTime startTime, LocalDateTime finishTime)
     {
         this.startTime = startTime;

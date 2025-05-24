@@ -60,9 +60,16 @@ public class ParkingCardAdapter extends RecyclerView.Adapter<ParkingCardAdapter.
             @Override
             public void onTickUpdate(int remainingMillis)
             {
+                holder.timecounter_tv.setText(thisCard.getDurationAsString());
+
                 diff = (start - remainingMillis) * 100;
                 holder.progress.setProgress(diff / start, true);
-                holder.timecounter_tv.setText(thisCard.getDurationAsString());
+
+                holder.plate_number.setText(thisCard.getPlateNumber());
+                holder.location_id.setText(thisCard.getLocationID());
+
+                holder.charged_hours.setText(thisCard.getChargedHours());
+                holder.price.setText(thisCard.getPrice());
             }
 
             @Override

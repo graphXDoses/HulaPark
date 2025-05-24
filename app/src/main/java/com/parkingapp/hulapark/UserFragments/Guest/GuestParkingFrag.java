@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -84,9 +86,11 @@ public class GuestParkingFrag extends Fragment {
             RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
 
             rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
-            LinearLayoutManager ll = new LinearLayoutManager(getContext());
-            ll.setOrientation(LinearLayoutManager.HORIZONTAL);
+            LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             rcv.setLayoutManager(ll);
+
+            SnapHelper snapHelper = new LinearSnapHelper();
+            snapHelper.attachToRecyclerView(rcv);
         }
 
         return view;

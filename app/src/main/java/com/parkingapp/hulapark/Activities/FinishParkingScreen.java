@@ -55,8 +55,15 @@ public class FinishParkingScreen extends AppCompatActivity
         binding.commitPaymentBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, HomeScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            ParkingCardModel cardModel = new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(2));
+            cardModel.setPlateNumber(plateNumber)
+                     .setLocationID(parkingSpot)
+                     .setChargedHours(parkingDuration)
+                     .setPrice("0.85 $");
+            CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
+
             startActivity(intent);
-            CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(2)));
             FinishParkingScreen.this.finish();
         });
         binding.cancelPaymentBtn.setOnClickListener(view -> {
