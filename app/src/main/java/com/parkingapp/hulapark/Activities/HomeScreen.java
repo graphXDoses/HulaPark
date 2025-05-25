@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +34,9 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private Toast backToast;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable resetBackPressedFlag;
+    private SharedPreferences sharedPreferences;
+
+    private final String IS_TOGGLE = "IS_TOGGLE";
 
 
     @Override
@@ -44,25 +48,35 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
+
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
 
+
+
         // NavControllers
 //        NavController parking_nc = Navigation.findNavController(findViewById(R.id.parkingFragContainer));
 //        CommonFragUtils.FragmentSwapper.setNC_Parking(parking_nc);
         binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             if(isChecked)
             {
                 CommonFragUtils.FragmentSwapper.changeUserTo(new User());
+                editor.putBoolean(IS_TOGGLE, true);
             } else {
                 CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
+                editor.putBoolean(IS_TOGGLE, false);
             }
+            editor.commit();
             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
         });
+
+        binding.switchUserType.setChecked(sharedPreferences.getBoolean(IS_TOGGLE, false));
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
         CommonFragUtils.FragmentSwapper.createGeoLocModelFromGeoJson(R.raw.parkingspots, getApplicationContext());
