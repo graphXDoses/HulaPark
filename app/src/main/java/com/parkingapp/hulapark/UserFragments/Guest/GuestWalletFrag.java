@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,11 +67,11 @@ public class GuestWalletFrag extends Fragment {
         View view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
         view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", false);
-            startActivity(intent);
+            CommonFragUtils.FragmentSwapper.authActivityLauncher.launch(intent);
         });
         view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", true);
-            startActivity(intent);
+            CommonFragUtils.FragmentSwapper.authActivityLauncher.launch(intent);
         });
 
         return view;

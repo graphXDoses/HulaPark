@@ -1,5 +1,7 @@
 package com.parkingapp.hulapark.UserFragments.Guest;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +80,14 @@ public class GuestAuthSignUpFrag extends Fragment
         connectBtn.setText(R.string.singUp);
 
         connectBtn.setOnClickListener(view1 -> {
+            CommonFragUtils.FragmentSwapper.changeUserTo(new User());
+            Activity activity = getActivity();
+
             Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("shouldNavigate", true);
+            activity.setResult(Activity.RESULT_OK, resultIntent);
+            activity.finish();
         });
 
         return view;

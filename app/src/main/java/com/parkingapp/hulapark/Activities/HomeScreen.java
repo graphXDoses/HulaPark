@@ -1,11 +1,14 @@
 package com.parkingapp.hulapark.Activities;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,9 +37,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private Toast backToast;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable resetBackPressedFlag;
-    private SharedPreferences sharedPreferences;
-
-    private final String IS_TOGGLE = "IS_TOGGLE";
+//    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -48,35 +49,31 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
+//        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
 
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
+        CommonFragUtils.FragmentSwapper.setBottomNavBar(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
 
+        CommonFragUtils.FragmentSwapper.authActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Intent data = result.getData();
+                        Boolean shouldNavigate = data.getBooleanExtra("shouldNavigate", false);
 
-
-        // NavControllers
-//        NavController parking_nc = Navigation.findNavController(findViewById(R.id.parkingFragContainer));
-//        CommonFragUtils.FragmentSwapper.setNC_Parking(parking_nc);
-        binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            if(isChecked)
-            {
-                CommonFragUtils.FragmentSwapper.changeUserTo(new User());
-                editor.putBoolean(IS_TOGGLE, true);
-            } else {
-                CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
-                editor.putBoolean(IS_TOGGLE, false);
-            }
-            editor.commit();
-            int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
-            CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
-        });
-
-        binding.switchUserType.setChecked(sharedPreferences.getBoolean(IS_TOGGLE, false));
+                        if(shouldNavigate)
+                        {
+                            int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
+                            CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
+                        }
+                    }
+                }
+        );
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
         CommonFragUtils.FragmentSwapper.createGeoLocModelFromGeoJson(R.raw.parkingspots, getApplicationContext());

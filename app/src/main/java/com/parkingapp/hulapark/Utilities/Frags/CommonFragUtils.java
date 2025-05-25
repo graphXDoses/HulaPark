@@ -1,8 +1,10 @@
 package com.parkingapp.hulapark.Utilities.Frags;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -14,6 +16,7 @@ import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Utilities.Users.UserType;
+import com.parkingapp.hulapark.Views.BottomNavMenuHolderView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -23,6 +26,13 @@ public class CommonFragUtils
 {
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
     public static final int hourScale = 24;
+
+    public BottomNavMenuHolderView getBottomNavBar()
+    {
+        return bottomNavBar;
+    }
+
+    private BottomNavMenuHolderView bottomNavBar;
 
     private CommonFragUtils() { }
     private NavController NC_BottomNavMenu;
@@ -37,6 +47,7 @@ public class CommonFragUtils
     }
 
     private UserType user_type = UserType.GUEST;
+    public ActivityResultLauncher<Intent> authActivityLauncher;
 
     private final OngoingParkingCardAdapter ongoingParkingCardAdapter = new OngoingParkingCardAdapter();
     private final HistoryParkingCardAdapter historyParkingCardAdapter = new HistoryParkingCardAdapter();
@@ -94,5 +105,10 @@ public class CommonFragUtils
                 break;
             }
         }
+    }
+
+    public void setBottomNavBar(BottomNavMenuHolderView bottomNavBar)
+    {
+        this.bottomNavBar = bottomNavBar;
     }
 }

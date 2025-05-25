@@ -65,6 +65,10 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         holder.charged_hours.setText(thisCard.getChargedHours());
         holder.price.setText(thisCard.getPrice());
 
+        holder.itemView.setOnClickListener(view -> {
+            CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_map);
+        });
+
         int start = (int)thisCard.getStaticDuration().toMillis();
 
         thisCard.setOnTickListener(position, new ParkingTimeManager()

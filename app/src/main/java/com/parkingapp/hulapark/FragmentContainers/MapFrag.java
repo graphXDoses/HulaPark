@@ -17,6 +17,7 @@ import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
 
 import android.preference.PreferenceManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.osmdroid.config.Configuration;
@@ -138,6 +139,19 @@ public class MapFrag extends Fragment {
                 Feature f = markFeatures.get(m);
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                 View view = getLayoutInflater().from(getContext()).inflate(R.layout.frag_map_display_spot_details, null);
+
+                FrameLayout dynamicLayout = view.findViewById(R.id.displayDynamicFrameLayout);
+
+                Bundle args = getArguments();
+                // Change that to `!=`
+                if (args == null)
+                {
+//                    String type = args.getString("layout_type");
+
+                    int layoutToInflate = R.layout.inc_display_spot_details_select;
+                    LayoutInflater.from(getContext()).inflate(layoutToInflate, dynamicLayout, true);
+                }
+
                 bottomSheetDialog.setContentView(view);
                 bottomSheetDialog.show();
 
@@ -155,13 +169,13 @@ public class MapFrag extends Fragment {
                 ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
                 ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
 
-                ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
-                    bottomSheetDialog.dismiss();
-                    mapView.getController().animateTo(
-                            point,
-                            previousZoomLevel,
-                            750L);
-                });
+//                ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
+//                    bottomSheetDialog.dismiss();
+//                    mapView.getController().animateTo(
+//                            point,
+//                            previousZoomLevel,
+//                            750L);
+//                });
 
                 bottomSheetDialog.setOnDismissListener(dialogInterface -> {
                     m.setIcon(getResources().getDrawable(R.drawable.map_location_circle));
