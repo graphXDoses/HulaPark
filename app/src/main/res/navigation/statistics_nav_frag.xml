@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/statistics_nav_frag"
-    app:startDestination="@id/guestStatistics">
+    app:startDestination="@id/guestStatisticsFrag">
 
     <fragment
-        android:id="@+id/guestStatistics"
+        android:id="@+id/guestStatisticsFrag"
         android:name="com.parkingapp.hulapark.UserFragments.Guest.GuestStatisticsFrag"
         android:label="frag_guest_statistics"
         tools:layout="@layout/frag_guest_statistics" />

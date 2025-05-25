@@ -10,16 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
-import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
-import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.

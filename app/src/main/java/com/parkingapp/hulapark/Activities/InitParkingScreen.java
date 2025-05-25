@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
-import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
+import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 
 import java.util.Arrays;
 import java.util.List;

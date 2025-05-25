@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.Activities.InitParkingScreen;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +66,8 @@ public class ParkingFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_parking, container, false);
+
+        CommonFragUtils.FragmentSwapper.setActiveUserFrag(view, R.id.parkingFragContainer);
 
         ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), InitParkingScreen.class);

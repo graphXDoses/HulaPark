@@ -2,7 +2,6 @@ package com.parkingapp.hulapark.Activities;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,13 +9,11 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.ExtrasManager;
+import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Views.TopNavMenuHolderView;
 import com.parkingapp.hulapark.databinding.ActivityAuthScreenBinding;
 
 import java.util.HashMap;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class AuthScreen extends AppCompatActivity
 {

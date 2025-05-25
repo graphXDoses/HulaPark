@@ -3,18 +3,12 @@ package com.parkingapp.hulapark.UserFragments.Guest;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,23 +61,6 @@ public class GuestParkingFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view;
-        if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
-        {
-            view = inflater.inflate(R.layout.frag_guest_parking, container, false);
-        } else {
-            view = inflater.inflate(R.layout.frag_user_parking, container, false);
-
-            RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
-
-            rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
-            LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            rcv.setLayoutManager(ll);
-
-            SnapHelper snapHelper = new LinearSnapHelper();
-            snapHelper.attachToRecyclerView(rcv);
-        }
-
-        return view;
+        return inflater.inflate(R.layout.frag_guest_parking, container, false);
     }
 }

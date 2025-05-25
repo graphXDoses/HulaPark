@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.ParkingCards;
 
 public interface ParkingTimeManager
 {

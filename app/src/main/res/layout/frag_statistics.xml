@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".FragmentContainers.StatisticsFrag">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+    <fragment
+        android:id="@+id/statistcsFragContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

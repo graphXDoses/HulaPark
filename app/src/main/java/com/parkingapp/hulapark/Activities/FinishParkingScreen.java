@@ -10,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
-import com.parkingapp.hulapark.Utilities.ExtrasManager;
-import com.parkingapp.hulapark.Utilities.ParkingHoursSpan;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
+import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 import com.parkingapp.hulapark.databinding.ActivityFinishParkingScreenBinding;
-import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 import java.time.LocalDateTime;
 

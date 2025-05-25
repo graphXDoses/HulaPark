@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +62,10 @@ public class StatisticsFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_statistics, container, false);
+        View view = inflater.inflate(R.layout.frag_statistics, container, false);
+
+        CommonFragUtils.FragmentSwapper.setActiveUserFrag(view, R.id.statistcsFragContainer);
+
+        return view;
     }
 }

@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.DialogBoxes;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

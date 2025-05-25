@@ -13,10 +13,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
+import com.parkingapp.hulapark.Users.Guest;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.UserType;
-import com.parkingapp.hulapark.Utilities.WarningDialogBox;
+import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 import java.util.HashMap;
@@ -37,13 +38,15 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // User Fragment Setup
+        userFragmentSetup();
+
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
-//        CommonFragUtils.FragmentSwapper.setBottomNavMenu(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
 
@@ -53,9 +56,9 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding.switchUserType.setOnCheckedChangeListener((button, isChecked) -> {
             if(isChecked)
             {
-                CommonFragUtils.FragmentSwapper.setUserType(UserType.USER);
+                CommonFragUtils.FragmentSwapper.changeUserTo(new User());
             } else {
-                CommonFragUtils.FragmentSwapper.setUserType(UserType.GUEST);
+                CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
             }
             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
@@ -68,6 +71,19 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         animatorMap.put(R.id.mapFrag, 1);
         animatorMap.put(R.id.walletFrag, 2);
         animatorMap.put(R.id.statisticsFrag, 3);
+    }
+
+    private void userFragmentSetup()
+    {
+        // Parking
+        Guest.setFragmentContainerActiveFrag(R.id.parkingFragContainer, R.id.guestParkingFrag);
+        User.setFragmentContainerActiveFrag(R.id.parkingFragContainer, R.id.userParkingFrag);
+        // Wallet
+        Guest.setFragmentContainerActiveFrag(R.id.walletFragContainer, R.id.guestWalletFrag);
+        User.setFragmentContainerActiveFrag(R.id.walletFragContainer, R.id.userWalletFrag);
+        // Stats
+        Guest.setFragmentContainerActiveFrag(R.id.statistcsFragContainer, R.id.guestStatisticsFrag);
+        User.setFragmentContainerActiveFrag(R.id.statistcsFragContainer, R.id.userStatisticsFrag);
     }
 
     @Override

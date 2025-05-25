@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.ParkingCards;
 
 import androidx.annotation.NonNull;
 

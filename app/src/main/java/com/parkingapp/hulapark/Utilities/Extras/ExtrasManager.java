@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.Extras;
 
 import android.content.Intent;
 import android.os.Bundle;

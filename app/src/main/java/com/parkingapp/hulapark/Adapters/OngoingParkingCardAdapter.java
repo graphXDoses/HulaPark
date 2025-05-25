@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parkingapp.hulapark.DataModels.ParkingCardModel;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
-import com.parkingapp.hulapark.Utilities.ParkingTimeManager;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 
 import java.util.ArrayList;
 

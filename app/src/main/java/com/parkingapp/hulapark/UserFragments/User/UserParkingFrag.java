@@ -3,12 +3,17 @@ package com.parkingapp.hulapark.UserFragments.User;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +66,17 @@ public class UserParkingFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_user_parking, container, false);
+        View view = inflater.inflate(R.layout.frag_user_parking, container, false);
+
+        RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
+
+        rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
+        LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rcv.setLayoutManager(ll);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(rcv);
+
+        return view;
     }
 }

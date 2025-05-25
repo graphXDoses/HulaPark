@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.Activities.AuthScreen;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,21 +63,15 @@ public class GuestWalletFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view;
-        if(CommonFragUtils.FragmentSwapper.getUserType() == UserType.GUEST)
-        {
-            view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
-            view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", false);
-                startActivity(intent);
-            });
-            view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
-                Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", true);
-                startActivity(intent);
-            });
-        } else {
-            view = inflater.inflate(R.layout.frag_user_wallet, container, false);
-        }
+        View view = inflater.inflate(R.layout.frag_guest_wallet, container, false);
+        view.findViewById(R.id.SignInButton).setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", false);
+            startActivity(intent);
+        });
+        view.findViewById(R.id.SignUpButton).setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", true);
+            startActivity(intent);
+        });
 
         return view;
     }

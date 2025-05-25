@@ -3,7 +3,7 @@ package com.parkingapp.hulapark.DataModels;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.parkingapp.hulapark.Utilities.ParkingTimeManager;
+import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.Users;
 
 public enum UserType
 {

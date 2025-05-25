@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-import com.parkingapp.hulapark.Utilities.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
-import com.parkingapp.hulapark.Utilities.WarningDialogBox;
+import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
 
 import android.preference.PreferenceManager;
 import android.widget.TextView;
