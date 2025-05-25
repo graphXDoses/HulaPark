@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,10 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
@@ -95,11 +101,25 @@ public class GuestAuthSignInFrag extends Fragment
             CommonFragUtils.FragmentSwapper.changeUserTo(new User());
             Activity activity = getActivity();
 
-            Toast.makeText(getContext(), "You succesfully signed in!", Toast.LENGTH_SHORT).show();
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("shouldNavigate", true);
-            activity.setResult(Activity.RESULT_OK, resultIntent);
-            activity.finish();
+            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", new OnCompleteListener<AuthResult>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task)
+                {
+                    if(task.isSuccessful())
+                    {
+                        String uid = DBManager.getCurrentUserAuthSertificate().getUid();
+                        Toast.makeText(getContext(), uid + " signed in!", Toast.LENGTH_SHORT).show();
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("shouldNavigate", true);
+                        activity.setResult(Activity.RESULT_OK, resultIntent);
+                        activity.finish();
+                    } else {
+                        Toast.makeText(getContext(), task.getException() + "", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         });
 
         return view;

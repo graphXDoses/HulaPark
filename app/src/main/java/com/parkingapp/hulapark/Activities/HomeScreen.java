@@ -9,16 +9,16 @@ import androidx.navigation.Navigation;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
@@ -43,6 +43,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         // User Fragment Setup
         userFragmentSetup();
 
@@ -68,6 +69,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
                         if(shouldNavigate)
                         {
+                            DBManager.createUserDataModel("User");
                             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
                             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
                         }

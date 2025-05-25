@@ -8,14 +8,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parkingapp.hulapark.DataModels.ParkingCardModel;
+import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 import com.parkingapp.hulapark.databinding.ActivityFinishParkingScreenBinding;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class FinishParkingScreen extends AppCompatActivity
 {
@@ -58,7 +60,16 @@ public class FinishParkingScreen extends AppCompatActivity
 
             int minutes = ParkingHoursSpan.fromString(parkingDuration).getMinutes(CommonFragUtils.FragmentSwapper.hourScale);
 
-            ParkingCardModel cardModel = new ParkingCardModel(LocalDateTime.now(), LocalDateTime.now().plusMinutes(minutes));
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime then = LocalDateTime.now().plusMinutes(minutes);
+
+            ZoneId zoneId = ZoneId.systemDefault();
+            long startTime = now.atZone(zoneId).toInstant().toEpochMilli();
+            long finishTime = then.atZone(zoneId).toInstant().toEpochMilli();
+
+//            User.setParkingStartTime(startTime);
+//            User.setParkingFinishTime(finishTime);
+            ParkingCardDataModel cardModel = new ParkingCardDataModel(now, then);
             cardModel.setPlateNumber(plateNumber)
                      .setLocationID(parkingSpot)
                      .setChargedHours(parkingDuration)

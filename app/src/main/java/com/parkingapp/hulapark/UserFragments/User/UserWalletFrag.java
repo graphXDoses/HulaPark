@@ -7,8 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.parkingapp.hulapark.DataModels.User.ActionLogsDataModel;
+import com.parkingapp.hulapark.DataModels.User.WalletDataModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DBManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +66,21 @@ public class UserWalletFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_user_wallet, container, false);
+        View view = inflater.inflate(R.layout.frag_user_wallet, container, false);
+
+        if(User.getWalletDataModel() == null)
+        {
+            User.onWalletResponse(response -> {
+                if(response.isSuccessful())
+                {
+                    WalletDataModel dataModel = DBManager.parseWallet(response.getResult());
+                    User.setWalletDataModel(dataModel);
+                    ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(String.valueOf(dataModel.Ballance));
+                }
+            });
+        } else
+            ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(String.valueOf(User.getWalletDataModel().Ballance));
+
+        return view;
     }
 }

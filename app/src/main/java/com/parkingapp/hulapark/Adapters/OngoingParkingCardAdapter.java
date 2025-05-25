@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parkingapp.hulapark.DataModels.ParkingCardModel;
+import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
@@ -19,7 +19,7 @@ import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 import java.util.ArrayList;
 
 public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParkingCardAdapter.ViewHolder> {
-    private ArrayList<ParkingCardModel> items;
+    private ArrayList<ParkingCardDataModel> items;
     private Context context;
 
     public OngoingParkingCardAdapter()
@@ -27,18 +27,18 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         this.items = new ArrayList<>();
     }
 
-    public OngoingParkingCardAdapter(ArrayList<ParkingCardModel> items)
+    public OngoingParkingCardAdapter(ArrayList<ParkingCardDataModel> items)
     {
         this.items = items;
     }
 
-    public void pushCard(ParkingCardModel cardModel)
+    public void pushCard(ParkingCardDataModel cardModel)
     {
         items.add(cardModel);
         notifyItemInserted(getItemCount());
     }
 
-    public void popCard(ParkingCardModel cardModel)
+    public void popCard(ParkingCardDataModel cardModel)
     {
         int position = items.indexOf(cardModel);
         items.remove(position);
@@ -57,7 +57,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
     @Override
     public void onBindViewHolder(@NonNull OngoingParkingCardAdapter.ViewHolder holder, int position)
     {
-        ParkingCardModel thisCard = items.get(position);
+        ParkingCardDataModel thisCard = items.get(position);
 
         holder.plate_number.setText(thisCard.getPlateNumber());
         holder.location_id.setText(thisCard.getLocationID());

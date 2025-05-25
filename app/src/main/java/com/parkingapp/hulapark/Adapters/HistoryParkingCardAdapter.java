@@ -9,13 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parkingapp.hulapark.DataModels.ParkingCardModel;
+import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 
 import java.util.ArrayList;
 
 public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParkingCardAdapter.ViewHolder> {
-    private ArrayList<ParkingCardModel> items;
+    private ArrayList<ParkingCardDataModel> items;
     private Context context;
 
     public HistoryParkingCardAdapter()
@@ -23,18 +23,18 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         this.items = new ArrayList<>();
     }
 
-    public HistoryParkingCardAdapter(ArrayList<ParkingCardModel> items)
+    public HistoryParkingCardAdapter(ArrayList<ParkingCardDataModel> items)
     {
         this.items = items;
     }
 
-    public void pushCard(ParkingCardModel cardModel)
+    public void pushCard(ParkingCardDataModel cardModel)
     {
         items.add(cardModel);
         notifyItemInserted(getItemCount());
     }
 
-    public void popCard(ParkingCardModel cardModel)
+    public void popCard(ParkingCardDataModel cardModel)
     {
         int position = items.indexOf(cardModel);
         items.remove(position);
@@ -53,7 +53,7 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
     @Override
     public void onBindViewHolder(@NonNull HistoryParkingCardAdapter.ViewHolder holder, int position)
     {
-        ParkingCardModel thisCard = items.get(position);
+        ParkingCardDataModel thisCard = items.get(position);
 
         holder.plate_number.setText(thisCard.getPlateNumber());
         holder.location_id.setText(thisCard.getLocationID());

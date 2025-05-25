@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingCardModel
+public class ParkingCardDataModel
 {
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
@@ -27,7 +27,7 @@ public class ParkingCardModel
         return plate_number;
     }
 
-    public ParkingCardModel setPlateNumber(String plate_number)
+    public ParkingCardDataModel setPlateNumber(String plate_number)
     {
         this.plate_number = plate_number;
         return this;
@@ -38,7 +38,7 @@ public class ParkingCardModel
         return location_id;
     }
 
-    public ParkingCardModel setLocationID(String location_id)
+    public ParkingCardDataModel setLocationID(String location_id)
     {
         this.location_id = location_id;
         return this;
@@ -49,7 +49,7 @@ public class ParkingCardModel
         return charged_hours;
     }
 
-    public ParkingCardModel setChargedHours(String charged_hours)
+    public ParkingCardDataModel setChargedHours(String charged_hours)
     {
         this.charged_hours = charged_hours;
         return this;
@@ -60,19 +60,19 @@ public class ParkingCardModel
         return price;
     }
 
-    public ParkingCardModel setPrice(String price)
+    public ParkingCardDataModel setPrice(String price)
     {
         this.price = price;
         return this;
     }
 
-    public ParkingCardModel(LocalDateTime startTime, LocalDateTime finishTime)
+    public ParkingCardDataModel(LocalDateTime startTime, LocalDateTime finishTime)
     {
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
 
-    public ParkingCardModel(LocalDateTime startTime, int minutesPass)
+    public ParkingCardDataModel(LocalDateTime startTime, int minutesPass)
     {
         this.startTime = startTime;
         this.finishTime = startTime.plusMinutes(minutesPass);
