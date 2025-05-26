@@ -2,7 +2,13 @@ package com.parkingapp.hulapark.DataModels.User;
 
 public class BalanceIncLogDataModel extends ActionLogsDataModel
 {
-    public double Ballance;
+    public double Amount;
+    private long TimeStamp;
 
     public BalanceIncLogDataModel() { Type = "BALANCE_INC"; }
+
+    public void setTimeStamp(long timestamp)
+    {
+        this.TimeStamp = timestamp;
+    }
 }

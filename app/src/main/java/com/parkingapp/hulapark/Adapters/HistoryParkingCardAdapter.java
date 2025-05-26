@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
+import com.parkingapp.hulapark.DataModels.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 
 import java.util.ArrayList;
@@ -71,6 +71,8 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         holder.plate_number.setText(thisCard.getPlateNumber());
         holder.location_id.setText(thisCard.getLocationID());
         holder.price.setText(thisCard.getPrice());
+        holder.date.setText(thisCard.getDate());
+        holder.timespan.setText(thisCard.getTimespan());
     }
 
     @Override
@@ -84,13 +86,17 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         TextView plate_number;
         TextView location_id;
         TextView price;
+        TextView date;
+        TextView timespan;
 
         public ViewHolder(View view)
         {
             super(view);
-            plate_number = (view.findViewById(R.id.history_parkingcard_plate_number));
-            location_id = (view.findViewById(R.id.history_parkingcard_sector_id));
-            price = (view.findViewById(R.id.history_parkingcard_price));
+            plate_number = view.findViewById(R.id.history_parkingcard_plate_number);
+            location_id = view.findViewById(R.id.history_parkingcard_sector_id);
+            price = view.findViewById(R.id.history_parkingcard_price);
+            date = view.findViewById(R.id.history_parkingcard_date);
+            timespan = view.findViewById(R.id.history_parkingcard_timespan);
         }
 
     }

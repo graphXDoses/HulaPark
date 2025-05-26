@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
+import com.parkingapp.hulapark.DataModels.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;

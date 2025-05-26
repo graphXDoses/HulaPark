@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parkingapp.hulapark.DataModels.ParkingCardDataModel;
+import com.parkingapp.hulapark.DataModels.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
