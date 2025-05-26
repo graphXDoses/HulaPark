@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.parkingapp.hulapark.DataModels.User.ActionLogsDataModel;
-import com.parkingapp.hulapark.DataModels.User.WalletDataModel;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
-import com.parkingapp.hulapark.Utilities.DBManager;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,19 +64,17 @@ public class UserWalletFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_user_wallet, container, false);
+        User user = (User)CommonFragUtils.FragmentSwapper.getUser();
 
-        if(User.getWalletDataModel() == null)
-        {
-            User.onWalletResponse(response -> {
-                if(response.isSuccessful())
-                {
-                    WalletDataModel dataModel = DBManager.parseWallet(response.getResult());
-                    User.setWalletDataModel(dataModel);
-                    ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(String.valueOf(dataModel.Ballance));
-                }
-            });
-        } else
-            ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(String.valueOf(User.getWalletDataModel().Ballance));
+        ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(user.getUserDataModel().Wallet.Ballance + "");
+
+//        UserDataModel model = ((User)CommonFragUtils.FragmentSwapper.getUser()).getUserDataModel();
+//
+//        Collection<ActionLogsDataModel> values = model.ActionLogs.values();
+//
+//        List<ParkingLogDataModel> parking = values.stream().filter(act -> act.Type.equals("PARKING"))
+//                                            .map(act -> (ParkingLogDataModel)act )
+//                                            .collect(Collectors.toList());
 
         return view;
     }

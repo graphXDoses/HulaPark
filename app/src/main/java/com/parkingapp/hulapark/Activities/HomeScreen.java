@@ -69,7 +69,6 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
                         if(shouldNavigate)
                         {
-                            DBManager.createUserDataModel("User");
                             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
                             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
                         }

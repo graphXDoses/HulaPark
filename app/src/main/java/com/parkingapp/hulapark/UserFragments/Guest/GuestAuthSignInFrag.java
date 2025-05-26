@@ -88,35 +88,21 @@ public class GuestAuthSignInFrag extends Fragment
         connectBtn.setText(R.string.singIn);
 
         connectBtn.setOnClickListener(view1 -> {
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            if(isChecked)
-//            {
-//                CommonFragUtils.FragmentSwapper.changeUserTo(new User());
-//                editor.putBoolean(IS_TOGGLE, true);
-//            } else {
-//                CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
-//                editor.putBoolean(IS_TOGGLE, false);
-//            }
-//            editor.commit();
-            CommonFragUtils.FragmentSwapper.changeUserTo(new User());
-            Activity activity = getActivity();
 
-            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", new OnCompleteListener<AuthResult>()
-            {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task)
+            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", e -> {
+                if(e == null) // No exception, all good!
                 {
-                    if(task.isSuccessful())
-                    {
-                        String uid = DBManager.getCurrentUserAuthSertificate().getUid();
-                        Toast.makeText(getContext(), uid + " signed in!", Toast.LENGTH_SHORT).show();
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("shouldNavigate", true);
-                        activity.setResult(Activity.RESULT_OK, resultIntent);
-                        activity.finish();
-                    } else {
-                        Toast.makeText(getContext(), task.getException() + "", Toast.LENGTH_SHORT).show();
-                    }
+                    String uid = DBManager.getCurrentUserAuthSertificate().getUid();
+
+                    Toast.makeText(getContext(), uid + " signed in!", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("shouldNavigate", true);
+
+                    Activity activity = getActivity();
+                    activity.setResult(Activity.RESULT_OK, resultIntent);
+                    activity.finish();
+                } else {
+                    Toast.makeText(getContext(), e + "", Toast.LENGTH_SHORT).show();
                 }
             });
 

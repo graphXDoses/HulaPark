@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import com.google.gson.Gson;
 import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
 import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
+import com.parkingapp.hulapark.Users.AUser;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
@@ -38,13 +39,18 @@ public class CommonFragUtils
     private NavController NC_BottomNavMenu;
     private GeoJsonDataModel geoJsonDataModel;
 
-    public void changeUserTo(Object classType)
+    private AUser userClassType;
+
+    public void changeUserTo(AUser classType)
     {
-        if (classType.getClass().getSimpleName().equals("User"))
+        userClassType = classType;
+        if (userClassType.getClass().getSimpleName().equals("User"))
             user_type = UserType.USER;
         else
             user_type = UserType.GUEST;
     }
+
+    public AUser getUser() { return userClassType; }
 
     private UserType user_type = UserType.GUEST;
     public ActivityResultLauncher<Intent> authActivityLauncher;

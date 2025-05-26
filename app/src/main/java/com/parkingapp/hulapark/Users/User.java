@@ -1,39 +1,60 @@
 package com.parkingapp.hulapark.Users;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
-import com.parkingapp.hulapark.DataModels.User.ActionLogsDataModel;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.parkingapp.hulapark.DataModels.User.UserDataModel;
-import com.parkingapp.hulapark.DataModels.User.WalletDataModel;
 import com.parkingapp.hulapark.Utilities.DBManager;
 import com.parkingapp.hulapark.Utilities.Users.UserFragDisplayConfigurator;
 
-public class User
+public class User extends AUser
 {
-    private static UserDataModel dataModel;
-    private static final String UsersPrefix = "Users/";
-    private static ActionLogsDataModel actionLogDataModel;
-    private static WalletDataModel walletDataModel;
+    private String userUID;
+    private DatabaseReference userDataModelReference;
+    private UserDataModel userDataModel;
 
-    public static ActionLogsDataModel getActionLogsDataModel()
+    public User(String uid, DataSnapshot dataSnapshot)
     {
-        return actionLogDataModel;
+        this.userUID = uid;
+        this.userDataModel = DBManager.parseUser(dataSnapshot);
+        this.userDataModelReference = dataSnapshot.getRef();
+
+        userDataModelReference.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                // Needs work!
+                UserDataModel dataModel = snapshot.getValue(UserDataModel.class);
+                if (dataModel != null)
+                    userDataModel = dataModel;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+                Log.e("Firebase", "Error: " + error.getMessage());
+            }
+        });
     }
 
-    public static void setActionLogDataModel(ActionLogsDataModel actionLogDataModel)
+    public void setUserDataModel(UserDataModel dataModel)
     {
-        User.actionLogDataModel = actionLogDataModel;
+        userDataModel = dataModel;
     }
 
-
-    public static void onActionLogsResponse(OnCompleteListener<DataSnapshot> listener)
+    public UserDataModel getUserDataModel()
     {
-        DBManager.getRef("Users/wtEzDQXaznX7vg5aNJPgTankGti1/ActionLogs/1748179801209").get().addOnCompleteListener(listener);
+        return userDataModel;
     }
 
-    public static void onWalletResponse(OnCompleteListener<DataSnapshot> listener)
+    public String getUID()
     {
-        DBManager.getRef("Users/wtEzDQXaznX7vg5aNJPgTankGti1/Wallet").get().addOnCompleteListener(listener);
+        return userUID;
     }
     public static void setFragmentContainerActiveFrag(int container, int frag)
     {
@@ -43,25 +64,5 @@ public class User
     public static int getFragmentContainerActiveFrag(int container)
     {
         return UserFragDisplayConfigurator.getFragmentContainerActiveFrag(User.class, container);
-    }
-
-    public static void setUserDataModel(UserDataModel dataModel)
-    {
-        dataModel = dataModel;
-    }
-
-    public static UserDataModel getUserDataModel()
-    {
-        return dataModel;
-    }
-
-    public static WalletDataModel getWalletDataModel()
-    {
-        return walletDataModel;
-    }
-
-    public static void setWalletDataModel(WalletDataModel walletDataModel)
-    {
-        User.walletDataModel = walletDataModel;
     }
 }
