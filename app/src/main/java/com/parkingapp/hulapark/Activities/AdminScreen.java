@@ -44,7 +44,7 @@ public class AdminScreen extends AppCompatActivity {
 
         //pattern supports Visa Card, Visa Master Card, Union Pay Card
         Pattern cardNumberPattern = Pattern.compile("^(4[0-9]{12}(?:[0-9]{3})?)|" +
-                "((?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}))|((62[0-9]{14,17}))$");
+                "((?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}))$");
         Pattern cvvPattern = Pattern.compile("^[0-9]{3,4}$");
 
         cvvNumber = findViewById(R.id.cvcEditText);
@@ -57,13 +57,10 @@ public class AdminScreen extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s)
             {
-                if (!cvvPattern.matcher(s.toString()).matches())
-                    cvvNumber.setError("Εσφαλμένη μορφή CVV. Πρέπει να είναι 3 ή 4 αριθμοί");
-
-                else {
-                    cvvNumber.setError(null);
+                if (cvvPattern.matcher(s.toString()).matches())
                     cvvNumberPatternMatched = true;
-                }
+                else
+                    cvvNumberPatternMatched = false;
             }
         });
 
@@ -72,25 +69,26 @@ public class AdminScreen extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s)
             {
-                if (!cardNumberPattern.matcher(s.toString()).matches())
-                    cardNumber.setError("Εσφαλμένος αριθμός κάρτας.");
-
-                else {
-                    cardNumber.setError(null);
+                if (cardNumberPattern.matcher(s.toString()).matches())
                     cardNumberPatternMatched = true;
-                }
+                else
+                    cardNumberPatternMatched = false;
             }
         });
 
         findViewById(R.id.testBtn).setOnClickListener(view -> {
 
-            if(!cvvNumberPatternMatched)
-                Toast.makeText(this, "Συμπληρώστε σωστά τον αριθμό του CVV.", Toast.LENGTH_SHORT).show();
-            else if(!cardNumberPatternMatched)
-                Toast.makeText(this, "Μη έγκυρη κάρτα. Συμπληρώστε σωστά τον αριθμό της κάρτας.", Toast.LENGTH_SHORT).show();
-            else {
+            boolean matchedFields = cvvNumberPatternMatched && cardNumberPatternMatched;
+            if (!matchedFields){
+                if(!cvvNumberPatternMatched)
+                    cvvNumber.setError("Συμπληρώστε σωστά τον αριθμό του CVV.");
+                if(!cardNumberPatternMatched)
+                    cardNumber.setError("Μη έγκυρη κάρτα. Συμπληρώστε σωστά τον αριθμό της κάρτας.");
+            }else {
                 Toast.makeText(this, "Έγκυρα στοιχεία!", Toast.LENGTH_SHORT).show();
             } });
+
+
 
     }
 }
