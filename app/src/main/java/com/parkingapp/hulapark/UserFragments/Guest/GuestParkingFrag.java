@@ -1,5 +1,6 @@
 package com.parkingapp.hulapark.UserFragments.Guest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.parkingapp.hulapark.Activities.AdminScreen;
+import com.parkingapp.hulapark.Activities.FinishParkingScreen;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
+import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
+
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +70,16 @@ public class GuestParkingFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_guest_parking, container, false);
+        View view = inflater.inflate(R.layout.frag_guest_parking, container, false);
+
+        Button GOTOADMIN = (Button) view.findViewById(R.id.GOTOADMIN);
+
+        GOTOADMIN.setOnClickListener(view1 ->
+        {
+            Intent intent = new Intent(getContext(), AdminScreen.class);
+            startActivity(intent);
+        });
+
+        return view;
     }
 }

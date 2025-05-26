@@ -81,14 +81,22 @@ public class GuestAuthSignInFrag extends Fragment
         MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
 
         ProgressBar authProgressBar = (ProgressBar) view.findViewById(R.id.authProgressBar);
-        (TextView)view.findViewById(R.id.authProgressText);
+        TextView authProgrssText = (TextView) view.findViewById(R.id.authProgressText);
+
+        // Hide them until auth.
+        authProgressBar.setVisibility(View.GONE);
+        authProgrssText.setVisibility(View.GONE);
 
         connectBtn.setText(R.string.singIn);
 
         connectBtn.setOnClickListener(view1 ->
         {
+            // Show authenticating...
+            authProgressBar.setVisibility(View.VISIBLE);
+            authProgrssText.setVisibility(View.VISIBLE);
 
-            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", e -> {
+            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", e ->
+            {
                 if(e == null) // No exception, all good!
                 {
                     String uid = DBManager.getCurrentUserAuthSertificate().getUid();
@@ -103,6 +111,8 @@ public class GuestAuthSignInFrag extends Fragment
                 } else {
                     Toast.makeText(getContext(), e + "", Toast.LENGTH_SHORT).show();
                 }
+                authProgressBar.setVisibility(View.GONE);
+                authProgrssText.setVisibility(View.GONE);
             });
 
         });
