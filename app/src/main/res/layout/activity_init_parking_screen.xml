@@ -26,15 +26,14 @@
             android:hint="@string/init_pariking_plate"
             app:helperText="@string/init_pariking_plate_h"
             app:counterEnabled="true"
-            app:counterMaxLength="7"
+            app:counterMaxLength="8"
             app:counterTextColor="@android:color/transparent"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/init_plate_number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
