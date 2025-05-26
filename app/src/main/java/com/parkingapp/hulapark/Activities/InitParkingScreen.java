@@ -65,8 +65,8 @@ public class InitParkingScreen extends AppCompatActivity
                 new InputFilter.AllCaps()
         });
 
-        Pattern plateNumberTypingPattern = Pattern.compile("^([A-Z0-9]{0,8})$");
-        Pattern plateNumberPattern = Pattern.compile(("^([A-Z]|[0-9]){5,8}$"));
+        Pattern plateNumberTypingPattern = Pattern.compile("^[A-Z0-9]{0,8})$");
+        Pattern plateNumberPattern = Pattern.compile("^([A-Z]|[0-9]){5,8}$");
 
         plateNumber.addTextChangedListener(new AfterTextWatcher()
         {
@@ -89,7 +89,8 @@ public class InitParkingScreen extends AppCompatActivity
             boolean completedFields = !(parkingSpot.getText().toString().isEmpty()|| parkingDuration.getText().toString().isEmpty()) || plateNumberPatternMatched;
 
             if(!completedFields)
-                if(!plateNumberPatternMatched){
+                if(!plateNumberPatternMatched)
+                {
                     plateNumber.setError("Εσφαλμένη μορφή πινακίδας. Πρέπει να είναι τουλάχιστον 5 κεφαλαία γράμματα ή αριθμοί (πχ. NAB1234)");
                 }
                 if(parkingSpot.getText().toString().isEmpty()|| parkingDuration.getText().toString().isEmpty())
