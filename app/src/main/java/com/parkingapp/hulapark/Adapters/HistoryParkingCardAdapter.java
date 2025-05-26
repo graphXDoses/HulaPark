@@ -24,9 +24,15 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         this.items.setValue(new ArrayList<>());
     }
 
-    public HistoryParkingCardAdapter(MutableLiveData<ArrayList<ParkingCardDataModel>> items)
+    public HistoryParkingCardAdapter(ArrayList<ParkingCardDataModel> items)
     {
-        this.items = items;
+        this.items.setValue(items);
+    }
+
+    public void setCards(ArrayList<ParkingCardDataModel> cardsArray)
+    {
+        this.items.setValue(cardsArray);
+        notifyDataSetChanged();
     }
 
     public void pushCard(ParkingCardDataModel cardModel)

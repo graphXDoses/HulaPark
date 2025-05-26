@@ -10,14 +10,17 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import com.google.firebase.FirebaseApp;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.databinding.ActivitySplashScreenBinding;
+
+import java.util.ArrayList;
 
 public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(getApplicationContext());
+        initStuff();
         ActivitySplashScreenBinding binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -36,5 +39,10 @@ public class SplashScreen extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void initStuff()
+    {
+        FirebaseApp.initializeApp(getApplicationContext());
     }
 }

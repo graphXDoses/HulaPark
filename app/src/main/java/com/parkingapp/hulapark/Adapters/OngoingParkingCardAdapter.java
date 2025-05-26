@@ -28,9 +28,15 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         this.items.setValue(new ArrayList<>());
     }
 
-    public OngoingParkingCardAdapter(MutableLiveData<ArrayList<ParkingCardDataModel>> items)
+    public OngoingParkingCardAdapter(ArrayList<ParkingCardDataModel> items)
     {
-        this.items = items;
+        this.items.setValue(items);
+    }
+
+    public void setCards(ArrayList<ParkingCardDataModel> cardsArray)
+    {
+        this.items.setValue(cardsArray);
+        notifyDataSetChanged();
     }
 
     public void pushCard(ParkingCardDataModel cardModel)
