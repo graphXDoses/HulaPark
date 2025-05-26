@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.DataModels;
+package com.parkingapp.hulapark.DataModels.Cards;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +7,7 @@ import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,5 +133,18 @@ public class ParkingCardDataModel
         long secs = seconds % 60;
 
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+
+    public String getDate()
+    {
+        return this.startTime.format(DateTimeFormatter.ofPattern("d/M/Y"));
+    }
+
+    public String getTimespan()
+    {
+        String s_start = this.startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        String s_finish = this.finishTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        return s_start + " - " + s_finish;
     }
 }
