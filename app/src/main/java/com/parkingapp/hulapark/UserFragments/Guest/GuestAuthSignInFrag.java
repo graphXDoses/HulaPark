@@ -13,16 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Users.Guest;
-import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.DBManager;
-import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.

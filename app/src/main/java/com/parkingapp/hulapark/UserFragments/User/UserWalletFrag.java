@@ -66,7 +66,8 @@ public class UserWalletFrag extends Fragment {
         View view = inflater.inflate(R.layout.frag_user_wallet, container, false);
         User user = (User)CommonFragUtils.FragmentSwapper.getUser();
 
-        ((TextView)view.findViewById(R.id.walletCurrentBallance)).setText(user.getUserDataModel().Wallet.Ballance + "");
+        ((TextView)view.findViewById(R.id.walletCurrentBallance))
+                .setText(String.format("%.2f", user.getUserDataModel().Wallet.Ballance));
 
 //        UserDataModel model = ((User)CommonFragUtils.FragmentSwapper.getUser()).getUserDataModel();
 //
