@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -78,9 +80,13 @@ public class GuestAuthSignInFrag extends Fragment
 
         MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
 
+        ProgressBar authProgressBar = (ProgressBar) view.findViewById(R.id.authProgressBar);
+        (TextView)view.findViewById(R.id.authProgressText);
+
         connectBtn.setText(R.string.singIn);
 
-        connectBtn.setOnClickListener(view1 -> {
+        connectBtn.setOnClickListener(view1 ->
+        {
 
             DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", e -> {
                 if(e == null) // No exception, all good!

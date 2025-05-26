@@ -2,6 +2,9 @@ package com.parkingapp.hulapark.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,10 +18,12 @@ import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
+import com.parkingapp.hulapark.Utilities.InputFieldFormatCheckers.AfterTextWatcher;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class InitParkingScreen extends AppCompatActivity
@@ -45,7 +50,27 @@ public class InitParkingScreen extends AppCompatActivity
         parkingSpot = ((AutoCompleteTextView)findViewById(R.id.init_pariking_spot));
         parkingDuration = ((AutoCompleteTextView)findViewById(R.id.init_pariking_duration));
 
-        findViewById(R.id.transitToPaymentBtn).setOnClickListener(view -> {
+        plateNumber.setFilters(new InputFilter[]
+        {
+                new InputFilter.AllCaps()
+        });
+
+        Pattern plateNumberTypingPattern = Pattern.compile("^[A-Z]{3}[0-9]{0,4}|[A-Z]{0,3}$");
+
+        plateNumber.addTextChangedListener(new AfterTextWatcher()
+        {
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if (!plateNumberTypingPattern.matcher(s.toString()).matches())
+                    plateNumber.setError("Εσφαλμένη μορφή πινακίδας. Πρέπει να είναι 3 κεφαλαίοι χαρακτήρες και 4 αριθμοί (πχ. NAB1234)");
+                else
+                    plateNumber.setError(null);
+            }
+        });
+
+        findViewById(R.id.transitToPaymentBtn).setOnClickListener(view ->
+        {
             Intent intent = new Intent(this, FinishParkingScreen.class);
 
             Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoLocModel()

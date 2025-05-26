@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 public class CommonFragUtils
 {
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
-    public static final int hourScale = 24;
+    public static final int hourScale = 24; // GivenTime / 24
 
     public BottomNavMenuHolderView getBottomNavBar()
     {
