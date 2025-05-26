@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +21,7 @@ import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Utilities.InputFieldFormatCheckers.AfterTextWatcher;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -31,6 +32,10 @@ public class InitParkingScreen extends AppCompatActivity
     private TextInputEditText plateNumber;
     private AutoCompleteTextView parkingSpot;
     private AutoCompleteTextView parkingDuration;
+
+    String initParkingSpotTxt;
+    String initParkingDurationTxt;
+    boolean plateNumberPatternMatched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +55,17 @@ public class InitParkingScreen extends AppCompatActivity
         parkingSpot = ((AutoCompleteTextView)findViewById(R.id.init_pariking_spot));
         parkingDuration = ((AutoCompleteTextView)findViewById(R.id.init_pariking_duration));
 
+        initParkingSpotTxt = getString(R.string.init_pariking_spot);
+        initParkingDurationTxt = getString(R.string.init_pariking_duration);
+        plateNumberPatternMatched = false;
+
+
         plateNumber.setFilters(new InputFilter[]
         {
                 new InputFilter.AllCaps()
         });
 
-        Pattern plateNumberTypingPattern = Pattern.compile("^[A-Z]{3}[0-9]{0,4}|[A-Z]{0,3}$");
+        Pattern plateNumberTypingPattern = Pattern.compile("^([A-Z]|[0-9]){5,8}$");
 
         plateNumber.addTextChangedListener(new AfterTextWatcher()
         {
@@ -63,27 +73,38 @@ public class InitParkingScreen extends AppCompatActivity
             public void afterTextChanged(Editable s)
             {
                 if (!plateNumberTypingPattern.matcher(s.toString()).matches())
-                    plateNumber.setError("Εσφαλμένη μορφή πινακίδας. Πρέπει να είναι 3 κεφαλαίοι χαρακτήρες και 4 αριθμοί (πχ. NAB1234)");
-                else
+                    plateNumber.setError("Εσφαλμένη μορφή πινακίδας. Πρέπει να είναι τουλάχιστον 5 κεφαλαία γράμματα ή αριθμοί (πχ. NAB1234)");
+
+                else {
                     plateNumber.setError(null);
+                    plateNumberPatternMatched = true;
+                }
             }
         });
 
         findViewById(R.id.transitToPaymentBtn).setOnClickListener(view ->
         {
-            Intent intent = new Intent(this, FinishParkingScreen.class);
+            boolean completedFields = !(parkingSpot.getText().toString().isEmpty()|| parkingDuration.getText().toString().isEmpty());
+            if(!completedFields)
+                    Toast.makeText(this, "Κενό πεδίο. Απαιτείται συμπλήρωση.", Toast.LENGTH_SHORT).show();
+            else if(!plateNumberPatternMatched)
+                    Toast.makeText(this, "Συμπληρώστε σωστά το πεδίο πινακίδα.", Toast.LENGTH_SHORT).show();
+            else {
 
-            Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoLocModel()
-                                    .data.features.stream().filter(feature -> feature.properties.address.equals(parkingSpot.getText().toString()))
-                                    .collect(Collectors.toList()).get(0);
+                Intent intent = new Intent(this, FinishParkingScreen.class);
 
-            String parkingDurationString = String.valueOf(ParkingHoursSpan.fromString(parkingDuration.getText().toString()).getMinutes());
+                Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoLocModel()
+                        .data.features.stream().filter(feature -> feature.properties.address.equals(parkingSpot.getText().toString()))
+                        .collect(Collectors.toList()).get(0);
 
-            intent.putExtra("INIT_PARKING_PLATE_NUMBER", plateNumber.getText().toString());
-            intent.putExtra("INIT_PARKING_PARKING_SPOT", sectorFeature.properties.sectorID);
-            intent.putExtra("INIT_PARKING_PARKING_DURATION", parkingDurationString);
-            startActivity(intent);
-        });
+                String parkingDurationString = String.valueOf(ParkingHoursSpan.fromString(parkingDuration.getText().toString()).getMinutes());
+
+                intent.putExtra("INIT_PARKING_PLATE_NUMBER", plateNumber.getText().toString());
+                intent.putExtra("INIT_PARKING_PARKING_SPOT", sectorFeature.properties.sectorID);
+                intent.putExtra("INIT_PARKING_PARKING_DURATION", parkingDurationString);
+                startActivity(intent);
+            } });
+
 
         GeoJsonDataModel model = CommonFragUtils.FragmentSwapper.getGeoLocModel();
 
