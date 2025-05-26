@@ -72,14 +72,6 @@ public class GuestParkingFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_guest_parking, container, false);
 
-        Button GOTOADMIN = (Button) view.findViewById(R.id.GOTOADMIN);
-
-        GOTOADMIN.setOnClickListener(view1 ->
-        {
-            Intent intent = new Intent(getContext(), AdminScreen.class);
-            startActivity(intent);
-        });
-
         return view;
     }
 }
