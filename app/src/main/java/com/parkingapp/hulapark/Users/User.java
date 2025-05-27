@@ -78,10 +78,18 @@ public class User extends AUser
             parkingCards.add(cardModel);
         }
 
+        LocalDateTime now = LocalDateTime.now();
+
         ArrayList<ParkingCardDataModel> history = (ArrayList<ParkingCardDataModel>) parkingCards.stream()
         .filter(card -> card.getFinishTime().isBefore(LocalDateTime.now())).collect(Collectors.toList());
 
+        ArrayList<ParkingCardDataModel> ongoing = (ArrayList<ParkingCardDataModel>) parkingCards.stream()
+        .filter(card ->
+                card.getStartTime().isBefore(now) && card.getFinishTime().isAfter(now)
+        ).collect(Collectors.toList());
+
         CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().setCards(history);
+        CommonFragUtils.FragmentSwapper.getParkingCardAdapter().setCards(ongoing);
     }
 
     public void setUserDataModel(UserDataModel dataModel)
