@@ -65,7 +65,7 @@ public class InitParkingScreen extends AppCompatActivity
                 new InputFilter.AllCaps()
         });
 
-        Pattern plateNumberTypingPattern = Pattern.compile("^[A-Z0-9]{0,8})$");
+        Pattern plateNumberTypingPattern = Pattern.compile("^[A-Z0-9]{0,8}$");
         Pattern plateNumberPattern = Pattern.compile("^([A-Z]|[0-9]){5,8}$");
 
         plateNumber.addTextChangedListener(new AfterTextWatcher()
