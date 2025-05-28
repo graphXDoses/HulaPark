@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/orange"
     tools:context=".UserFragments.User.UserStatisticsFrag">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/statsTopBarArea"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/beige"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        android:layout_height="match_parent"
+        tools:context=".UserFragments.User.UserStatisticsFrag">
 
-        <com.parkingapp.hulapark.Views.TopNavMenuHolderView
-            android:id="@+id/statsNavMenuHolderView"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/statsTopBarArea"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/beige"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.parkingapp.hulapark.Views.TopNavMenuHolderView
+                android:id="@+id/statsNavMenuHolderView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:compatShadowEnabled="false"
+                app:customIndicatorColor="@color/teal_700"
+                app:customIndicatorHeight="6dp"
+                app:itemHorizontalTranslationEnabled="true"
+                app:itemIconSize="24sp"
+                app:itemIconTint="@drawable/stats_nav_active_frag_icon"
+                app:itemPaddingBottom="16dp"
+                app:itemPaddingTop="16dp"
+                app:itemRippleColor="@android:color/transparent"
+                app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
+                app:itemTextAppearanceInactive="@style/App.Custom.TopNavTextSize"
+                app:itemTextColor="@drawable/stats_nav_active_frag_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/stats_top_nav_menu" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <fragment
+            android:id="@+id/statsActiveFrag"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            app:compatShadowEnabled="false"
-            app:itemHorizontalTranslationEnabled="true"
-            app:itemTextAppearanceActive="@style/App.Custom.TopNavTextSize"
-            app:itemTextAppearanceInactive="@style/App.Custom.TopNavTextSize"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:itemTextColor="@drawable/stats_nav_active_frag_text"
-            app:itemIconTint="@drawable/stats_nav_active_frag_icon"
-            app:itemIconSize="24sp"
-            app:itemRippleColor="@android:color/transparent"
-            app:customIndicatorHeight="6dp"
-            app:customIndicatorColor="@color/teal_700"
-            app:menu="@menu/stats_top_nav_menu"
-            app:itemPaddingBottom="16dp"
-            app:itemPaddingTop="16dp"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/statsTopBarArea"
+            app:navGraph="@navigation/category_statistics_nav_frag" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <fragment
-        android:id="@+id/statsActiveFrag"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statsTopBarArea"
-        app:navGraph="@navigation/category_statistics_nav_frag"
-    />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

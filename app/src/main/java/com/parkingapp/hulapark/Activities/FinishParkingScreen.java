@@ -66,12 +66,9 @@ public class FinishParkingScreen extends AppCompatActivity
             long startTime = now.atZone(zoneId).toInstant().toEpochMilli();
             long finishTime = then.atZone(zoneId).toInstant().toEpochMilli();
 
-//            User.setParkingStartTime(startTime);
-//            User.setParkingFinishTime(finishTime);
             ParkingCardDataModel cardModel = new ParkingCardDataModel(now, then);
             cardModel.setPlateNumber(plateNumber)
                      .setLocationID(parkingSpot)
-                     .setChargedHours(parkingDuration)
                      .setPrice("0.85");
             CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
 

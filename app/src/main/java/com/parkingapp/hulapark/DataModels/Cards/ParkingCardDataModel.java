@@ -8,8 +8,11 @@ import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
 import java.util.HashMap;
 import java.util.Map;
+
+import kotlin.time.DurationUnit;
 
 public class ParkingCardDataModel
 {
@@ -47,7 +50,20 @@ public class ParkingCardDataModel
 
     public String getChargedHours()
     {
-        return charged_hours;
+        Duration diff = Duration.between(startTime, finishTime);
+        return String.format("%d", diff.toMinutes());
+    }
+
+    private String formatDuration(Duration duration)
+    {
+        long seconds = duration.getSeconds();
+        long absSeconds = Math.abs(seconds);
+        String positive = String.format(
+                "%d:%02d:%02d",
+                absSeconds / 3600,
+                (absSeconds % 3600) / 60,
+                absSeconds % 60);
+        return seconds < 0 ? "-" + positive : positive;
     }
 
     public ParkingCardDataModel setChargedHours(String charged_hours)
@@ -112,7 +128,7 @@ public class ParkingCardDataModel
                 if (remaining > 0)
                 {
                     parkingManager.onTickUpdate(remaining);
-                    handler.postDelayed(this, 500);
+                    handler.postDelayed(this, 50);
                 } else {
                     if(parkingManager.onFinish())
                         timerRunnables.remove(position);
