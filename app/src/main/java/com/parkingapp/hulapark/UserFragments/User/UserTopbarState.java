@@ -3,25 +3,20 @@ package com.parkingapp.hulapark.UserFragments.User;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
-import com.parkingapp.hulapark.Views.LinePagerIndicatorDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserParkingFrag#newInstance} factory method to
+ * Use the {@link UserTopbarState#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserParkingFrag extends Fragment {
+public class UserTopbarState extends Fragment
+{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +27,8 @@ public class UserParkingFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UserParkingFrag() {
+    public UserTopbarState()
+    {
         // Required empty public constructor
     }
 
@@ -42,11 +38,12 @@ public class UserParkingFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UserParkingFrag.
+     * @return A new instance of fragment UserTopbarState.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserParkingFrag newInstance(String param1, String param2) {
-        UserParkingFrag fragment = new UserParkingFrag();
+    public static UserTopbarState newInstance(String param1, String param2)
+    {
+        UserTopbarState fragment = new UserTopbarState();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,9 +52,11 @@ public class UserParkingFrag extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -65,21 +64,9 @@ public class UserParkingFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_user_parking, container, false);
-
-        RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
-
-        rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
-        LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rcv.setLayoutManager(ll);
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(rcv);
-
-        rcv.addItemDecoration(new LinePagerIndicatorDecoration(getResources()));
-
-        return view;
+        return inflater.inflate(R.layout.frag_user_topbar_state, container, false);
     }
 }

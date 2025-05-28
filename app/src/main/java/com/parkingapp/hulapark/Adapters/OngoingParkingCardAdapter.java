@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -113,6 +114,11 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
     public int getItemCount()
     {
         return items.getValue().size();
+    }
+
+    public LiveData<ArrayList<ParkingCardDataModel>> getLiveData()
+    {
+        return items;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

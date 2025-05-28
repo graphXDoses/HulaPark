@@ -48,6 +48,8 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        CommonFragUtils.FragmentSwapper.setHomeActivityLifecycleOwner(this);
+
 //        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
 
         // Navbar

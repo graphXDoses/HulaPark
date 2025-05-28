@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -28,6 +29,7 @@ public class CommonFragUtils
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
     public static final int hourScale = 1;
     private String mapFocusedPoint = null;
+    private LifecycleOwner homeActivityLifecycleOwner;
 
     public BottomNavMenuHolderView getBottomNavBar()
     {
@@ -127,5 +129,15 @@ public class CommonFragUtils
     public String getMapFocusedPoint()
     {
         return mapFocusedPoint;
+    }
+
+    public LifecycleOwner getHomeActivityLifecycleOwner()
+    {
+        return homeActivityLifecycleOwner;
+    }
+
+    public void setHomeActivityLifecycleOwner(LifecycleOwner owner)
+    {
+        homeActivityLifecycleOwner = owner;
     }
 }
