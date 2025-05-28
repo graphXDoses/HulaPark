@@ -1,5 +1,7 @@
 package com.parkingapp.hulapark.FragmentContainers;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
@@ -29,6 +30,7 @@ import org.osmdroid.views.overlay.Marker;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,7 +107,12 @@ public class MapFrag extends Fragment {
         loadMapMarkers(model.data.features);
         map.invalidate();
 
-
+        String targetLocationString = CommonFragUtils.FragmentSwapper.getMapFocusedPoint();
+        if(targetLocationString != null)
+        {
+            HulaMapMarker marker = HulaMapMarker.getMarkerBySectorID(targetLocationString);
+            marker.getOnMarkerClickListener().onMarkerClick(marker, map);
+        }
 
         return view;
     }
@@ -125,68 +132,148 @@ public class MapFrag extends Fragment {
 
     private void loadMapMarkers(List<Feature> features)
     {
-        markFeatures = new HashMap<>();
         for (Feature feature : features)
         {
-            Marker marker = new Marker(map);
-            List<Double> co = feature.geometry.coordinates;
-
-            GeoPoint point = new GeoPoint(co.get(1), co.get(0));
-            marker.setPosition(point);
-            marker.setIcon(getResources().getDrawable(R.drawable.map_location_circle));
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            marker.setOnMarkerClickListener((m, mapView) -> {
-                Feature f = markFeatures.get(m);
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                View view = getLayoutInflater().from(getContext()).inflate(R.layout.frag_map_display_spot_details, null);
-
-                FrameLayout dynamicLayout = view.findViewById(R.id.displayDynamicFrameLayout);
-
+            HulaMapMarker.Builder(getLayoutInflater(), map, feature, dynamicLayout -> {
                 Bundle args = getArguments();
                 // Change that to `!=`
                 if (args == null)
                 {
-//                    String type = args.getString("layout_type");
-
-                    int layoutToInflate = R.layout.inc_display_spot_details_select;
+                    int layoutToInflate = R.layout.inc_display_spot_details_ongoing;
                     LayoutInflater.from(getContext()).inflate(layoutToInflate, dynamicLayout, true);
                 }
-
-                bottomSheetDialog.setContentView(view);
-                bottomSheetDialog.show();
-
-                map.getOverlays().remove(m);
-                m.setIcon(getResources().getDrawable(R.drawable.map_location_parking_active));
-                map.getOverlays().add(m);
-                map.invalidate();
-
-                double previousZoomLevel = map.getZoomLevelDouble();
-                mapView.getController().animateTo(
-                        point,
-                        16.0,
-                        750L);
-
-                ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
-                ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
-
-//                ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
-//                    bottomSheetDialog.dismiss();
-//                    mapView.getController().animateTo(
-//                            point,
-//                            previousZoomLevel,
-//                            750L);
-//                });
-
-                bottomSheetDialog.setOnDismissListener(dialogInterface -> {
-                    m.setIcon(getResources().getDrawable(R.drawable.map_location_circle));
-                    map.invalidate();
-                });
-
-                return true;
             });
-            markFeatures.put(marker, feature);
+        }
+    }
+}
 
-            map.getOverlays().add(marker);
+class HulaMapMarker extends Marker
+{
+    private Context context;
+    private BottomSheetDialog bottomSheetDialog;
+
+    private static HulaMapMarker instance = null;
+
+    private static HashMap<String, HulaMapMarker> sectorIDMap = new HashMap<>();
+
+    private HulaMapMarkerOnClickListener listener;
+    private MapView mapView;
+
+    public OnMarkerClickListener getOnMarkerClickListener()
+    {
+        return listener;
+    }
+    private HulaMapMarker(LayoutInflater inflater, MapView mapView, Feature feature, Consumer<FrameLayout> dynFunc)
+    {
+        super(mapView);
+        this.mapView = mapView;
+        this.context = mapView.getContext();
+        this.bottomSheetDialog = new BottomSheetDialog(context);
+
+        // HMM
+        HMM descriptor = new HMM();
+
+        List<Double> co = feature.geometry.coordinates;
+        sectorIDMap.put(feature.properties.sectorID, this);
+
+        descriptor.geoLocationPoint = new GeoPoint(co.get(1), co.get(0));
+        descriptor.inflater = inflater;
+        descriptor.dynFunc = dynFunc;
+        descriptor.context = mapView.getContext();
+        descriptor.markFeatures = new HashMap<>();
+        descriptor.locationCircle = context.getResources().getDrawable(R.drawable.map_location_circle);
+        descriptor.locationParkingActive = context.getResources().getDrawable(R.drawable.map_location_parking_active);
+
+        // Set point style
+        setPosition(descriptor.geoLocationPoint);
+        setIcon(descriptor.locationCircle);
+        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+        // Set onclick listener
+        listener = new HulaMapMarkerOnClickListener(descriptor);
+        setOnMarkerClickListener(listener);
+
+        descriptor.markFeatures.put(this, feature);
+        mapView.getOverlays().add(this);
+    }
+
+    public static HulaMapMarker Builder(LayoutInflater inflater, MapView mapView, Feature feature, Consumer<FrameLayout> dynFunc)
+    {
+        return instance == null ? new HulaMapMarker(inflater, mapView, feature, dynFunc) : instance;
+    }
+
+    public static HulaMapMarker getMarkerBySectorID(String s)
+    {
+        HulaMapMarker marker = sectorIDMap.get(s);
+        return marker;
+    }
+
+    private class HMM
+    {
+        public Drawable locationCircle;
+        public Drawable locationParkingActive;
+        public GeoPoint geoLocationPoint;
+        public Consumer<FrameLayout> dynFunc;
+        public HashMap<Marker, Feature> markFeatures;
+        public LayoutInflater inflater;
+        public Context context;
+    }
+
+    private class HulaMapMarkerOnClickListener implements OnMarkerClickListener
+    {
+        private HMM descriptor;
+        public HulaMapMarkerOnClickListener(HMM descriptor)
+        {
+            this.descriptor = descriptor;
+        }
+
+        @Override
+        public boolean onMarkerClick(Marker m, MapView map)
+        {
+            Feature f = descriptor.markFeatures.get(m);
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(descriptor.context);
+            View view = descriptor.inflater.from(descriptor.context).inflate(R.layout.frag_map_display_spot_details, null);
+
+            FrameLayout dynamicLayout = view.findViewById(R.id.displayDynamicFrameLayout);
+
+            descriptor.dynFunc.accept(dynamicLayout);
+
+            bottomSheetDialog.setContentView(view);
+            bottomSheetDialog.show();
+
+            map.getOverlays().remove(m);
+            m.setIcon(descriptor.locationParkingActive);
+            map.getOverlays().add(m);
+            map.invalidate();
+
+            double previousZoomLevel = map.getZoomLevelDouble();
+//            GeoPoint previousFocalPoint = (GeoPoint)map.getMapCenter();
+            GeoPoint previousFocalPoint = new GeoPoint(21.309884, -157.858140);
+            map.getController().animateTo(
+                    descriptor.geoLocationPoint,
+                    16.0,
+                    750L);
+
+            ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
+            ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
+
+//            ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
+//                bottomSheetDialog.dismiss();
+//                mapView.getController().animateTo(
+//                        point,
+//                        previousZoomLevel,
+//                        750L);
+//            });
+
+            bottomSheetDialog.setOnDismissListener(dialogInterface -> {
+                m.setIcon(descriptor.locationCircle);
+                map.getController().animateTo(
+                        previousFocalPoint,
+                        previousZoomLevel,
+                        750L);
+                map.invalidate();
+            });
+            return true;
         }
     }
 }

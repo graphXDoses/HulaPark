@@ -73,12 +73,13 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         ParkingCardDataModel thisCard = items.getValue().get(position);
 
         holder.plate_number.setText(thisCard.getPlateNumber());
-        holder.location_id.setText(thisCard.getLocationID());
+        holder.location_id.setText(thisCard.getSectorID());
 
         holder.charged_hours.setText(thisCard.getChargedHours());
         holder.price.setText(thisCard.getPrice());
 
         holder.itemView.setOnClickListener(view -> {
+            CommonFragUtils.FragmentSwapper.setMapFocusedPoint(thisCard.getSectorID());
             CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_map);
         });
 

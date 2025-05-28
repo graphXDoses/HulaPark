@@ -69,7 +69,7 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         ParkingCardDataModel thisCard = items.getValue().get(position);
 
         holder.plate_number.setText(thisCard.getPlateNumber());
-        holder.location_id.setText(thisCard.getLocationID());
+        holder.location_id.setText(thisCard.getSectorID());
         holder.price.setText(thisCard.getPrice());
         holder.date.setText(thisCard.getDate());
         holder.timespan.setText(thisCard.getTimespan());

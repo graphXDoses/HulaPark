@@ -26,7 +26,8 @@ import java.io.InputStreamReader;
 public class CommonFragUtils
 {
     public static final CommonFragUtils FragmentSwapper = new CommonFragUtils();
-    public static final int hourScale = 1; // GivenTime / 24
+    public static final int hourScale = 1;
+    private String mapFocusedPoint = null;
 
     public BottomNavMenuHolderView getBottomNavBar()
     {
@@ -116,5 +117,15 @@ public class CommonFragUtils
     public void setBottomNavBar(BottomNavMenuHolderView bottomNavBar)
     {
         this.bottomNavBar = bottomNavBar;
+    }
+
+    public void setMapFocusedPoint(String s)
+    {
+        mapFocusedPoint = s;
+    }
+
+    public String getMapFocusedPoint()
+    {
+        return mapFocusedPoint;
     }
 }

@@ -37,7 +37,7 @@ public class ParkingCardDataModel
         return this;
     }
 
-    public String getLocationID()
+    public String getSectorID()
     {
         return location_id;
     }
