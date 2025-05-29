@@ -69,9 +69,32 @@ public class HulaMapMarker extends Marker
         mapView.getOverlays().add(this);
     }
 
+    private HulaMapMarker(MapView mapView, Feature feature)
+    {
+        super(mapView);
+        this.mapView = mapView;
+        this.context = mapView.getContext();
+        this.bottomSheetDialog = new BottomSheetDialog(context);
+
+        List<Double> co = feature.geometry.coordinates;
+        sectorIDMap.put(feature.properties.sectorID, this);
+
+        // Set point style
+        setPosition(new GeoPoint(co.get(1), co.get(0)));
+        setIcon(context.getResources().getDrawable(R.drawable.map_location_circle));
+        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        mapView.getOverlays().add(this);
+    }
+
     public static HulaMapMarker Builder(LayoutInflater inflater, MapView mapView, Feature feature, HulaMapMarkerBehaviourModifier behaviourMod)
     {
         instance = new HulaMapMarker(inflater, mapView, feature, behaviourMod);
+        return instance;
+    }
+
+    public static HulaMapMarker Builder(MapView mapView, Feature feature)
+    {
+        instance = new HulaMapMarker(mapView, feature);
         return instance;
     }
 

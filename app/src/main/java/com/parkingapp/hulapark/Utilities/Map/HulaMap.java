@@ -25,11 +25,10 @@ import java.io.InputStreamReader;
 
 public class HulaMap
 {
-    private static HulaMap instance = null;
-    private static MapView mapView;
-    private static Context context;
+    private MapView mapView;
+    private Context context;
 
-    private HulaMap(MapView map)
+    public HulaMap(MapView map)
     {
         mapView = map;
         mapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -41,13 +40,7 @@ public class HulaMap
         mapView.setMinZoomLevel(12.0);
     }
 
-    public static HulaMap Builder(MapView mapView)
-    {
-        instance = new HulaMap(mapView);
-        return instance;
-    }
-
-    public static MapView getMap()
+    public MapView getMap()
     {
         return mapView;
     }
@@ -61,7 +54,7 @@ public class HulaMap
         return this;
     }
 
-    public static void setContext(Context applicationContext)
+    public void setContext(Context applicationContext)
     {
         context = applicationContext;
     }
@@ -71,6 +64,15 @@ public class HulaMap
         for (Feature feature : CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features)
         {
             HulaMapMarker.Builder(inflater, mapView, feature, behaviourModifier);
+        }
+        return this;
+    }
+
+    public HulaMap loadMapMarkers()
+    {
+        for (Feature feature : CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features)
+        {
+            HulaMapMarker.Builder(mapView, feature);
         }
         return this;
     }

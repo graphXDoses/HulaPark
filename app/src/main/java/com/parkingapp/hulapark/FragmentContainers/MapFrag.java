@@ -106,7 +106,9 @@ public class MapFrag extends Fragment {
                     .show();
         });
 
-        HulaMap.Builder(view.findViewById(R.id.streetMap))
+        HulaMap hulaMap = new HulaMap(view.findViewById(R.id.streetMap));
+
+        hulaMap
         .setMapFocalPoint(new GeoPoint(21.309884, -157.858140), 13.0)
         .loadMapMarkers(getLayoutInflater(), new HulaMapMarkerBehaviourModifier()
         {
@@ -140,7 +142,7 @@ public class MapFrag extends Fragment {
         if(targetLocationString != null)
         {
             HulaMapMarker marker = HulaMapMarker.getMarkerBySectorID(targetLocationString);
-            marker.getOnMarkerClickListener().onMarkerClick(marker, HulaMap.getMap());
+            marker.getOnMarkerClickListener().onMarkerClick(marker, hulaMap.getMap());
         }
 
         return view;
