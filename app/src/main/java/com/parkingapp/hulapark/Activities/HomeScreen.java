@@ -48,12 +48,12 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        CommonFragUtils.FragmentSwapper.setHomeActivityLifecycleOwner(this);
-
 //        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
 
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
+
+        NavController topbarNavController = Navigation.findNavController(findViewById(R.id.topbar_state_nav_frag));
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
         CommonFragUtils.FragmentSwapper.setBottomNavBar(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
@@ -71,6 +71,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
                         {
                             int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
                             CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
+                            topbarNavController.navigate(R.id.userTopbarState);
                         }
                     }
                 }
@@ -126,6 +127,9 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
+        if(id == binding.BottomNavBar.getSelectedItemId())
+            return true;
 
         switch (id) {
             case R.id.nav_parking_car:

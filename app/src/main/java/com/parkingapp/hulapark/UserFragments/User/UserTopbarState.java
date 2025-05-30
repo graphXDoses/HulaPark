@@ -2,6 +2,7 @@ package com.parkingapp.hulapark.UserFragments.User;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +70,19 @@ public class UserTopbarState extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_user_topbar_state, container, false);
+        View view = inflater.inflate(R.layout.frag_user_topbar_state, container, false);
+
+        User user = (User) CommonFragUtils.FragmentSwapper.getUser();
+        AppCompatButton balanceButton = (AppCompatButton) view.findViewById(R.id.topbarBalanceButton);
+
+        balanceButton.setOnClickListener(view1 -> {
+            CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
+        });
+
+        user.getBalance().observe(getActivity(), balance -> {
+            balanceButton.setText(String.format("%.2f", balance));
+        });
+
+        return view;
     }
 }

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topbar_state_nav_frag"
-    app:startDestination="@id/frag_guest_topbar_state">
+    app:startDestination="@id/guestTopbarState">
     <fragment
-        android:id="@+id/frag_guest_topbar_state"
+        android:id="@+id/guestTopbarState"
         android:name="com.parkingapp.hulapark.UserFragments.Guest.GuestTopbarState"
         android:label="frag_guest_topbar_state"
         tools:layout="@layout/frag_guest_topbar_state" />

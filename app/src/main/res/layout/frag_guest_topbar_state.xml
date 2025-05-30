@@ -9,44 +9,23 @@
     android:gravity="center_vertical"
     tools:context=".UserFragments.Guest.GuestTopbarState">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@drawable/topbar_button_ripple"
-        android:clipToOutline="true"
-        android:drawableTop="@drawable/ic_logout"
-        android:drawableTint="@color/beige_dark"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="15dp"
-        android:text="Αποσύνδεση"
-        android:textAllCaps="false"
-        android:textColor="@color/beige_dark"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_hulapark_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@drawable/topbar_button_ripple"
-        android:clipToOutline="true"
-        android:drawableTop="@drawable/ic_dollar"
-        android:drawableTint="@color/beige_dark"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="15dp"
-        android:text="0.00"
-        android:textAllCaps="false"
-        android:textColor="@color/beige_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:src="@drawable/hulaparklogotext"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

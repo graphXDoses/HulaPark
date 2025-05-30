@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.DataModels.User;
+package com.parkingapp.hulapark.Users.DataModels.User;
 
 public class ActionLogsDataModel
 {

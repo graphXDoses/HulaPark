@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.DataModels.Cards;
+package com.parkingapp.hulapark.Users.DataModels.Cards;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -8,11 +8,8 @@ import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalUnit;
 import java.util.HashMap;
 import java.util.Map;
-
-import kotlin.time.DurationUnit;
 
 public class ParkingCardDataModel
 {

@@ -8,8 +8,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parkingapp.hulapark.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.DataModels.User.NewParkingLogDataModel;
+import com.parkingapp.hulapark.Users.DataModels.User.ParkingLogDataModel;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
@@ -71,6 +75,14 @@ public class FinishParkingScreen extends AppCompatActivity
                      .setLocationID(parkingSpot)
                      .setPrice("0.85");
             CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
+
+            NewParkingLogDataModel dataModel = new NewParkingLogDataModel();
+            dataModel.FinishTime = finishTime;
+            dataModel.Price = 0.85;
+            dataModel.SectorID = parkingSpot;
+            dataModel.VehicleID = plateNumber;
+
+            DBManager.sendNewParking(startTime, dataModel);
 
             startActivity(intent);
             FinishParkingScreen.this.finish();

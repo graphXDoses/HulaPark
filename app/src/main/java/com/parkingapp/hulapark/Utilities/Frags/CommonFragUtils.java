@@ -130,14 +130,4 @@ public class CommonFragUtils
     {
         return mapFocusedPoint;
     }
-
-    public LifecycleOwner getHomeActivityLifecycleOwner()
-    {
-        return homeActivityLifecycleOwner;
-    }
-
-    public void setHomeActivityLifecycleOwner(LifecycleOwner owner)
-    {
-        homeActivityLifecycleOwner = owner;
-    }
 }

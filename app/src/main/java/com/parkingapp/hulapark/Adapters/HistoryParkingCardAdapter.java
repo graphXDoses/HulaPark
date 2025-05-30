@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parkingapp.hulapark.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 
 import java.util.ArrayList;
