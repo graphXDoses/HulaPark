@@ -19,6 +19,7 @@
     <color name="orange">#ff5607</color>
     <color name="orange_dark">#E64D07</color>
     <color name="yellow">#fdbe00</color>
+    <color name="yelloworange">#FF6F00</color>
     <color name="mild_purple">#a87bd9</color>
     <color name="greenish">#9CCC65</color>
 </resources>
