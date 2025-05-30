@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import com.google.firebase.FirebaseApp;
+import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.databinding.ActivitySplashScreenBinding;
 
@@ -34,6 +35,7 @@ public class SplashScreen extends AppCompatActivity {
                 super.onAnimationEnd(animation);
                 new Handler().post(() -> {
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
                     startActivity(intent);
                     finish();
                 });

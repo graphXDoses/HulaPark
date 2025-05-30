@@ -157,7 +157,7 @@ public class HulaMapMarker extends Marker
             ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
             ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
 
-//            ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
+//            ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(__ -> {
 //                bottomSheetDialog.dismiss();
 //                mapView.getController().animateTo(
 //                        point,

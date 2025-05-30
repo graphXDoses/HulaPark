@@ -3,20 +3,27 @@ package com.parkingapp.hulapark.FragmentContainers;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.Guest;
+import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Frags.IActiveUserFragSetter;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WalletFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WalletFrag extends Fragment {
+public class WalletFrag extends Fragment implements IActiveUserFragSetter
+{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,8 +71,30 @@ public class WalletFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_wallet, container, false);
 
-        CommonFragUtils.FragmentSwapper.setActiveUserFrag(view, R.id.walletFragContainer);
+        CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType -> {
+            setActiveUserFrag(userType, view, R.id.walletFragContainer);
+        });
 
         return view;
+    }
+
+    @Override
+    public void setActiveUserFrag(UserType userType, View thisView, int fragContainer)
+    {
+        NavController navController = Navigation.findNavController(thisView.findViewById(fragContainer));
+
+        switch (CommonFragUtils.FragmentSwapper.getUserType().getValue())
+        {
+            case GUEST:
+            {
+                navController.navigate(Guest.getFragmentContainerActiveFrag(fragContainer));
+                break;
+            }
+            case USER:
+            {
+                navController.navigate(User.getFragmentContainerActiveFrag(fragContainer));
+                break;
+            }
+        }
     }
 }

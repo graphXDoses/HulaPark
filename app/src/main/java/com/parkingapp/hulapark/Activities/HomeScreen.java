@@ -13,19 +13,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.FirebaseApp;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
+import com.parkingapp.hulapark.Utilities.Frags.IActiveUserFragSetter;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
 import java.util.HashMap;
 
-public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener
+public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IActiveUserFragSetter
 {
     private ActivityHomeScreenBinding binding;
     private NavController navController;
@@ -36,6 +38,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private Toast backToast;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable resetBackPressedFlag;
+    private NavController topbarNavController;
 //    private SharedPreferences sharedPreferences;
 
 
@@ -53,7 +56,12 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         // Navbar
         navController = Navigation.findNavController(findViewById(R.id.activeFrag));
 
-        NavController topbarNavController = Navigation.findNavController(findViewById(R.id.topbar_state_nav_frag));
+        topbarNavController = Navigation.findNavController(findViewById(R.id.topbarFragContainer));
+
+        CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType -> {
+            setActiveUserFrag(userType, binding.getRoot(), R.id.topbarFragContainer);
+        });
+
         CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
         CommonFragUtils.FragmentSwapper.setBottomNavBar(binding.BottomNavBar);
         binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
@@ -160,5 +168,23 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
                 .setExitAnim(exit_anim);
 
         return navBuilder.build();
+    }
+
+    @Override
+    public void setActiveUserFrag(UserType userType, View thisView, int fragContainer)
+    {
+        switch (userType)
+        {
+            case GUEST:
+            {
+                topbarNavController.navigate(R.id.guestTopbarState);
+                break;
+            }
+            case USER:
+            {
+                topbarNavController.navigate(R.id.userTopbarState);
+                break;
+            }
+        }
     }
 }

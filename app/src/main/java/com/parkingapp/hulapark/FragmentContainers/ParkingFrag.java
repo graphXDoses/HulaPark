@@ -5,21 +5,30 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.AuthResult;
+import com.parkingapp.hulapark.Activities.AuthScreen;
 import com.parkingapp.hulapark.Activities.InitParkingScreen;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.Guest;
+import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Frags.IActiveUserFragSetter;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ParkingFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ParkingFrag extends Fragment {
+public class ParkingFrag extends Fragment implements IActiveUserFragSetter
+{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,13 +76,51 @@ public class ParkingFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_parking, container, false);
 
-        CommonFragUtils.FragmentSwapper.setActiveUserFrag(view, R.id.parkingFragContainer);
+        CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType -> {
+            setActiveUserFrag(userType, view, R.id.parkingFragContainer);
+        });
 
-        ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), InitParkingScreen.class);
-            startActivity(intent);
+        ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(__ -> {
+            CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType -> {
+                switch (userType)
+                {
+                    case GUEST:
+                    {
+                        Intent intent = new Intent(getActivity(), AuthScreen.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case USER:
+                    {
+                        Intent intent = new Intent(getActivity(), InitParkingScreen.class);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+
+            });
         });
 
         return view;
+    }
+
+    @Override
+    public void setActiveUserFrag(UserType userType, View thisView, int fragContainer)
+    {
+        NavController navController = Navigation.findNavController(thisView.findViewById(fragContainer));
+
+        switch (userType)
+        {
+            case GUEST:
+            {
+                navController.navigate(Guest.getFragmentContainerActiveFrag(fragContainer));
+                break;
+            }
+            case USER:
+            {
+                navController.navigate(User.getFragmentContainerActiveFrag(fragContainer));
+                break;
+            }
+        }
     }
 }

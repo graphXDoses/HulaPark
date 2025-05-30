@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -48,14 +49,19 @@ public class CommonFragUtils
     {
         userClassType = classType;
         if (userClassType.getClass().getSimpleName().equals("User"))
-            user_type = UserType.USER;
+            user_type.setValue(UserType.USER);
         else
-            user_type = UserType.GUEST;
+            user_type.setValue(UserType.GUEST);
     }
 
     public AUser getUser() { return userClassType; }
 
-    private UserType user_type = UserType.GUEST;
+    public MutableLiveData<UserType> getUserType()
+    {
+        return user_type;
+    }
+
+    private MutableLiveData<UserType> user_type = new MutableLiveData<>();
     public ActivityResultLauncher<Intent> authActivityLauncher;
 
     private final OngoingParkingCardAdapter ongoingParkingCardAdapter = new OngoingParkingCardAdapter();
@@ -96,24 +102,6 @@ public class CommonFragUtils
 
         geoJsonDataModel = new GeoJsonDataModel();
         geoJsonDataModel.data = collection;
-    }
-
-    public void setActiveUserFrag(View view, int fragContainer)
-    {
-        NavController navController = Navigation.findNavController(view.findViewById(fragContainer));
-        switch (user_type)
-        {
-            case GUEST:
-            {
-                navController.navigate(Guest.getFragmentContainerActiveFrag(fragContainer));
-                break;
-            }
-            case USER:
-            {
-                navController.navigate(User.getFragmentContainerActiveFrag(fragContainer));
-                break;
-            }
-        }
     }
 
     public void setBottomNavBar(BottomNavMenuHolderView bottomNavBar)

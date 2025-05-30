@@ -130,7 +130,7 @@ public class MapFrag extends Fragment {
             {
                 if(layoutResID == R.layout.inc_display_spot_details_select)
                 {
-                    ((MaterialButton)dynamicView.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(view1 -> {
+                    ((MaterialButton)dynamicView.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(__ -> {
                         bottomSheetDialog.dismiss();
                     });
                 }

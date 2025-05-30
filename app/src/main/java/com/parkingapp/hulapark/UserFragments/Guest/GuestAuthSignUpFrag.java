@@ -79,7 +79,7 @@ public class GuestAuthSignUpFrag extends Fragment
 
         connectBtn.setText(R.string.singUp);
 
-        connectBtn.setOnClickListener(view1 -> {
+        connectBtn.setOnClickListener(__ -> {
             Activity activity = getActivity();
 
             Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();

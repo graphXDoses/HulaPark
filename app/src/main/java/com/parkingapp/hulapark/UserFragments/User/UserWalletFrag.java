@@ -72,14 +72,10 @@ public class UserWalletFrag extends Fragment {
                     .setText(String.format("%.2f", balance));
         });
 
-
-//        UserDataModel model = ((User)CommonFragUtils.FragmentSwapper.getUser()).getUserDataModel();
-//
-//        Collection<ActionLogsDataModel> values = model.ActionLogs.values();
-//
-//        List<ParkingLogDataModel> parking = values.stream().filter(act -> act.Type.equals("PARKING"))
-//                                            .map(act -> (ParkingLogDataModel)act )
-//                                            .collect(Collectors.toList());
+        ((AppCompatButton)view.findViewById(R.id.walletAddByTenBtn)).setOnClickListener(__ -> {
+            Double currentBalance = user.getBalance().getValue();
+            user.getBalance().setValue(currentBalance + 10.0f);
+        });
 
         return view;
     }

@@ -2,10 +2,8 @@ package com.parkingapp.hulapark.UserFragments.Guest;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Utilities.DBManager;
+import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +87,7 @@ public class GuestAuthSignInFrag extends Fragment
 
         connectBtn.setText(R.string.singIn);
 
-        connectBtn.setOnClickListener(view1 ->
+        connectBtn.setOnClickListener(__ ->
         {
             // Show authenticating...
             authProgressBar.setVisibility(View.VISIBLE);

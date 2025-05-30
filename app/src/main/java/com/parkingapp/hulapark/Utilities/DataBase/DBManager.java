@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Utilities;
+package com.parkingapp.hulapark.Utilities.DataBase;
 
 import android.util.Log;
 
@@ -8,8 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.parkingapp.hulapark.Users.DataModels.User.NewParkingLogDataModel;
-import com.parkingapp.hulapark.Users.DataModels.User.ParkingLogDataModel;
-import com.parkingapp.hulapark.Users.DataModels.User.UserDataModel;
+import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
@@ -64,6 +63,12 @@ public class DBManager
                 .addOnFailureListener(e -> {
                     Log.e("Firebase", "Failed to add action log", e);
                 });
+    }
+
+    public static void logout()
+    {
+        mAuth.signOut();
+        CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
     }
 }
 

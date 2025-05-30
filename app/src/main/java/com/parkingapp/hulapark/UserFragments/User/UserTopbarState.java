@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
@@ -74,8 +75,13 @@ public class UserTopbarState extends Fragment
 
         User user = (User) CommonFragUtils.FragmentSwapper.getUser();
         AppCompatButton balanceButton = (AppCompatButton) view.findViewById(R.id.topbarBalanceButton);
+        AppCompatButton logoutButton = (AppCompatButton) view.findViewById(R.id.topbarLogoutButton);
 
-        balanceButton.setOnClickListener(view1 -> {
+        logoutButton.setOnClickListener(__ -> {
+            DBManager.logout();
+        });
+
+        balanceButton.setOnClickListener(__ -> {
             CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
         });
 
