@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         holder.location_id.setText(thisCard.getSectorID());
         holder.price.setText(thisCard.getPrice());
         holder.date.setText(thisCard.getDate());
-        holder.timespan.setText(thisCard.getTimespan());
+        holder.timespan.setText(thisCard.getStartHourString() + " - " + thisCard.getFinishHourString());
     }
 
     @Override

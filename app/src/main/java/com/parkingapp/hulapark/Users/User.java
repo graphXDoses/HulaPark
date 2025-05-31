@@ -3,18 +3,17 @@ package com.parkingapp.hulapark.Users;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
-import com.parkingapp.hulapark.Users.DataModels.User.BalanceIncLogDataModel;
-import com.parkingapp.hulapark.Users.DataModels.User.ParkingLogDataModel;
-import com.parkingapp.hulapark.Users.DataModels.User.UserDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User.BalanceIncLogDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User.ParkingLogDataModel;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Users.InteractsWithDB;
 import com.parkingapp.hulapark.Utilities.Users.UserFragDisplayConfigurator;
 
 import java.time.Instant;
@@ -23,25 +22,35 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class User extends AUser
+public class User
 {
-    private String userUID;
-    private DatabaseReference userDataModelReference;
+    private DatabaseReference catholicDataSnapshotReference;
+    private DatabaseReference userDataSnapshotReference;
     // ActionLog
     private ArrayList<ParkingLogDataModel> parkingLogDataModels;
     private ArrayList<BalanceIncLogDataModel> balanceIncLogDataModels;
     // Wallet
     private MutableLiveData<Double> Balance = new MutableLiveData<>();
 
+    private MutableLiveData<Double> bphPrice = new MutableLiveData<>();
 
-    public User(String uid, DataSnapshot userDataSnapshot)
+
+    public User(DataSnapshot userDataSnapshot, DataSnapshot catholicDataSnapshot)
     {
-        this.userUID = uid;
-        this.userDataModelReference = userDataSnapshot.getRef();
-        userDataModelReference.addListenerForSingleValueEvent(new UserDataModelChangeListener());
+        this.userDataSnapshotReference = userDataSnapshot.getRef();
+        this.catholicDataSnapshotReference = catholicDataSnapshot.getRef();
+
+        userDataSnapshotReference.addListenerForSingleValueEvent(new UserDataSnapshotChangeListener());
+        catholicDataSnapshotReference.addListenerForSingleValueEvent(new CatholicDataSnapshotChangeListener());
     }
 
-    private void refreshData(DataSnapshot userDataSnapshot)
+    private void refreshCatholicData(DataSnapshot catholicDataSnapshot)
+    {
+        DataSnapshot bphPriceSnapshot = catholicDataSnapshot.child("BasePerHourPrice");
+        bphPrice.setValue(bphPriceSnapshot.getValue(Double.class));
+    }
+
+    private void refreshUserData(DataSnapshot userDataSnapshot)
     {
         DataSnapshot logsSnapshot = userDataSnapshot.child("ActionLogs");
         parkingLogDataModels = new ArrayList<>();
@@ -109,15 +118,34 @@ public class User extends AUser
     {
         return Balance;
     }
+    public MutableLiveData<Double> getBPHPrice()
+    {
+        return bphPrice;
+    }
 
-    class UserDataModelChangeListener implements ValueEventListener
+    class UserDataSnapshotChangeListener implements ValueEventListener
     {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot)
         {
-            // Needs work!
             Log.i("DATA_REFRESH", "Refreshing user data.");
-            refreshData(snapshot);
+            refreshUserData(snapshot);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error)
+        {
+            Log.e("Firebase", "Error: " + error.getMessage());
+        }
+    }
+
+    class CatholicDataSnapshotChangeListener implements ValueEventListener
+    {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot)
+        {
+            Log.i("DATA_REFRESH", "Refreshing catholic data.");
+            refreshCatholicData(snapshot);
         }
 
         @Override

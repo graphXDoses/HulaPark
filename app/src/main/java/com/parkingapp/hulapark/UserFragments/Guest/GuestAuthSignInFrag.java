@@ -14,8 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.parkingapp.hulapark.Activities.AdminScreen;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +81,8 @@ public class GuestAuthSignInFrag extends Fragment
         View view = inflater.inflate(R.layout.frag_guest_auth_signin, container, false);
 
         MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
+        TextInputEditText email = (TextInputEditText) view.findViewById(R.id.auth_email_field);
+        TextInputEditText password = (TextInputEditText) view.findViewById(R.id.auth_password_field);
 
         ProgressBar authProgressBar = (ProgressBar) view.findViewById(R.id.authProgressBar);
         TextView authProgrssText = (TextView) view.findViewById(R.id.authProgressText);
@@ -93,17 +99,23 @@ public class GuestAuthSignInFrag extends Fragment
             authProgressBar.setVisibility(View.VISIBLE);
             authProgrssText.setVisibility(View.VISIBLE);
 
-            DBManager.authenticateUserCredentials("example@somemail.com", "erSdsvSCD$#", e ->
+            DBManager.authenticateUserCredentials(email.getText().toString(), password.getText().toString(), e ->
             {
                 if(e == null) // No exception, all good!
                 {
-                    String uid = DBManager.getCurrentUserAuthSertificate().getUid();
-
-                    Toast.makeText(getContext(), uid + " signed in!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Welcome back!", Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra("shouldNavigate", true);
 
                     Activity activity = getActivity();
+                    Boolean isAdmin = CommonFragUtils.FragmentSwapper.getUserType().getValue() == UserType.ADMIN;
+
+                    if(isAdmin)
+                    {
+                        resultIntent.putExtra("shouldNavigate", false);
+                        startActivity(new Intent(getActivity(), AdminScreen.class));
+                    } else
+                        resultIntent.putExtra("shouldNavigate", true);
+
                     activity.setResult(Activity.RESULT_OK, resultIntent);
                     activity.finish();
                 } else {

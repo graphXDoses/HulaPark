@@ -92,9 +92,9 @@ public class ParkingFrag extends Fragment implements IActiveUserFragSetter
                     }
                     case USER:
                     {
-                        CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
-//                        Intent intent = new Intent(getActivity(), InitParkingScreen.class);
-//                        startActivity(intent);
+//                        CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
+                        Intent intent = new Intent(getActivity(), InitParkingScreen.class);
+                        startActivity(intent);
                         break;
                     }
                 }

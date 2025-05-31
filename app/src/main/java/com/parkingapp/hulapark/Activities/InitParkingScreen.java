@@ -93,7 +93,8 @@ public class InitParkingScreen extends AppCompatActivity
                 {
                     plateNumber.setError("Εσφαλμένη μορφή πινακίδας. Πρέπει να είναι τουλάχιστον 5 κεφαλαία γράμματα ή αριθμοί (πχ. NAB1234)");
                 }
-                if(parkingSpot.getText().toString().isEmpty()|| parkingDuration.getText().toString().isEmpty())
+
+            if(parkingSpot.getText().toString().isEmpty()|| parkingDuration.getText().toString().isEmpty())
                     Toast.makeText(this, "Κενό πεδίο. Απαιτείται συμπλήρωση.", Toast.LENGTH_SHORT).show();
 
             else {

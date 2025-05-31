@@ -17,7 +17,6 @@
     >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/auth_email_field"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,13 +25,13 @@
             android:hint="@string/auth_email">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/auth_email_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/auth_password_field"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,6 +42,7 @@
             android:hint="@string/auth_password" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/auth_password_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"

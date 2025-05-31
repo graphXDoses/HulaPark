@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Users.DataModels.User;
+package com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User;
 
 public class ParkingLogDataModel extends ActionLogsDataModel
 {

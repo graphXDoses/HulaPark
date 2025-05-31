@@ -1,4 +1,4 @@
-package com.parkingapp.hulapark.Users.DataModels.Cards;
+package com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class ParkingCardDataModel
 {
+
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -33,7 +34,6 @@ public class ParkingCardDataModel
         this.plate_number = plate_number;
         return this;
     }
-
     public String getSectorID()
     {
         return location_id;
@@ -49,18 +49,6 @@ public class ParkingCardDataModel
     {
         Duration diff = Duration.between(startTime, finishTime);
         return String.format("%d", diff.toMinutes());
-    }
-
-    private String formatDuration(Duration duration)
-    {
-        long seconds = duration.getSeconds();
-        long absSeconds = Math.abs(seconds);
-        String positive = String.format(
-                "%d:%02d:%02d",
-                absSeconds / 3600,
-                (absSeconds % 3600) / 60,
-                absSeconds % 60);
-        return seconds < 0 ? "-" + positive : positive;
     }
 
     public ParkingCardDataModel setChargedHours(String charged_hours)
@@ -153,11 +141,13 @@ public class ParkingCardDataModel
         return this.startTime.format(DateTimeFormatter.ofPattern("d/M/Y"));
     }
 
-    public String getTimespan()
+    public String getStartHourString()
     {
-        String s_start = this.startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-        String s_finish = this.finishTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        return this.startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
 
-        return s_start + " - " + s_finish;
+    public String getFinishHourString()
+    {
+        return this.finishTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 }

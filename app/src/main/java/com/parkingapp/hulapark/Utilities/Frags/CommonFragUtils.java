@@ -2,20 +2,15 @@ package com.parkingapp.hulapark.Utilities.Frags;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.gson.Gson;
 import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
 import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
-import com.parkingapp.hulapark.Users.AUser;
-import com.parkingapp.hulapark.Users.Guest;
-import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Utilities.Users.UserType;
@@ -43,18 +38,20 @@ public class CommonFragUtils
     private NavController NC_BottomNavMenu;
     private GeoJsonDataModel geoJsonDataModel;
 
-    private AUser userClassType;
+    private Object userClassType;
 
-    public void changeUserTo(AUser classType)
+    public void changeUserTo(Object classType)
     {
         userClassType = classType;
         if (userClassType.getClass().getSimpleName().equals("User"))
             user_type.setValue(UserType.USER);
+        else if(userClassType.getClass().getSimpleName().equals("Admin"))
+            user_type.setValue(UserType.ADMIN);
         else
             user_type.setValue(UserType.GUEST);
     }
 
-    public AUser getUser() { return userClassType; }
+    public Object getUser() { return userClassType; }
 
     public MutableLiveData<UserType> getUserType()
     {

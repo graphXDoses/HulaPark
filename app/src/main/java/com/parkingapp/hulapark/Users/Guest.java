@@ -2,7 +2,7 @@ package com.parkingapp.hulapark.Users;
 
 import com.parkingapp.hulapark.Utilities.Users.UserFragDisplayConfigurator;
 
-public class Guest extends AUser
+public class Guest
 {
     public static void setFragmentContainerActiveFrag(int container, int frag) {
         UserFragDisplayConfigurator.setFragmentContainerActiveFrag(Guest.class, container, frag);

@@ -8,9 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
-import com.parkingapp.hulapark.Users.DataModels.User.NewParkingLogDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Outbound.User.NewParkingLogDataModel;
 import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
@@ -43,6 +44,7 @@ public class FinishParkingScreen extends AppCompatActivity
         titleTextView.setText(R.string.finishparking_activity_title);
 
         // UI elements
+        User user = (User)CommonFragUtils.FragmentSwapper.getUser();
 
         ExtrasManager.getPassedExtras(savedInstanceState, getIntent(), (e) ->
         {
@@ -54,6 +56,11 @@ public class FinishParkingScreen extends AppCompatActivity
         binding.finishPlateNumber.setText(plateNumber);
         binding.finishParkingId.setText(parkingSpot);
         binding.finishParikingDuration.setText(parkingDuration);
+
+        user.getBPHPrice().observe(this, bphPrice -> {
+            Double multiplier = Double.parseDouble(parkingDuration) / 60.0f;
+            binding.finishPaymentPrice.setText(String.format("%.2f", bphPrice * multiplier));
+        });
 
         binding.commitPaymentBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, HomeScreen.class);
@@ -71,16 +78,16 @@ public class FinishParkingScreen extends AppCompatActivity
             ParkingCardDataModel cardModel = new ParkingCardDataModel(now, then);
             cardModel.setPlateNumber(plateNumber)
                      .setLocationID(parkingSpot)
-                     .setPrice("0.85");
+                     .setPrice(binding.finishPaymentPrice.getText().toString());
             CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
 
             NewParkingLogDataModel dataModel = new NewParkingLogDataModel();
             dataModel.FinishTime = finishTime;
-            dataModel.Price = 0.85;
+            dataModel.Price = Double.parseDouble(binding.finishPaymentPrice.getText().toString());
             dataModel.SectorID = parkingSpot;
             dataModel.VehicleID = plateNumber;
 
-            DBManager.sendNewParking(startTime, dataModel);
+            DBManager.setNewParking(startTime, dataModel);
 
             startActivity(intent);
             FinishParkingScreen.this.finish();

@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
@@ -79,6 +79,9 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         holder.charged_hours.setText(thisCard.getChargedHours());
         holder.price.setText(thisCard.getPrice());
 
+        holder.startHour.setText(thisCard.getStartHourString());
+        holder.finishHour.setText(thisCard.getFinishHourString());
+
         holder.itemView.setOnClickListener(view -> {
             CommonFragUtils.FragmentSwapper.setMapFocusedPoint(thisCard.getSectorID());
             CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_map);
@@ -129,6 +132,8 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         TextView location_id;
         TextView charged_hours;
         TextView price;
+        TextView startHour;
+        TextView finishHour;
 
         public ViewHolder(View view)
         {
@@ -139,7 +144,8 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
             location_id = (view.findViewById(R.id.ongoing_parkingcard_sector_id));
             charged_hours = (view.findViewById(R.id.ongoing_parkingcard_charged_hours));
             price = (view.findViewById(R.id.ongoing_parkingcard_price));
-//            view.invalidate();
+            startHour = (view.findViewById(R.id.ongoing_parkingcard_start));
+            finishHour = (view.findViewById(R.id.ongoing_parkingcard_finish));
         }
 
     }

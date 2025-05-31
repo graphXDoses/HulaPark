@@ -2,12 +2,14 @@ package com.parkingapp.hulapark.Utilities.DataBase;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.parkingapp.hulapark.Users.DataModels.User.NewParkingLogDataModel;
+import com.parkingapp.hulapark.Users.Admin;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Outbound.User.NewParkingLogDataModel;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
@@ -30,15 +32,23 @@ public class DBManager
         .continueWithTask(task ->
         {
             if (!task.isSuccessful()) { throw task.getException(); }
-            String uid = getCurrentUserAuthSertificate().getUid();
-            AuthPipelineData.dataReference = getRef("Users/" + uid);
-
-            return AuthPipelineData.dataReference.get();
-        }).addOnSuccessListener(result ->
+            AuthPipelineData.uid = getCurrentUserAuthSertificate().getUid();
+            DatabaseReference adminUser = getRef("Admins").child(AuthPipelineData.uid);
+            return adminUser.get();
+        }).continueWithTask(adminsDataSnapshot -> {
+            AuthPipelineData.isAdmin = adminsDataSnapshot.getResult().exists();
+            return getRef("Data").get();
+        }).continueWithTask(catholicDataSnapshot -> {
+            AuthPipelineData.catholicDataSnapshot = catholicDataSnapshot.getResult();
+            if(AuthPipelineData.isAdmin)
+                return Tasks.forResult(null);
+            return getRef("Users/" + AuthPipelineData.uid).get();
+        }).addOnSuccessListener(userDataSnapshot ->
         {
-            AuthPipelineData.dataSnapshot = result;
-            String uid = getCurrentUserAuthSertificate().getUid();
-            CommonFragUtils.FragmentSwapper.changeUserTo(new User(uid, AuthPipelineData.dataSnapshot));
+            if(AuthPipelineData.isAdmin)
+                CommonFragUtils.FragmentSwapper.changeUserTo(new Admin(AuthPipelineData.catholicDataSnapshot));
+            else
+                CommonFragUtils.FragmentSwapper.changeUserTo(new User(userDataSnapshot, AuthPipelineData.catholicDataSnapshot));
             onCompleteFunc.accept(null);
         }).addOnFailureListener(e -> { onCompleteFunc.accept(e); });
     }
@@ -48,7 +58,7 @@ public class DBManager
         return mAuth.getCurrentUser();
     }
 
-    public static void sendNewParking(long startTime, NewParkingLogDataModel dataModel)
+    public static void setNewParking(long startTime, NewParkingLogDataModel dataModel)
     {
         String uid = getCurrentUserAuthSertificate().getUid();
         DatabaseReference actionLogRef = db
@@ -74,6 +84,7 @@ public class DBManager
 
 class AuthPipelineData
 {
-    protected static DatabaseReference dataReference;
-    protected static DataSnapshot dataSnapshot;
+    protected static String uid;
+    protected static Boolean isAdmin;
+    protected static DataSnapshot catholicDataSnapshot;
 }

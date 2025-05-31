@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-import com.parkingapp.hulapark.Users.DataModels.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
