@@ -9,12 +9,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.parkingapp.hulapark.Activities.AdminScreen;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,17 +82,42 @@ public class GuestAuthSignUpFrag extends Fragment
         View view = inflater.inflate(R.layout.frag_guest_auth_signup, container, false);
 
         MaterialButton connectBtn = (MaterialButton)view.findViewById(R.id.auth_connect_button);
+        TextInputEditText email = (TextInputEditText) view.findViewById(R.id.auth_email_field);
+        TextInputEditText password = (TextInputEditText) view.findViewById(R.id.auth_password_field);
+
+        ProgressBar authProgressBar = (ProgressBar) view.findViewById(R.id.authProgressBar);
+        TextView authProgrssText = (TextView) view.findViewById(R.id.authProgressText);
+
+        // Hide them until auth.
+        authProgressBar.setVisibility(View.GONE);
+        authProgrssText.setVisibility(View.GONE);
 
         connectBtn.setText(R.string.singUp);
 
-        connectBtn.setOnClickListener(__ -> {
-            Activity activity = getActivity();
+        connectBtn.setOnClickListener(__ ->
+        {
 
-            Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("shouldNavigate", true);
-            activity.setResult(Activity.RESULT_OK, resultIntent);
-            activity.finish();
+            // Show authenticating...
+            authProgressBar.setVisibility(View.VISIBLE);
+            authProgrssText.setVisibility(View.VISIBLE);
+
+            DBManager.createNewUserFromCredentials("xridoses@gmail.com", "rgeSW445F$vsa5", e ->
+            {
+                if(e == null) // No exception, all good!
+                {
+                    Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    Activity activity = getActivity();
+
+                    resultIntent.putExtra("shouldNavigate", true);
+                    activity.setResult(Activity.RESULT_OK, resultIntent);
+                    activity.finish();
+                } else {
+                    Toast.makeText(getContext(), e + "", Toast.LENGTH_SHORT).show();
+                }
+                authProgressBar.setVisibility(View.GONE);
+                authProgrssText.setVisibility(View.GONE);
+            });
         });
 
         return view;

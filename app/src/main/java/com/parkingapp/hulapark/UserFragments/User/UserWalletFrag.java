@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 /**
@@ -73,8 +74,9 @@ public class UserWalletFrag extends Fragment {
         });
 
         ((AppCompatButton)view.findViewById(R.id.walletAddByTenBtn)).setOnClickListener(__ -> {
-            Double currentBalance = user.getBalance().getValue();
-            user.getBalance().setValue(currentBalance + 10.0f);
+            Double balance = user.getBalance().getValue() + 10.0f;
+            user.getBalance().setValue(balance);
+            DBManager.updateBalance(user, balance);
         });
 
         return view;

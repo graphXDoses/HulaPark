@@ -87,7 +87,7 @@ public class FinishParkingScreen extends AppCompatActivity
             dataModel.SectorID = parkingSpot;
             dataModel.VehicleID = plateNumber;
 
-            DBManager.setNewParking(startTime, dataModel);
+            DBManager.setNewParking(user, startTime, dataModel);
 
             startActivity(intent);
             FinishParkingScreen.this.finish();

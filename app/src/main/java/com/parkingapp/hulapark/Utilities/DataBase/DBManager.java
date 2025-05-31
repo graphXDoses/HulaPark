@@ -26,31 +26,73 @@ public class DBManager
         return db.getReference(refString);
     }
 
+    private static final AuthPipelineData pipeline = new AuthPipelineData();
+
+    public static void createNewUserFromCredentials(String email, String password, Consumer<Exception> onCompleteFunc)
+    {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .continueWithTask(task ->
+                {
+                    if (!task.isSuccessful())
+                    {
+                        throw task.getException();
+                    }
+                    pipeline.uid = getCurrentUserAuthSertificate().getUid();
+                    return getRef("Users/" + pipeline.uid).get();
+                }).continueWithTask(userDataSnapshot ->
+                {
+                    pipeline.userDataSnapshot = userDataSnapshot.getResult();
+                    return getRef("Users/" + pipeline.uid).child("Wallet").child("Balance").setValue(0);
+                }).continueWithTask(task ->
+                {
+                    if (!task.isSuccessful())
+                    {
+                        throw task.getException();
+                    }
+                    return getRef("Data").get();
+                }).addOnSuccessListener(catholicDataSnapshot ->
+                {
+                    CommonFragUtils.FragmentSwapper.changeUserTo(new User(pipeline.userDataSnapshot, catholicDataSnapshot));
+                    onCompleteFunc.accept(null);
+                }).addOnFailureListener(e ->
+                {
+                    onCompleteFunc.accept(e);
+                });
+    }
+
     public static void authenticateUserCredentials(String email, String password, Consumer<Exception> onCompleteFunc)
     {
         mAuth.signInWithEmailAndPassword(email, password)
-        .continueWithTask(task ->
-        {
-            if (!task.isSuccessful()) { throw task.getException(); }
-            AuthPipelineData.uid = getCurrentUserAuthSertificate().getUid();
-            DatabaseReference adminUser = getRef("Admins").child(AuthPipelineData.uid);
-            return adminUser.get();
-        }).continueWithTask(adminsDataSnapshot -> {
-            AuthPipelineData.isAdmin = adminsDataSnapshot.getResult().exists();
-            return getRef("Data").get();
-        }).continueWithTask(catholicDataSnapshot -> {
-            AuthPipelineData.catholicDataSnapshot = catholicDataSnapshot.getResult();
-            if(AuthPipelineData.isAdmin)
-                return Tasks.forResult(null);
-            return getRef("Users/" + AuthPipelineData.uid).get();
-        }).addOnSuccessListener(userDataSnapshot ->
-        {
-            if(AuthPipelineData.isAdmin)
-                CommonFragUtils.FragmentSwapper.changeUserTo(new Admin(AuthPipelineData.catholicDataSnapshot));
-            else
-                CommonFragUtils.FragmentSwapper.changeUserTo(new User(userDataSnapshot, AuthPipelineData.catholicDataSnapshot));
-            onCompleteFunc.accept(null);
-        }).addOnFailureListener(e -> { onCompleteFunc.accept(e); });
+                .continueWithTask(task ->
+                {
+                    if (!task.isSuccessful())
+                    {
+                        throw task.getException();
+                    }
+                    pipeline.uid = getCurrentUserAuthSertificate().getUid();
+                    DatabaseReference adminUser = getRef("Admins").child(pipeline.uid);
+                    return adminUser.get();
+                }).continueWithTask(adminsDataSnapshot ->
+                {
+                    pipeline.isAdmin = adminsDataSnapshot.getResult().exists();
+                    return getRef("Data").get();
+                }).continueWithTask(catholicDataSnapshot ->
+                {
+                    pipeline.catholicDataSnapshot = catholicDataSnapshot.getResult();
+                    if (pipeline.isAdmin)
+                        return Tasks.forResult(null);
+                    return getRef("Users/" + pipeline.uid).get();
+                }).addOnSuccessListener(userDataSnapshot ->
+                {
+                    if (pipeline.isAdmin)
+                        CommonFragUtils.FragmentSwapper.changeUserTo(new Admin(pipeline.catholicDataSnapshot));
+                    else
+                        CommonFragUtils.FragmentSwapper.changeUserTo(new User(userDataSnapshot, pipeline.catholicDataSnapshot));
+                    onCompleteFunc.accept(null);
+                }).addOnFailureListener(e ->
+                {
+                    onCompleteFunc.accept(e);
+                });
     }
 
     public static FirebaseUser getCurrentUserAuthSertificate()
@@ -58,21 +100,27 @@ public class DBManager
         return mAuth.getCurrentUser();
     }
 
-    public static void setNewParking(long startTime, NewParkingLogDataModel dataModel)
+    public static void setNewParking(User user, long startTime, NewParkingLogDataModel dataModel)
     {
         String uid = getCurrentUserAuthSertificate().getUid();
-        DatabaseReference actionLogRef = db
-                .getReference("Users")
-                .child(uid)
+        DatabaseReference actionLogRef = user.getRef()
                 .child("ActionLogs")
                 .child(startTime + "");
 
-        actionLogRef.setValue(dataModel).addOnSuccessListener(aVoid -> {
+        actionLogRef.setValue(dataModel).addOnSuccessListener(aVoid ->
+                {
                     Log.d("Firebase", "Action log added successfully");
                 })
-                .addOnFailureListener(e -> {
+                .addOnFailureListener(e ->
+                {
                     Log.e("Firebase", "Failed to add action log", e);
                 });
+    }
+
+    public static void updateBalance(User user, Double balance)
+    {
+        DatabaseReference balanceRef = user.getRef().child("Wallet").child("Balance");
+        balanceRef.setValue(balance);
     }
 
     public static void logout()
@@ -80,11 +128,12 @@ public class DBManager
         mAuth.signOut();
         CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
     }
-}
 
-class AuthPipelineData
-{
-    protected static String uid;
-    protected static Boolean isAdmin;
-    protected static DataSnapshot catholicDataSnapshot;
+    private static class AuthPipelineData
+    {
+        public String uid;
+        public Boolean isAdmin;
+        public DataSnapshot catholicDataSnapshot;
+        public DataSnapshot userDataSnapshot;
+    }
 }

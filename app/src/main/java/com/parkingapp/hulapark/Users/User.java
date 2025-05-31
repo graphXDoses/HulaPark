@@ -44,6 +44,11 @@ public class User
         catholicDataSnapshotReference.addListenerForSingleValueEvent(new CatholicDataSnapshotChangeListener());
     }
 
+    public DatabaseReference getRef()
+    {
+        return userDataSnapshotReference;
+    }
+
     private void refreshCatholicData(DataSnapshot catholicDataSnapshot)
     {
         DataSnapshot bphPriceSnapshot = catholicDataSnapshot.child("BasePerHourPrice");
@@ -155,4 +160,3 @@ public class User
         }
     }
 }
-

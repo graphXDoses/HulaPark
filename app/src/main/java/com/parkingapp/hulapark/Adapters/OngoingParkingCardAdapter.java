@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         holder.startHour.setText(thisCard.getStartHourString());
         holder.finishHour.setText(thisCard.getFinishHourString());
 
-        holder.itemView.setOnClickListener(view -> {
+        holder.infoPanel.setOnClickListener(view -> {
             CommonFragUtils.FragmentSwapper.setMapFocusedPoint(thisCard.getSectorID());
             CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_map);
         });
@@ -134,6 +135,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         TextView price;
         TextView startHour;
         TextView finishHour;
+        LinearLayout infoPanel;
 
         public ViewHolder(View view)
         {
@@ -146,6 +148,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
             price = (view.findViewById(R.id.ongoing_parkingcard_price));
             startHour = (view.findViewById(R.id.ongoing_parkingcard_start));
             finishHour = (view.findViewById(R.id.ongoing_parkingcard_finish));
+            infoPanel = (view.findViewById(R.id.ongoing_parkingcard_info_panel));
         }
 
     }
