@@ -4,19 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ActionCardDataModel;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardViewHolder;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardViewHolder;
 
 import java.util.ArrayList;
 
-public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParkingCardAdapter.ViewHolder> {
-    private MutableLiveData<ArrayList<ParkingCardDataModel>> items = new MutableLiveData<>();
+public class HistoryParkingCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private MutableLiveData<ArrayList<ActionCardDataModel>> items = new MutableLiveData<>();
     private Context context;
 
     public HistoryParkingCardAdapter()
@@ -24,18 +29,18 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         this.items.setValue(new ArrayList<>());
     }
 
-    public HistoryParkingCardAdapter(ArrayList<ParkingCardDataModel> items)
+    public HistoryParkingCardAdapter(ArrayList<ActionCardDataModel> items)
     {
         this.items.setValue(items);
     }
 
-    public void setCards(ArrayList<ParkingCardDataModel> cardsArray)
+    public void setCards(ArrayList<? extends ActionCardDataModel> cardsArray)
     {
-        this.items.setValue(cardsArray);
+        this.items.setValue((ArrayList<ActionCardDataModel>)cardsArray);
         notifyDataSetChanged();
     }
 
-    public void pushCard(ParkingCardDataModel cardModel)
+    public void pushCard(ActionCardDataModel cardModel)
     {
         if(!items.getValue().contains(cardModel))
         {
@@ -44,7 +49,7 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         }
     }
 
-    public void popCard(ParkingCardDataModel cardModel)
+    public void popCard(ActionCardDataModel cardModel)
     {
         if (items.getValue().contains(cardModel))
         {
@@ -54,50 +59,43 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<HistoryParki
         }
     }
 
+    @Override
+    public int getItemViewType(int position)
+    {
+        return items.getValue().get(position).getType();
+    }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_parking_card_history, parent, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_card_history, parent, false);
 
+        FrameLayout dynamicLayout = view.findViewById(R.id.card_history_dynamic_layout);
+
+        if (viewType == 0)
+        {
+                LayoutInflater.from(context).inflate(R.layout.inc_card_history_parking, dynamicLayout, true);
+                return new ParkingCardViewHolder(view);
+        }
+        LayoutInflater.from(context).inflate(R.layout.inc_card_history_balanceinc, dynamicLayout, true);
+        return new BalanceIncCardViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryParkingCardAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
     {
-        ParkingCardDataModel thisCard = items.getValue().get(position);
+        ActionCardDataModel thisCard = items.getValue().get(position);
 
-        holder.plate_number.setText(thisCard.getPlateNumber());
-        holder.location_id.setText(thisCard.getSectorID());
-        holder.price.setText(thisCard.getPrice());
-        holder.date.setText(thisCard.getDate());
-        holder.timespan.setText(thisCard.getStartHourString() + " - " + thisCard.getFinishHourString());
+        if (holder instanceof ParkingCardViewHolder && thisCard instanceof ParkingCardDataModel)
+            ((ParkingCardViewHolder) holder).bind((ParkingCardDataModel) thisCard);
+        else if (holder instanceof BalanceIncCardViewHolder && thisCard instanceof BalanceIncCardDataModel)
+            ((BalanceIncCardViewHolder) holder).bind((BalanceIncCardDataModel) thisCard);
     }
 
     @Override
     public int getItemCount()
     {
         return items.getValue().size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView plate_number;
-        TextView location_id;
-        TextView price;
-        TextView date;
-        TextView timespan;
-
-        public ViewHolder(View view)
-        {
-            super(view);
-            plate_number = view.findViewById(R.id.history_parkingcard_plate_number);
-            location_id = view.findViewById(R.id.history_parkingcard_sector_id);
-            price = view.findViewById(R.id.history_parkingcard_price);
-            date = view.findViewById(R.id.history_parkingcard_date);
-            timespan = view.findViewById(R.id.history_parkingcard_timespan);
-        }
-
     }
 }

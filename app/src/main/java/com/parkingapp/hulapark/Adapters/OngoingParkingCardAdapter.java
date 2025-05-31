@@ -64,7 +64,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_parking_card_ongoing, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rcvi_card_ongoing_parking, parent, false);
         return new ViewHolder(view);
 
     }
@@ -78,7 +78,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         holder.location_id.setText(thisCard.getSectorID());
 
         holder.charged_hours.setText(thisCard.getChargedHours());
-        holder.price.setText(thisCard.getPrice());
+        holder.price.setText(thisCard.getAmount());
 
         holder.startHour.setText(thisCard.getStartHourString());
         holder.finishHour.setText(thisCard.getFinishHourString());
@@ -140,15 +140,15 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
         public ViewHolder(View view)
         {
             super(view);
-            timecounter_tv = (view.findViewById(R.id.ongoing_parkingcard_timecounter_tv));
-            progress = (view.findViewById(R.id.ongoing_parkingcard_progress));
-            plate_number = (view.findViewById(R.id.ongoing_parkingcard_plate_number));
-            location_id = (view.findViewById(R.id.ongoing_parkingcard_sector_id));
-            charged_hours = (view.findViewById(R.id.ongoing_parkingcard_charged_hours));
-            price = (view.findViewById(R.id.ongoing_parkingcard_price));
-            startHour = (view.findViewById(R.id.ongoing_parkingcard_start));
-            finishHour = (view.findViewById(R.id.ongoing_parkingcard_finish));
-            infoPanel = (view.findViewById(R.id.ongoing_parkingcard_info_panel));
+            timecounter_tv = (view.findViewById(R.id.card_ongoing_parking_timecounter_tv));
+            progress = (view.findViewById(R.id.card_ongoing_parking_progress));
+            plate_number = (view.findViewById(R.id.card_ongoing_parking_plate_number));
+            location_id = (view.findViewById(R.id.card_ongoing_parking_sector_id));
+            charged_hours = (view.findViewById(R.id.card_ongoing_parking_charged_hours));
+            price = (view.findViewById(R.id.card_ongoing_parking_price));
+            startHour = (view.findViewById(R.id.card_ongoing_parking_start));
+            finishHour = (view.findViewById(R.id.card_ongoing_parking_finish));
+            infoPanel = (view.findViewById(R.id.card_ongoing_parking_info_panel));
         }
 
     }

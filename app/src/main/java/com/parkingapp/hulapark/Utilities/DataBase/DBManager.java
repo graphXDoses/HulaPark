@@ -8,12 +8,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.Admin;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User.BalanceIncLogDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Outbound.User.NewBalanceIncLogDataModel;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Outbound.User.NewParkingLogDataModel;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.function.Consumer;
 
 public class DBManager
@@ -100,12 +107,13 @@ public class DBManager
         return mAuth.getCurrentUser();
     }
 
-    public static void setNewParking(User user, long startTime, NewParkingLogDataModel dataModel)
+    public static void setNewParking(User user, long startTime, double newBalance, NewParkingLogDataModel dataModel)
     {
         String uid = getCurrentUserAuthSertificate().getUid();
         DatabaseReference actionLogRef = user.getRef()
                 .child("ActionLogs")
                 .child(startTime + "");
+        DatabaseReference balanceRef = user.getRef().child("Wallet").child("Balance");
 
         actionLogRef.setValue(dataModel).addOnSuccessListener(aVoid ->
                 {
@@ -115,12 +123,16 @@ public class DBManager
                 {
                     Log.e("Firebase", "Failed to add action log", e);
                 });
+        balanceRef.setValue(newBalance);
     }
 
-    public static void updateBalance(User user, Double balance)
+    public static void updateBalance(User user, long timestamp, double balance, NewBalanceIncLogDataModel dataModel)
     {
         DatabaseReference balanceRef = user.getRef().child("Wallet").child("Balance");
+        DatabaseReference actionLogRef = user.getRef().child("ActionLogs").child(timestamp + "");
+
         balanceRef.setValue(balance);
+        actionLogRef.setValue(dataModel);
     }
 
     public static void logout()

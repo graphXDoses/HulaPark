@@ -11,10 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingCardDataModel
+public class ParkingCardDataModel extends ActionCardDataModel
 {
-
-    private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Map<Integer, Runnable> timerRunnables = new HashMap<>();
@@ -22,7 +20,6 @@ public class ParkingCardDataModel
     private String plate_number = "";
     private String location_id = "";
     private String charged_hours = "";
-    private String price = "";
 
     public String getPlateNumber()
     {
@@ -57,17 +54,6 @@ public class ParkingCardDataModel
         return this;
     }
 
-    public String getPrice()
-    {
-        return price;
-    }
-
-    public ParkingCardDataModel setPrice(String price)
-    {
-        this.price = price;
-        return this;
-    }
-
     public ParkingCardDataModel(LocalDateTime startTime, LocalDateTime finishTime)
     {
         this.startTime = startTime;
@@ -78,11 +64,6 @@ public class ParkingCardDataModel
     {
         this.startTime = startTime;
         this.finishTime = startTime.plusMinutes(minutesPass);
-    }
-
-    public LocalDateTime getStartTime()
-    {
-        return startTime;
     }
 
     public LocalDateTime getFinishTime()
@@ -136,18 +117,14 @@ public class ParkingCardDataModel
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
-    public String getDate()
-    {
-        return this.startTime.format(DateTimeFormatter.ofPattern("d/M/Y"));
-    }
-
-    public String getStartHourString()
-    {
-        return this.startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-    }
-
     public String getFinishHourString()
     {
         return this.finishTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    @Override
+    public int getType()
+    {
+        return 0;
     }
 }

@@ -103,7 +103,7 @@ public class GuestAuthSignUpFrag extends Fragment
 
             DBManager.createNewUserFromCredentials("xridoses@gmail.com", "rgeSW445F$vsa5", e ->
             {
-                if(e == null) // No exception, all good!
+                if(e == null) // No exception, all good!xridoses@gmail.com
                 {
                     Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();

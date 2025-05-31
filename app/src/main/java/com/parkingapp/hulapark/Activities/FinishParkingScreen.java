@@ -78,7 +78,7 @@ public class FinishParkingScreen extends AppCompatActivity
             ParkingCardDataModel cardModel = new ParkingCardDataModel(now, then);
             cardModel.setPlateNumber(plateNumber)
                      .setLocationID(parkingSpot)
-                     .setPrice(binding.finishPaymentPrice.getText().toString());
+                     .setAmount(binding.finishPaymentPrice.getText().toString());
             CommonFragUtils.FragmentSwapper.getParkingCardAdapter().pushCard(cardModel);
 
             NewParkingLogDataModel dataModel = new NewParkingLogDataModel();
@@ -87,7 +87,10 @@ public class FinishParkingScreen extends AppCompatActivity
             dataModel.SectorID = parkingSpot;
             dataModel.VehicleID = plateNumber;
 
-            DBManager.setNewParking(user, startTime, dataModel);
+            // TODO: Needs to be checked!
+            Double newBalance = user.getBalance().getValue() - dataModel.Price;
+            user.getBalance().setValue(newBalance);
+            DBManager.setNewParking(user, startTime, newBalance, dataModel);
 
             startActivity(intent);
             FinishParkingScreen.this.finish();

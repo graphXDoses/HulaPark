@@ -13,6 +13,12 @@ import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User.BalanceIncLogDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Outbound.User.NewBalanceIncLogDataModel;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,9 +80,17 @@ public class UserWalletFrag extends Fragment {
         });
 
         ((AppCompatButton)view.findViewById(R.id.walletAddByTenBtn)).setOnClickListener(__ -> {
-            Double balance = user.getBalance().getValue() + 10.0f;
+            LocalDateTime now = LocalDateTime.now();
+            NewBalanceIncLogDataModel dataModel = new NewBalanceIncLogDataModel();
+            BalanceIncCardDataModel card = new BalanceIncCardDataModel(now);
+            long timestamp = now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+            dataModel.Amount = 10.0f;
+            card.setAmount(String.format("%.2f", dataModel.Amount));
+            CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().pushCard(card);
+            double balance = user.getBalance().getValue() + dataModel.Amount;
             user.getBalance().setValue(balance);
-            DBManager.updateBalance(user, balance);
+            DBManager.updateBalance(user, timestamp, balance, dataModel);
         });
 
         return view;

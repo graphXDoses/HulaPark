@@ -27,7 +27,7 @@
             android:paddingVertical="20dp">
 
             <TextView
-                android:id="@+id/ongoing_parkingcard_timecounter_tv"
+                android:id="@+id/card_ongoing_parking_timecounter_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:34:25"
@@ -42,7 +42,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/ongoing_parkingcard_progress"
+                    android:id="@+id/card_ongoing_parking_progress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:progress="60"
@@ -74,7 +74,7 @@
                         android:textStyle="bold"
                         android:text="ΕΝΑΡΞΗ" />
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_start"
+                        android:id="@+id/card_ongoing_parking_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -98,7 +98,7 @@
                         android:textStyle="bold"
                         android:text="ΛΗΞΗ" />
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_finish"
+                        android:id="@+id/card_ongoing_parking_finish"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -112,7 +112,7 @@
                 android:layout_weight="1" />
 
             <LinearLayout
-                android:id="@+id/ongoing_parkingcard_info_panel"
+                android:id="@+id/card_ongoing_parking_info_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -124,7 +124,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_plate_number"
+                        android:id="@+id/card_ongoing_parking_plate_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -142,7 +142,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_sector_id"
+                        android:id="@+id/card_ongoing_parking_sector_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -168,7 +168,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_charged_hours"
+                        android:id="@+id/card_ongoing_parking_charged_hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -196,7 +196,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/ongoing_parkingcard_price"
+                        android:id="@+id/card_ongoing_parking_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
