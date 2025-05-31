@@ -21,7 +21,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,6 @@ public class User
     private MutableLiveData<Double> Balance = new MutableLiveData<>();
 
     private MutableLiveData<Double> bphPrice = new MutableLiveData<>();
-
 
     public User(DataSnapshot userDataSnapshot, DataSnapshot catholicDataSnapshot)
     {
@@ -107,20 +105,8 @@ public class User
             historyCards.add(cardModel);
         }
 
-        historyCards = (ArrayList<ActionCardDataModel>)historyCards.stream().sorted(Comparator.comparing(ActionCardDataModel::getStartTime)).collect(Collectors.toList());
-
-//        ArrayList<ParkingCardDataModel> balanceincCards = new ArrayList<>();
-//        for (BalanceIncLogDataModel model : balanceIncLogDataModels)
-//        {
-//            LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(model.getStartTime()), ZoneId.systemDefault());
-//            LocalDateTime finish = LocalDateTime.ofInstant(Instant.ofEpochMilli(model.FinishTime), ZoneId.systemDefault());
-//            ParkingCardDataModel cardModel = new ParkingCardDataModel(start, finish);
-//            cardModel.setPlateNumber(model.VehicleID)
-//                    .setLocationID(model.SectorID)
-//                    .setPrice(String.format("%.2f", model.Price));
-//
-//            parkingCards.add(cardModel);
-//        }
+        // TODO: Compare timestamp (for BalanceInc) to finishtime (for Parking)
+        historyCards = (ArrayList<ActionCardDataModel>)historyCards.stream().sorted().collect(Collectors.toList());
 
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ActionCardDataModel> history = new ArrayList<>(historyCards.stream()

@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingTimeManager;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Inbound.User.BalanceIncLogDataModel;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -125,6 +126,24 @@ public class ParkingCardDataModel extends ActionCardDataModel
     @Override
     public int getType()
     {
+        return 0;
+    }
+
+    @Override
+    public int compareTo(ActionCardDataModel o)
+    {
+        if (o instanceof ParkingCardDataModel)
+        {
+            ParkingCardDataModel p = (ParkingCardDataModel) o;
+            int i = getFinishTime().isAfter(p.getFinishTime()) ? 1 : -1;
+            return i;
+        }
+        if(o instanceof BalanceIncCardDataModel)
+        {
+            BalanceIncCardDataModel p = (BalanceIncCardDataModel) o;
+            int i = getFinishTime().isAfter(p.getStartTime()) ? 1 : -1;
+            return i;
+        }
         return 0;
     }
 }

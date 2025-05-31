@@ -2,8 +2,9 @@ package com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
-public abstract class ActionCardDataModel
+public abstract class ActionCardDataModel implements Comparable<ActionCardDataModel>
 {
     public abstract int getType();
 
