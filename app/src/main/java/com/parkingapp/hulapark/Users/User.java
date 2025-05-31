@@ -21,7 +21,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class User
@@ -105,7 +104,6 @@ public class User
             historyCards.add(cardModel);
         }
 
-        // TODO: Compare timestamp (for BalanceInc) to finishtime (for Parking)
         historyCards = (ArrayList<ActionCardDataModel>)historyCards.stream().sorted().collect(Collectors.toList());
 
         LocalDateTime now = LocalDateTime.now();

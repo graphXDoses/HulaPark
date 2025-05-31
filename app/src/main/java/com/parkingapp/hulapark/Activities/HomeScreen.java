@@ -25,6 +25,7 @@ import com.parkingapp.hulapark.Utilities.Frags.IActiveUserFragSetter;
 import com.parkingapp.hulapark.Utilities.Users.UserType;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IActiveUserFragSetter
@@ -92,6 +93,15 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         animatorMap.put(R.id.mapFrag, 1);
         animatorMap.put(R.id.walletFrag, 2);
         animatorMap.put(R.id.statisticsFrag, 3);
+
+        CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType ->
+        {
+            if(userType == UserType.GUEST)
+            {
+                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().setCards(new ArrayList<>());
+                CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().setCards(new ArrayList<>());
+            }
+        });
     }
 
     private void userFragmentSetup()

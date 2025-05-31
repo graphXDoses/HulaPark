@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
@@ -116,7 +117,8 @@ public class MapFrag extends Fragment {
             public void chooseLayout(AtomicInteger layoutToInflate, Feature f)
             {
                 LifecycleOwner owner = getActivity();
-                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(owner, parkingCardDataModels -> {
+                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(owner, parkingCardDataModels ->
+                {
                     List<ParkingCardDataModel> card = parkingCardDataModels.stream().filter(c -> c.getSectorID().equals(f.properties.sectorID)).collect(Collectors.toList());
                     if(card.isEmpty())
                         layoutToInflate.set(R.layout.inc_display_spot_details_select);
