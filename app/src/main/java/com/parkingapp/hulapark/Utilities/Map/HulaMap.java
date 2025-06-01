@@ -22,6 +22,7 @@ import org.osmdroid.views.overlay.Marker;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class HulaMap
 {
@@ -49,8 +50,6 @@ public class HulaMap
     {
         mapView.getController().setCenter(focalPoint);
         mapView.getController().setZoom(zoomLevel);
-        mapView.setMaxZoomLevel(20.0);
-        mapView.setMinZoomLevel(12.0);
         return this;
     }
 
@@ -59,9 +58,9 @@ public class HulaMap
         context = applicationContext;
     }
 
-    public HulaMap loadMapMarkers(LayoutInflater inflater, HulaMapMarkerBehaviourModifier behaviourModifier)
+    public HulaMap loadMapMarkers(LayoutInflater inflater, List<Feature> features, HulaMapMarkerBehaviourModifier behaviourModifier)
     {
-        for (Feature feature : CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features)
+        for (Feature feature : features)
         {
             HulaMapMarker.Builder(inflater, mapView, feature, behaviourModifier);
         }
@@ -80,5 +79,10 @@ public class HulaMap
     public void invalidateMap()
     {
         mapView.invalidate();
+    }
+
+    public void flyToMapFocalPoint(GeoPoint geoPoint, double v)
+    {
+        mapView.getController().animateTo(geoPoint, 16.0, 750L);
     }
 }

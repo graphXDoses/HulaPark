@@ -5,8 +5,9 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/displaySpotDismissBtn"
+        android:id="@+id/displayGotoInitParkingButton"
         style="@style/ModalBottomSheet.SelectButton"
+        android:text="Εναρξη σταθμευσης"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -16,15 +16,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/mapFindMyLocation"
+        android:id="@+id/mapCenterFocalPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_menu_mylocation"
+        android:src="@drawable/ic_mapfocus"
         app:backgroundTint="@color/yellow"
-        app:fabSize="mini"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

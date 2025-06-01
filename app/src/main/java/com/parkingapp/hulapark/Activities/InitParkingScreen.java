@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
@@ -58,7 +59,6 @@ public class InitParkingScreen extends AppCompatActivity
         initParkingSpotTxt = getString(R.string.init_pariking_spot);
         initParkingDurationTxt = getString(R.string.init_pariking_duration);
         plateNumberPatternMatched = false;
-
 
         plateNumber.setFilters(new InputFilter[]
         {
@@ -126,5 +126,14 @@ public class InitParkingScreen extends AppCompatActivity
 
         parkingSpot.setAdapter(new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, addresses));
         parkingDuration.setAdapter(new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, hours));
+
+        ExtrasManager.getPassedExtras(savedInstanceState, getIntent(), (e) ->
+        {
+            String selectedSectorID = e.getString("SELECTED_SECTOR");
+            String selectedAddress = model.data.features.stream()
+                    .filter(f -> f.properties.sectorID.equals(selectedSectorID))
+                    .findFirst().map(f -> f.properties.address).get();
+            parkingSpot.setText(selectedAddress, false);
+        });
     }
 }

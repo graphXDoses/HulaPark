@@ -1,6 +1,7 @@
 package com.parkingapp.hulapark.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,7 @@ public class OngoingParkingCardAdapter extends RecyclerView.Adapter<OngoingParki
 
         holder.infoPanel.setOnClickListener(view -> {
             CommonFragUtils.FragmentSwapper.setMapFocusedPoint(thisCard.getSectorID());
-            CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_map);
+            CommonFragUtils.FragmentSwapper.getHomeActivity().navToSelectedFragUpdateBottomNavBar(R.id.nav_map, null);
         });
 
         int start = (int)thisCard.getStaticDuration().toMillis();

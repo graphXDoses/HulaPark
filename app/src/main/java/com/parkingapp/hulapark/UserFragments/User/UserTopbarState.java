@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parkingapp.hulapark.Activities.HomeScreen;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
@@ -82,7 +83,7 @@ public class UserTopbarState extends Fragment
         });
 
         balanceButton.setOnClickListener(__ -> {
-            CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
+            ((HomeScreen)getActivity()).navToSelectedFragUpdateBottomNavBar(R.id.nav_wallet, null);
         });
 
         user.getBalance().observe(getActivity(), balance -> {

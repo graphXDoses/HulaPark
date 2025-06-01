@@ -132,11 +132,12 @@ public class HulaMapMarker extends Marker
 
             FrameLayout dynamicLayout = view.findViewById(R.id.displayDynamicFrameLayout);
 
-            AtomicInteger layoutToInflate = new AtomicInteger(R.layout.inc_display_spot_details_select);
+            AtomicInteger layoutToInflate = new AtomicInteger(0);
             descriptor.behaviourMod.chooseLayout(layoutToInflate, f);
-            LayoutInflater.from(descriptor.context).inflate(layoutToInflate.get(), dynamicLayout, true);
+            if(layoutToInflate.get() != 0)
+                LayoutInflater.from(descriptor.context).inflate(layoutToInflate.get(), dynamicLayout, true);
 
-            descriptor.behaviourMod.afterInflating(layoutToInflate.get(), dynamicLayout, bottomSheetDialog);
+            descriptor.behaviourMod.afterInflating(layoutToInflate.get(), dynamicLayout, view, bottomSheetDialog);
 
             bottomSheetDialog.setContentView(view);
             bottomSheetDialog.show();
@@ -155,7 +156,7 @@ public class HulaMapMarker extends Marker
                     750L);
 
             ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
-            ((TextView)view.findViewById(R.id.displaySpotID)).setText(f.properties.sectorID);
+            ((TextView)view.findViewById(R.id.displaySectorID)).setText(f.properties.sectorID);
 
 //            ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(__ -> {
 //                bottomSheetDialog.dismiss();

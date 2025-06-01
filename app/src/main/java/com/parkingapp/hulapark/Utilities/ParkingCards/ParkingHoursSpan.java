@@ -54,9 +54,4 @@ public enum ParkingHoursSpan
     {
         return minRepr;
     }
-
-    public int getMinutes(int divideBy)
-    {
-        return minRepr / divideBy;
-    }
 }

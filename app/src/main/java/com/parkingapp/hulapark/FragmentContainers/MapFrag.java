@@ -1,5 +1,6 @@
 package com.parkingapp.hulapark.FragmentContainers;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Activities.InitParkingScreen;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
@@ -20,12 +21,13 @@ import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
 import com.parkingapp.hulapark.Utilities.Map.HulaMap;
 import com.parkingapp.hulapark.Utilities.Map.HulaMapMarker;
 import com.parkingapp.hulapark.Utilities.Map.HulaMapMarkerBehaviourModifier;
+import com.parkingapp.hulapark.Utilities.Users.UserType;
 
 import android.preference.PreferenceManager;
+import android.widget.TextView;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.HashMap;
@@ -48,8 +50,7 @@ public class MapFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    private MapView map;
+    private BottomSheetDialog popupGotoInitParking = null;
 
     private HashMap<Marker, Feature> markFeatures;
     public MapFrag() {
@@ -100,18 +101,25 @@ public class MapFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_map, container, false);
 
-        view.findViewById(R.id.mapFindMyLocation).setOnClickListener(v ->
+        CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType ->
         {
-            new WarningDialogBox(getContext()).builder()
-                    .setDescription(getString(R.string.locationFinderNotImplemented))
-                    .show();
+            switch (userType)
+            {
+                case GUEST:
+                {
+                    new WarningDialogBox(getContext()).builder()
+                            .setDescription("Ενδεχόμενα μη έκγυρα δεδομένα. Παρακαλούμε οπως συνδεθείτε στον λογαριασμό σας, ή δημιουργήσετε νεο για να λάβετε τις σύγχρονες τοποθεσίες.")
+                            .show();
+                    break;
+                }
+            }
         });
 
         HulaMap hulaMap = new HulaMap(view.findViewById(R.id.streetMap));
 
         hulaMap
         .setMapFocalPoint(new GeoPoint(21.309884, -157.858140), 13.0)
-        .loadMapMarkers(getLayoutInflater(), new HulaMapMarkerBehaviourModifier()
+        .loadMapMarkers(getLayoutInflater(), CommonFragUtils.FragmentSwapper.getMapFeatures(), new HulaMapMarkerBehaviourModifier()
         {
             @Override
             public void chooseLayout(AtomicInteger layoutToInflate, Feature f)
@@ -120,33 +128,62 @@ public class MapFrag extends Fragment {
                 CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(owner, parkingCardDataModels ->
                 {
                     List<ParkingCardDataModel> card = parkingCardDataModels.stream().filter(c -> c.getSectorID().equals(f.properties.sectorID)).collect(Collectors.toList());
-                    if(card.isEmpty())
-                        layoutToInflate.set(R.layout.inc_display_spot_details_select);
-                    else
+                    if(!card.isEmpty())
                         layoutToInflate.set(R.layout.inc_display_spot_details_ongoing);
                 });
             }
 
             @Override
-            public void afterInflating(int layoutResID, View dynamicView, BottomSheetDialog bottomSheetDialog)
+            public void afterInflating(int layoutResID, View dynamicView, View parent, BottomSheetDialog bottomSheetDialog)
             {
-                if(layoutResID == R.layout.inc_display_spot_details_select)
+                MaterialButton gotoInitParkingButton = (MaterialButton)parent.findViewById(R.id.displayGotoInitParkingButton);
+                if(CommonFragUtils.FragmentSwapper.getUserType().getValue() == UserType.USER)
                 {
-                    ((MaterialButton)dynamicView.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(__ -> {
-                        bottomSheetDialog.dismiss();
+                    gotoInitParkingButton.setOnClickListener(__ -> {
+                        Intent intent = new Intent(getActivity(), InitParkingScreen.class);
+                        intent.putExtra("SELECTED_SECTOR", ((TextView)bottomSheetDialog.findViewById(R.id.displaySectorID)).getText().toString());
+                        popupGotoInitParking = bottomSheetDialog;
+                        startActivity(intent);
+                    });
+                } else {
+                    gotoInitParkingButton.setVisibility(View.GONE);
+                }
+                if(layoutResID == R.layout.inc_display_spot_details_ongoing)
+                {
+                    ((MaterialButton)dynamicView.findViewById(R.id.displayShowVehicles)).setOnClickListener(__ -> {
+                        new WarningDialogBox(getContext()).builder().setDescription("Σταθμευμένα οχήματα.").show();
                     });
                 }
             }
         })
         .invalidateMap();
 
+        view.findViewById(R.id.mapCenterFocalPoint).setOnClickListener(v ->
+        {
+            hulaMap.flyToMapFocalPoint(new GeoPoint(21.309884, -157.858140), 13.0);
+        });
+
+        gotoSector(hulaMap);
+
+        return view;
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if (popupGotoInitParking != null && popupGotoInitParking.isShowing()) {
+            popupGotoInitParking.dismiss();
+        }
+    }
+
+    private void gotoSector(HulaMap hulaMap)
+    {
         String targetLocationString = CommonFragUtils.FragmentSwapper.getMapFocusedPoint();
         if(targetLocationString != null)
         {
             HulaMapMarker marker = HulaMapMarker.getMarkerBySectorID(targetLocationString);
             marker.getOnMarkerClickListener().onMarkerClick(marker, hulaMap.getMap());
         }
-
-        return view;
     }
 }

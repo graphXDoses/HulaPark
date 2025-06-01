@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.DialogBoxes.WarningDialogBox;
@@ -31,7 +32,9 @@ import java.util.HashMap;
 public class HomeScreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IActiveUserFragSetter
 {
     private ActivityHomeScreenBinding binding;
-    private NavController navController;
+    private NavController mainNavController;
+    private NavController topbarNavController;
+    private Bundle bottomNavBarArgs = null;
     private final NavOptions.Builder navBuilder =  new NavOptions.Builder();
     private final HashMap<Integer, Integer> animatorMap = new HashMap<Integer, Integer>();
     private static final int BACK_PRESS_INTERVAL = 2000;
@@ -39,8 +42,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
     private Toast backToast;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable resetBackPressedFlag;
-    private NavController topbarNavController;
-//    private SharedPreferences sharedPreferences;
+    private Bundle savedInstanceState;
 
 
     @Override
@@ -51,21 +53,17 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
         binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        CommonFragUtils.FragmentSwapper.setHomeActivity(this);
+        this.savedInstanceState = savedInstanceState;
 
 //        sharedPreferences = getSharedPreferences("SWITCH_STATE", MODE_PRIVATE);
 
         // Navbar
-        navController = Navigation.findNavController(findViewById(R.id.activeFrag));
+        mainNavController = Navigation.findNavController(findViewById(R.id.activeFrag));
 
         topbarNavController = Navigation.findNavController(findViewById(R.id.topbarFragContainer));
 
-        CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType -> {
-            setActiveUserFrag(userType, binding.getRoot(), R.id.topbarFragContainer);
-        });
-
-        CommonFragUtils.FragmentSwapper.setNC_BottomNavMenu(navController);
-        CommonFragUtils.FragmentSwapper.setBottomNavBar(binding.BottomNavBar);
-        binding.BottomNavBar.setSelectedItemId(R.id.nav_parking_car);
+        navToSelectedFragUpdateBottomNavBar(R.id.nav_parking_car, null);
         binding.BottomNavBar.setOnNavigationItemSelectedListener(HomeScreen.this);
 
         CommonFragUtils.FragmentSwapper.authActivityLauncher = registerForActivityResult(
@@ -78,8 +76,8 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
                         if(shouldNavigate)
                         {
-                            int id = CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().getCurrentDestination().getId();
-                            CommonFragUtils.FragmentSwapper.getNC_BottomNavMenu().navigate(id);
+                            int id = mainNavController.getCurrentDestination().getId();
+                            mainNavController.navigate(id);
                             topbarNavController.navigate(R.id.userTopbarState);
                         }
                     }
@@ -87,21 +85,39 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         );
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
-        CommonFragUtils.FragmentSwapper.createGeoLocModelFromGeoJson(R.raw.parkingspots, getApplicationContext());
+        CommonFragUtils.FragmentSwapper.createGeoLocModelFromLocalGeoJson(R.raw.parkingspots, getApplicationContext());
+
+        CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType -> {
+            setActiveUserFrag(userType, binding.getRoot(), R.id.topbarFragContainer);
+            if(userType == UserType.GUEST)
+            {
+                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().setCards(new ArrayList<>());
+                CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().setCards(new ArrayList<>());
+                CommonFragUtils.FragmentSwapper.setMapFeatures(CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features);
+            }
+        });
 
         animatorMap.put(R.id.parkingFrag, 0);
         animatorMap.put(R.id.mapFrag, 1);
         animatorMap.put(R.id.walletFrag, 2);
         animatorMap.put(R.id.statisticsFrag, 3);
+    }
 
-        CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType ->
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+        ExtrasManager.getPassedExtras(savedInstanceState, intent, (e) ->
         {
-            if(userType == UserType.GUEST)
-            {
-                CommonFragUtils.FragmentSwapper.getParkingCardAdapter().setCards(new ArrayList<>());
-                CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().setCards(new ArrayList<>());
-            }
+            int gotoPage = e.getInt("GOTO_PAGE");
+            navToSelectedFragUpdateBottomNavBar(gotoPage, null);
         });
+    }
+
+    public void navToSelectedFragUpdateBottomNavBar(int bottom_nav_menu_item, Bundle args)
+    {
+        bottomNavBarArgs = args;
+        binding.BottomNavBar.setSelectedItemId(bottom_nav_menu_item);
     }
 
     private void userFragmentSetup()
@@ -151,25 +167,26 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
 
         switch (id) {
             case R.id.nav_parking_car:
-                navController.navigate(R.id.parkingFrag, null, setNavBuilderAnimations(R.id.parkingFrag));
+                mainNavController.navigate(R.id.parkingFrag, bottomNavBarArgs, setNavBuilderAnimations(R.id.parkingFrag));
                 break;
             case R.id.nav_map:
-                navController.navigate(R.id.mapFrag, null, setNavBuilderAnimations(R.id.mapFrag));
+                mainNavController.navigate(R.id.mapFrag, bottomNavBarArgs, setNavBuilderAnimations(R.id.mapFrag));
                 break;
             case R.id.nav_wallet:
-                navController.navigate(R.id.walletFrag, null, setNavBuilderAnimations(R.id.walletFrag));
+                mainNavController.navigate(R.id.walletFrag, bottomNavBarArgs, setNavBuilderAnimations(R.id.walletFrag));
                 break;
             case R.id.nav_statistics:
-                navController.navigate(R.id.statisticsFrag, null, setNavBuilderAnimations(R.id.statisticsFrag));
+                mainNavController.navigate(R.id.statisticsFrag, bottomNavBarArgs, setNavBuilderAnimations(R.id.statisticsFrag));
                 break;
         }
         binding.BottomNavBar.setBubbleX(findViewById(id).getX());
+        bottomNavBarArgs = null;
         return true;
     }
 
     private NavOptions setNavBuilderAnimations(int targetFragment)
     {
-        int currentFragID = animatorMap.get((int)navController.getCurrentDestination().getId());
+        int currentFragID = animatorMap.get((int)mainNavController.getCurrentDestination().getId());
         int targetFragID = animatorMap.get(targetFragment);
         int enter_anim = currentFragID > targetFragID ? R.anim.from_left : R.anim.from_right;
         int exit_anim = currentFragID > targetFragID ? R.anim.to_right : R.anim.to_left;

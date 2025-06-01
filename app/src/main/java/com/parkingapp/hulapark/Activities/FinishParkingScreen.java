@@ -66,7 +66,7 @@ public class FinishParkingScreen extends AppCompatActivity
             Intent intent = new Intent(this, HomeScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            int minutes = ParkingHoursSpan.fromString(parkingDuration).getMinutes(CommonFragUtils.FragmentSwapper.hourScale);
+            int minutes = ParkingHoursSpan.fromString(parkingDuration).getMinutes();
 
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime then = LocalDateTime.now().plusMinutes(minutes);
@@ -91,6 +91,8 @@ public class FinishParkingScreen extends AppCompatActivity
             Double newBalance = user.getBalance().getValue() - dataModel.Price;
             user.getBalance().setValue(newBalance);
             DBManager.setNewParking(user, startTime, newBalance, dataModel);
+
+            intent.putExtra("GOTO_PAGE", R.id.nav_parking_car);
 
             startActivity(intent);
             FinishParkingScreen.this.finish();
