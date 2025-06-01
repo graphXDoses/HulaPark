@@ -1,5 +1,5 @@
 <!-- Project Banner -->
-![AppBanner](https://github.com/user-attachments/assets/cb32520b-e9fa-439b-8d25-17972c15b709)
+![AppBanner](https://github.com/user-attachments/assets/9475d2dc-f2a0-4a34-8ac6-d4ae8cd31e4c)
 
 <h1 align="center">Hula Park</h1>
 
