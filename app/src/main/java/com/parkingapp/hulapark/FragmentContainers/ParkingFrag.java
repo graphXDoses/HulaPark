@@ -22,6 +22,8 @@ import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.Frags.IActiveUserFragSetter;
 import com.parkingapp.hulapark.Utilities.Users.UserType;
 
+import java.util.function.Consumer;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ParkingFrag#newInstance} factory method to
@@ -38,6 +40,7 @@ public class ParkingFrag extends Fragment implements IActiveUserFragSetter
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Consumer<View> newParkingCallback;
 
     public ParkingFrag() {
         // Required empty public constructor
@@ -75,34 +78,60 @@ public class ParkingFrag extends Fragment implements IActiveUserFragSetter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_parking, container, false);
+        AppCompatButton newParkingButton = view.findViewById(R.id.parkBtn);
+
+        setGuestCallback();
+
+        ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(__ -> {
+            newParkingCallback.accept(__);
+        });
 
         CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType -> {
             setActiveUserFrag(userType, view, R.id.parkingFragContainer);
-        });
-
-        ((AppCompatButton)view.findViewById(R.id.parkBtn)).setOnClickListener(__ -> {
-            CommonFragUtils.FragmentSwapper.getUserType().observe(getViewLifecycleOwner(), userType -> {
-                switch (userType)
+            switch (userType)
+            {
+                case GUEST:
                 {
-                    case GUEST:
-                    {
-                        Intent intent = new Intent(getActivity(), AuthScreen.class);
-                        startActivity(intent);
-                        break;
-                    }
-                    case USER:
-                    {
-//                        CommonFragUtils.FragmentSwapper.getBottomNavBar().setSelectedItemId(R.id.nav_wallet);
-                        Intent intent = new Intent(getActivity(), InitParkingScreen.class);
-                        startActivity(intent);
-                        break;
-                    }
+                    setGuestCallback();
+                    break;
                 }
-
-            });
+                case USER:
+                {
+                    setUserCallback();
+                    break;
+                }
+            }
         });
 
         return view;
+    }
+
+    public void setUserCallback()
+    {
+        newParkingCallback = new Consumer<View>()
+        {
+            @Override
+            public void accept(View view)
+            {
+                // User goes to InitParkingScreen.
+                Intent intent = new Intent(getActivity(), InitParkingScreen.class);
+                startActivity(intent);
+            }
+        };
+    }
+
+    public void setGuestCallback()
+    {
+        newParkingCallback = new Consumer<View>()
+        {
+            @Override
+            public void accept(View view)
+            {
+                // Guest goes to authentication page.
+                Intent intent = new Intent(getContext(), AuthScreen.class).putExtra("SIGNUP_INTENT", false);
+                CommonFragUtils.FragmentSwapper.authActivityLauncher.launch(intent);
+            }
+        };
     }
 
     @Override

@@ -101,23 +101,23 @@ public class InitParkingScreen extends AppCompatActivity
 
                 Intent intent = new Intent(this, FinishParkingScreen.class);
 
-                Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoLocModel()
-                        .data.features.stream().filter(feature -> feature.properties.address.equals(parkingSpot.getText().toString()))
+                Feature sectorFeature = CommonFragUtils.FragmentSwapper.getGeoDataModel()
+                        .GeoData.features.stream().filter(feature -> feature.properties.ADDRESS.equals(parkingSpot.getText().toString()))
                         .collect(Collectors.toList()).get(0);
 
                 String parkingDurationString = String.valueOf(ParkingHoursSpan.fromString(parkingDuration.getText().toString()).getMinutes());
 
                 intent.putExtra("INIT_PARKING_PLATE_NUMBER", plateNumber.getText().toString());
-                intent.putExtra("INIT_PARKING_PARKING_SPOT", sectorFeature.properties.sectorID);
+                intent.putExtra("INIT_PARKING_PARKING_SPOT", sectorFeature.properties.SECTORID);
                 intent.putExtra("INIT_PARKING_PARKING_DURATION", parkingDurationString);
                 startActivity(intent);
             } });
 
 
-        GeoJsonDataModel model = CommonFragUtils.FragmentSwapper.getGeoLocModel();
+        GeoJsonDataModel model = CommonFragUtils.FragmentSwapper.getGeoDataModel();
 
-        List<String> addresses = model.data.features.stream()
-                .map(feature -> feature.properties.address)
+        List<String> addresses = model.GeoData.features.stream()
+                .map(feature -> feature.properties.ADDRESS)
                 .collect(Collectors.toList());
 
         List<String> hours = Arrays.stream(ParkingHoursSpan.values())
@@ -130,10 +130,13 @@ public class InitParkingScreen extends AppCompatActivity
         ExtrasManager.getPassedExtras(savedInstanceState, getIntent(), (e) ->
         {
             String selectedSectorID = e.getString("SELECTED_SECTOR");
-            String selectedAddress = model.data.features.stream()
-                    .filter(f -> f.properties.sectorID.equals(selectedSectorID))
-                    .findFirst().map(f -> f.properties.address).get();
-            parkingSpot.setText(selectedAddress, false);
+            if(selectedSectorID != null)
+            {
+                String selectedAddress = model.GeoData.features.stream()
+                        .filter(f -> f.properties.SECTORID.equals(selectedSectorID))
+                        .findFirst().map(f -> f.properties.ADDRESS).get();
+                parkingSpot.setText(selectedAddress, false);
+            }
         });
     }
 }

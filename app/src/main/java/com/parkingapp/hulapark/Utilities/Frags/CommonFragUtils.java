@@ -88,12 +88,16 @@ public class CommonFragUtils
         return historyParkingCardAdapter;
     }
 
-    public GeoJsonDataModel getGeoLocModel()
+    public GeoJsonDataModel getGeoDataModel()
     {
         return geoJsonDataModel;
     }
+    public void setGeoDataModel(GeoJsonDataModel model)
+    {
+        geoJsonDataModel = model;
+    }
 
-    public void createGeoLocModelFromLocalGeoJson(final int resID, Context context)
+    public void createLocalGeoDataModelGeoJson(final int resID, Context context)
     {
         InputStream is = context.getResources().openRawResource(resID);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -102,7 +106,7 @@ public class CommonFragUtils
         FeatureCollection collection = gson.fromJson(reader, FeatureCollection.class);
 
         geoJsonDataModel = new GeoJsonDataModel();
-        geoJsonDataModel.data = collection;
+        geoJsonDataModel.GeoData = collection;
     }
 
     public void setMapFocusedPoint(String s)

@@ -46,7 +46,7 @@ public class HulaMapMarker extends Marker
         HMM descriptor = new HMM();
 
         List<Double> co = feature.geometry.coordinates;
-        sectorIDMap.put(feature.properties.sectorID, this);
+        sectorIDMap.put(feature.properties.SECTORID, this);
 
         descriptor.geoLocationPoint = new GeoPoint(co.get(1), co.get(0));
         descriptor.inflater = inflater;
@@ -77,7 +77,7 @@ public class HulaMapMarker extends Marker
         this.bottomSheetDialog = new BottomSheetDialog(context);
 
         List<Double> co = feature.geometry.coordinates;
-        sectorIDMap.put(feature.properties.sectorID, this);
+        sectorIDMap.put(feature.properties.SECTORID, this);
 
         // Set point style
         setPosition(new GeoPoint(co.get(1), co.get(0)));
@@ -155,8 +155,8 @@ public class HulaMapMarker extends Marker
                     16.0,
                     750L);
 
-            ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.address);
-            ((TextView)view.findViewById(R.id.displaySectorID)).setText(f.properties.sectorID);
+            ((TextView)view.findViewById(R.id.displaySpotAddress)).setText(f.properties.ADDRESS);
+            ((TextView)view.findViewById(R.id.displaySectorID)).setText(f.properties.SECTORID);
 
 //            ((MaterialButton)view.findViewById(R.id.displaySpotDismissBtn)).setOnClickListener(__ -> {
 //                bottomSheetDialog.dismiss();

@@ -1,5 +1,6 @@
 package com.parkingapp.hulapark.UserFragments.User;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,10 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.TextView;
 
+import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Views.LinePagerIndicatorDecoration;
@@ -31,6 +35,7 @@ public class UserParkingFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView parking_empty_tv;
 
     public UserParkingFrag() {
         // Required empty public constructor
@@ -68,10 +73,12 @@ public class UserParkingFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_user_parking, container, false);
-
+        parking_empty_tv = view.findViewById(R.id.parking_empty_tv);
         RecyclerView rcv = (RecyclerView)view.findViewById(R.id.parking_card_rc);
 
-        rcv.setAdapter(CommonFragUtils.FragmentSwapper.getParkingCardAdapter());
+        OngoingParkingCardAdapter adapter = CommonFragUtils.FragmentSwapper.getParkingCardAdapter();
+
+        rcv.setAdapter(adapter);
         LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rcv.setLayoutManager(ll);
 
@@ -80,6 +87,32 @@ public class UserParkingFrag extends Fragment {
 
         rcv.addItemDecoration(new LinePagerIndicatorDecoration(getResources()));
 
+        updateEmptyMessageVisibility(adapter);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                updateEmptyMessageVisibility(adapter);
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                updateEmptyMessageVisibility(adapter);
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                updateEmptyMessageVisibility(adapter);
+            }
+        });
+
         return view;
+    }
+
+    private void updateEmptyMessageVisibility(RecyclerView.Adapter adapter) {
+        if (adapter.getItemCount() == 0) {
+            parking_empty_tv.setVisibility(View.VISIBLE);
+        } else {
+            parking_empty_tv.setVisibility(View.GONE);
+        }
     }
 }

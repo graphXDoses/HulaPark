@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class GeoJsonDataModel
 {
-    @SerializedName("data")
-    public FeatureCollection data;
+    @SerializedName("GeoData")
+    public FeatureCollection GeoData;
 }

@@ -23,5 +23,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/parking_empty_tv"
+            android:visibility="gone"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_about"
+            android:drawableTint="@color/gray_600"
+            android:drawablePadding="5dp"
+            android:gravity="bottom"
+            android:text="Δεν υπάρουν τρέχουσες σταθμεύσεις."
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlCompat" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

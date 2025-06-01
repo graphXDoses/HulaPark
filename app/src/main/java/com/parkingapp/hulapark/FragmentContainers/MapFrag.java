@@ -127,7 +127,7 @@ public class MapFrag extends Fragment {
                 LifecycleOwner owner = getActivity();
                 CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(owner, parkingCardDataModels ->
                 {
-                    List<ParkingCardDataModel> card = parkingCardDataModels.stream().filter(c -> c.getSectorID().equals(f.properties.sectorID)).collect(Collectors.toList());
+                    List<ParkingCardDataModel> card = parkingCardDataModels.stream().filter(c -> c.getSectorID().equals(f.properties.SECTORID)).collect(Collectors.toList());
                     if(!card.isEmpty())
                         layoutToInflate.set(R.layout.inc_display_spot_details_ongoing);
                 });

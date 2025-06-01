@@ -9,6 +9,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
+import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ActionCardDataModel;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardDataModel;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
@@ -51,6 +53,14 @@ public class User
 
     private void refreshCatholicData(DataSnapshot catholicDataSnapshot)
     {
+        DataSnapshot geoDataSnapshot = catholicDataSnapshot.child("GeoData");
+
+        FeatureCollection collection = geoDataSnapshot.getValue(FeatureCollection.class);
+
+        GeoJsonDataModel geoJsonDataModel = new GeoJsonDataModel();
+        geoJsonDataModel.GeoData = collection;
+        CommonFragUtils.FragmentSwapper.setGeoDataModel(geoJsonDataModel);
+
         DataSnapshot bphPriceSnapshot = catholicDataSnapshot.child("BasePerHourPrice");
         bphPrice.setValue(bphPriceSnapshot.getValue(Double.class));
     }

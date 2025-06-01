@@ -21,6 +21,7 @@ import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
 public class DBManager
@@ -56,7 +57,7 @@ public class DBManager
                     {
                         throw task.getException();
                     }
-                    return getRef("Data").get();
+                    return getRef("CatholicData").get();
                 }).addOnSuccessListener(catholicDataSnapshot ->
                 {
                     CommonFragUtils.FragmentSwapper.changeUserTo(new User(pipeline.userDataSnapshot, catholicDataSnapshot));
@@ -82,7 +83,7 @@ public class DBManager
                 }).continueWithTask(adminsDataSnapshot ->
                 {
                     pipeline.isAdmin = adminsDataSnapshot.getResult().exists();
-                    return getRef("Data").get();
+                    return getRef("CatholicData").get();
                 }).continueWithTask(catholicDataSnapshot ->
                 {
                     pipeline.catholicDataSnapshot = catholicDataSnapshot.getResult();
@@ -139,6 +140,18 @@ public class DBManager
     {
         mAuth.signOut();
         CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
+    }
+
+    public static CurrentUserCreds getCurrentUserCreds()
+    {
+        LocalDateTime createT = LocalDateTime.ofInstant(Instant.ofEpochMilli(mAuth.getCurrentUser().getMetadata().getCreationTimestamp()), ZoneId.systemDefault());
+        LocalDateTime lastVisT = LocalDateTime.ofInstant(Instant.ofEpochMilli(mAuth.getCurrentUser().getMetadata().getLastSignInTimestamp()), ZoneId.systemDefault());
+
+        CurrentUserCreds creds = new CurrentUserCreds();
+        creds.setEmail(mAuth.getCurrentUser().getEmail());
+        creds.setCreatedDate(createT.format(DateTimeFormatter.ofPattern("d/M/Y")));
+        creds.setLastVisited(lastVisT.format(DateTimeFormatter.ofPattern("d/M/Y")));
+        return creds;
     }
 
     private static class AuthPipelineData

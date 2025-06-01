@@ -12,6 +12,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DataBase.CurrentUserCreds;
+import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
+import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,15 +79,33 @@ public class UserStatisticsGenStatsFrag extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_user_statistics_gen_stats, container, false);
+        // Account
+        TextView genStatsUserEmail = view.findViewById(R.id.genStatsUserEmail);
+        TextView genStatsUserCreated = view.findViewById(R.id.genStatsUserCreated);
+        TextView genStatsUserLastVisited = view.findViewById(R.id.genStatsUserLastVisited);
+        // Expenses
+        TextView genStatsUserTotalCost = view.findViewById(R.id.genStatsUserTotalCost);
+        TextView genStatsUserTotalCredit = view.findViewById(R.id.genStatsUserTotalCredit);
+        TextView genStatsUserParkNum = view.findViewById(R.id.genStatsUserParkNum);
+        // Favs
+        TextView genStatsUserFavParking = view.findViewById(R.id.genStatsUserFavParking);
+        TextView genStatsUserFavVehicle = view.findViewById(R.id.genStatsUserFavVehicle);
+        User user = (User) (CommonFragUtils.FragmentSwapper.getUser());
 
-        List<String> qq = Arrays.asList(
-                "Δημιουργία Λογαριασμού",
-                "Συνολικά Έξοδα Σταθμευσεων",
-                "Σύνηθες Όχημα (Πανακίδα)",
-                "Συνήθης Χώρος Στάθμευσης"
-        );
+        CurrentUserCreds creds = DBManager.getCurrentUserCreds();
 
-        ((ListView)view.findViewById(R.id.genStatsList)).setAdapter(new ArrayAdapter<String>(getContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, qq));
+        genStatsUserEmail.setText(creds.getEmail());
+        genStatsUserCreated.setText(creds.getCreatedDate());
+        genStatsUserLastVisited.setText(creds.getLastVisited());
+
+//        List<String> qq = Arrays.asList(
+//                "Δημιουργία Λογαριασμού",
+//                "Συνολικά Έξοδα Σταθμευσεων",
+//                "Σύνηθες Όχημα (Πανακίδα)",
+//                "Συνήθης Χώρος Στάθμευσης"
+//        );
+//
+//        ((ListView)view.findViewById(R.id.genStatsList)).setAdapter(new ArrayAdapter<String>(getContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, qq));
 
         return view;
     }

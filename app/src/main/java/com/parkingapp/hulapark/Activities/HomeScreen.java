@@ -85,7 +85,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         );
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
-        CommonFragUtils.FragmentSwapper.createGeoLocModelFromLocalGeoJson(R.raw.parkingspots, getApplicationContext());
+        CommonFragUtils.FragmentSwapper.createLocalGeoDataModelGeoJson(R.raw.parkingspots, getApplicationContext());
 
         CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType -> {
             setActiveUserFrag(userType, binding.getRoot(), R.id.topbarFragContainer);
@@ -93,7 +93,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
             {
                 CommonFragUtils.FragmentSwapper.getParkingCardAdapter().setCards(new ArrayList<>());
                 CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter().setCards(new ArrayList<>());
-                CommonFragUtils.FragmentSwapper.setMapFeatures(CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features);
+                CommonFragUtils.FragmentSwapper.setMapFeatures(CommonFragUtils.FragmentSwapper.getGeoDataModel().GeoData.features);
             }
         });
 

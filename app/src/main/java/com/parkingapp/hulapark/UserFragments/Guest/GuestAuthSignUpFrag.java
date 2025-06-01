@@ -101,9 +101,9 @@ public class GuestAuthSignUpFrag extends Fragment
             authProgressBar.setVisibility(View.VISIBLE);
             authProgrssText.setVisibility(View.VISIBLE);
 
-            DBManager.createNewUserFromCredentials("xridoses@gmail.com", "rgeSW445F$vsa5", e ->
+            DBManager.createNewUserFromCredentials(email.getText().toString(), password.getText().toString(), e ->
             {
-                if(e == null) // No exception, all good!xridoses@gmail.com
+                if(e == null) // No exception, all good!
                 {
                     Toast.makeText(getContext(), "You succesfully created and account!", Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();

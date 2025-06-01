@@ -2,26 +2,15 @@ package com.parkingapp.hulapark.Utilities.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
-import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
-import com.parkingapp.hulapark.Utilities.GeoJsonModel.FeatureCollection;
-import com.parkingapp.hulapark.Utilities.GeoJsonModel.GeoJsonDataModel;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Marker;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 public class HulaMap
@@ -69,7 +58,7 @@ public class HulaMap
 
     public HulaMap loadMapMarkers()
     {
-        for (Feature feature : CommonFragUtils.FragmentSwapper.getGeoLocModel().data.features)
+        for (Feature feature : CommonFragUtils.FragmentSwapper.getGeoDataModel().GeoData.features)
         {
             HulaMapMarker.Builder(mapView, feature);
         }

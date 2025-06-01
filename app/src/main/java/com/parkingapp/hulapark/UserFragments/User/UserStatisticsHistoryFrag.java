@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
+import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
 import com.parkingapp.hulapark.R;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 
@@ -29,6 +32,7 @@ public class UserStatisticsHistoryFrag extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView history_empty_tv;
 
     public UserStatisticsHistoryFrag()
     {
@@ -71,13 +75,41 @@ public class UserStatisticsHistoryFrag extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_user_statistics_history, container, false);
+        history_empty_tv = view.findViewById(R.id.history_empty_tv);
+        HistoryParkingCardAdapter adapter = CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter();
 
         // Set Adapter
         RecyclerView rcv = (RecyclerView)view.findViewById(R.id.historyRecycleList);
-        rcv.setAdapter(CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter());
+        rcv.setAdapter(adapter);
         LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rcv.setLayoutManager(ll);
 
+        updateEmptyMessageVisibility(adapter);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                updateEmptyMessageVisibility(adapter);
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                updateEmptyMessageVisibility(adapter);
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                updateEmptyMessageVisibility(adapter);
+            }
+        });
+
         return view;
+    }
+
+    private void updateEmptyMessageVisibility(RecyclerView.Adapter adapter) {
+        if (adapter.getItemCount() == 0) {
+            history_empty_tv.setVisibility(View.VISIBLE);
+        } else {
+            history_empty_tv.setVisibility(View.GONE);
+        }
     }
 }
