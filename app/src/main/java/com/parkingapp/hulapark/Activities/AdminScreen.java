@@ -2,8 +2,7 @@ package com.parkingapp.hulapark.Activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
+import androidx.constraintlayout.motion.widget.FloatLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.parkingapp.hulapark.R;
@@ -11,6 +10,7 @@ import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.Utilities.GeoJsonModel.Feature;
 import com.parkingapp.hulapark.Utilities.InputFieldFormatCheckers.AfterTextWatcher;
+import com.parkingapp.hulapark.Utilities.Map.HulaMap;
 import com.parkingapp.hulapark.Utilities.ParkingCards.ParkingHoursSpan;
 import com.parkingapp.hulapark.databinding.ActivityHomeScreenBinding;
 
@@ -19,21 +19,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.osmdroid.util.GeoPoint;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class AdminScreen extends AppCompatActivity {
-
-    private TextInputEditText cvvNumber;
-    private TextInputEditText cardNumber;
-
-    boolean cvvNumberPatternMatched;
-    boolean cardNumberPatternMatched;
+public class AdminScreen extends AppCompatActivity
+{
     private static final int BACK_PRESS_INTERVAL = 2000;
     private long lastBackPressedTime = 0;
     private Toast backToast;
@@ -77,57 +76,20 @@ public class AdminScreen extends AppCompatActivity {
         View customView = getSupportActionBar().getCustomView();
 
         TextView titleTextView = customView.findViewById(R.id.tvActivityTitle);
-        titleTextView.setText(R.string.admin_activity_title);
+        titleTextView.setText("Σελίδα Διαχείρησης");
 
 
-    }
+        HulaMap hulaMap = new HulaMap(findViewById(R.id.adminStreetMap));
+        hulaMap
+                .setMapFocalPoint(new GeoPoint(21.309884, -157.858140), 13.0)
+                .loadMapMarkers()
+                .invalidateMap();
 
-    private void creditCardTests()
-    {
-        //pattern supports Visa Card, Visa Master Card, Union Pay Card
-        Pattern cardNumberPattern = Pattern.compile("^(4[0-9]{12}(?:[0-9]{3})?)|" +
-                "((?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}))$");
-        Pattern cvvPattern = Pattern.compile("^[0-9]{3,4}$");
-
-        cvvNumber = findViewById(R.id.cvcEditText);
-        cardNumber = findViewById(R.id.cardNumberEditText);
-        cvvNumberPatternMatched = false;
-        cardNumberPatternMatched = false;
-
-        cvvNumber.addTextChangedListener(new AfterTextWatcher()
-        {
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                if (cvvPattern.matcher(s.toString()).matches())
-                    cvvNumberPatternMatched = true;
-                else
-                    cvvNumberPatternMatched = false;
-            }
+        findViewById(R.id.addNewLocation).setOnClickListener(view -> {
+            Toast.makeText(this, "New Location added!", Toast.LENGTH_SHORT).show();
         });
 
-        cardNumber.addTextChangedListener(new AfterTextWatcher()
-        {
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                if (cardNumberPattern.matcher(s.toString()).matches())
-                    cardNumberPatternMatched = true;
-                else
-                    cardNumberPatternMatched = false;
-            }
-        });
-
-        findViewById(R.id.testBtn).setOnClickListener(view -> {
-
-            boolean matchedFields = cvvNumberPatternMatched && cardNumberPatternMatched;
-            if (!matchedFields){
-                if(!cvvNumberPatternMatched)
-                    cvvNumber.setError("Συμπληρώστε σωστά τον αριθμό του CVV.");
-                if(!cardNumberPatternMatched)
-                    cardNumber.setError("Μη έγκυρη κάρτα. Συμπληρώστε σωστά τον αριθμό της κάρτας.");
-            }else {
-                Toast.makeText(this, "Έγκυρα στοιχεία!", Toast.LENGTH_SHORT).show();
-            } });
+        FrameLayout dynamicLayout = findViewById(R.id.displayDynamicFrameLayout);
+        LayoutInflater.from(this).inflate(R.layout.inc_display_spot_details_latlon_delete, dynamicLayout, true);
     }
 }
