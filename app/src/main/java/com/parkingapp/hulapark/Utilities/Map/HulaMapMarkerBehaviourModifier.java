@@ -10,5 +10,5 @@ import java.util.concurrent.atomic.AtomicInteger;
 public interface HulaMapMarkerBehaviourModifier
 {
     void chooseLayout(AtomicInteger layoutToInflate, Feature feature);
-    void afterInflating(int layoutResID, View view, View dynamicView, BottomSheetDialog bottomSheetDialog);
+    void afterInflating(Feature feature, int layoutResID, View view, View dynamicView, BottomSheetDialog bottomSheetDialog);
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -19,6 +18,8 @@ import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardData
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HistoryParkingCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<ArrayList<ActionCardDataModel>> items = new MutableLiveData<>();
@@ -97,5 +98,16 @@ public class HistoryParkingCardAdapter extends RecyclerView.Adapter<RecyclerView
     public int getItemCount()
     {
         return items.getValue().size();
+    }
+
+
+    public int getParkingsCount()
+    {
+        return (int)items.getValue().stream().filter(p -> p.getType() == 0).count();
+    }
+
+    public List<ActionCardDataModel> getAllHistory()
+    {
+        return items.getValue();
     }
 }

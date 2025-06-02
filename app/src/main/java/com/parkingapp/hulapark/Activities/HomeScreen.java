@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DialogBoxes.OKDialogBox;
 import com.parkingapp.hulapark.Utilities.Extras.ExtrasManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
@@ -85,6 +86,7 @@ public class HomeScreen extends AppCompatActivity implements BottomNavigationVie
         );
 
         WarningDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
+        OKDialogBox.setBackground(getDrawable(R.drawable.bg_info_panel));
         CommonFragUtils.FragmentSwapper.createLocalGeoDataModelGeoJson(R.raw.parkingspots, getApplicationContext());
 
         CommonFragUtils.FragmentSwapper.getUserType().observe(this, userType -> {

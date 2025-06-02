@@ -2,8 +2,12 @@ package com.parkingapp.hulapark.Utilities.DataBase;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -142,6 +146,11 @@ public class DBManager
         CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
     }
 
+    public static Task<Void> deleteCurrentUsersAccount()
+    {
+        return mAuth.getCurrentUser().delete();
+    }
+
     public static CurrentUserCreds getCurrentUserCreds()
     {
         LocalDateTime createT = LocalDateTime.ofInstant(Instant.ofEpochMilli(mAuth.getCurrentUser().getMetadata().getCreationTimestamp()), ZoneId.systemDefault());
@@ -149,9 +158,44 @@ public class DBManager
 
         CurrentUserCreds creds = new CurrentUserCreds();
         creds.setEmail(mAuth.getCurrentUser().getEmail());
-        creds.setCreatedDate(createT.format(DateTimeFormatter.ofPattern("d/M/Y")));
-        creds.setLastVisited(lastVisT.format(DateTimeFormatter.ofPattern("d/M/Y")));
+        creds.setCreatedDate(createT.format(DateTimeFormatter.ofPattern("dd/MM/Y - HH:mm")));
+        creds.setLastVisited(lastVisT.format(DateTimeFormatter.ofPattern("dd/MM/Y - HH:mm")));
         return creds;
+    }
+
+    public static String getGreekMessageForErrorCode(Exception e)
+    {
+        String errorCode;
+
+        if (e instanceof FirebaseAuthInvalidUserException) {
+            errorCode = ((FirebaseAuthInvalidUserException) e).getErrorCode();
+        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+            errorCode = ((FirebaseAuthInvalidCredentialsException) e).getErrorCode();
+        } else if (e instanceof FirebaseAuthException) {
+            errorCode = ((FirebaseAuthException) e).getErrorCode();
+        } else {
+            errorCode = "Άγνωστο Σφάλμα";
+        }
+
+        switch (errorCode)
+        {
+            case "ERROR_INVALID_EMAIL":
+                return "Μη έγκυρη διεύθυνση email.";
+            case "ERROR_WRONG_PASSWORD":
+                return "Λάθος κωδικός.";
+            case "ERROR_USER_NOT_FOUND":
+                return "Ο χρήστης δεν βρέθηκε.";
+            case "ERROR_USER_DISABLED":
+                return "Ο λογαριασμός έχει απενεργοποιηθεί.";
+            case "ERROR_EMAIL_ALREADY_IN_USE":
+                return "Αυτή η διεύθυνση email χρησιμοποιείται ήδη.";
+            case "ERROR_WEAK_PASSWORD":
+                return "Ο κωδικός είναι πολύ αδύναμος.";
+            case "ERROR_TOO_MANY_REQUESTS":
+                return "Πάρα πολλές προσπάθειες. Δοκιμάστε ξανά αργότερα.";
+            default:
+                return "Παρουσιάστηκε άγνωστο σφάλμα.";
+        }
     }
 
     private static class AuthPipelineData

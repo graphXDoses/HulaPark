@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,9 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.parkingapp.hulapark.Activities.InitParkingScreen;
+import com.parkingapp.hulapark.Adapters.ParkedVehiclesAdapter;
+import com.parkingapp.hulapark.Users.User;
+import com.parkingapp.hulapark.Utilities.DialogBoxes.OKDialogBox;
 import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
 import com.parkingapp.hulapark.R;
@@ -28,9 +33,8 @@ import android.widget.TextView;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.Marker;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -52,7 +56,6 @@ public class MapFrag extends Fragment {
     private String mParam2;
     private BottomSheetDialog popupGotoInitParking = null;
 
-    private HashMap<Marker, Feature> markFeatures;
     public MapFrag() {
         // Required empty public constructor
     }
@@ -134,14 +137,17 @@ public class MapFrag extends Fragment {
             }
 
             @Override
-            public void afterInflating(int layoutResID, View dynamicView, View parent, BottomSheetDialog bottomSheetDialog)
+            public void afterInflating(Feature f, int layoutResID, View dynamicView, View parent, BottomSheetDialog bottomSheetDialog)
             {
                 MaterialButton gotoInitParkingButton = (MaterialButton)parent.findViewById(R.id.displayGotoInitParkingButton);
                 if(CommonFragUtils.FragmentSwapper.getUserType().getValue() == UserType.USER)
                 {
+                    User user = (User) CommonFragUtils.FragmentSwapper.getUser();
+
+                    ((TextView)parent.findViewById(R.id.displaySpotFee)).setText(String.format("%.2f", user.getBPHPrice().getValue()));
                     gotoInitParkingButton.setOnClickListener(__ -> {
                         Intent intent = new Intent(getActivity(), InitParkingScreen.class);
-                        intent.putExtra("SELECTED_SECTOR", ((TextView)bottomSheetDialog.findViewById(R.id.displaySectorID)).getText().toString());
+                        intent.putExtra("SELECTED_SECTOR", ((TextView) bottomSheetDialog.findViewById(R.id.displaySectorID)).getText().toString());
                         popupGotoInitParking = bottomSheetDialog;
                         startActivity(intent);
                     });
@@ -150,8 +156,37 @@ public class MapFrag extends Fragment {
                 }
                 if(layoutResID == R.layout.inc_display_spot_details_ongoing)
                 {
-                    ((MaterialButton)dynamicView.findViewById(R.id.displayShowVehicles)).setOnClickListener(__ -> {
-                        new WarningDialogBox(getContext()).builder().setDescription("Σταθμευμένα οχήματα.").show();
+                    CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(getViewLifecycleOwner(), allParkings ->
+                    {
+                        ArrayList<String> vehicleIDs;
+                        vehicleIDs = (ArrayList<String>) allParkings.stream()
+                                .filter(p -> p.getSectorID().equals(f.properties.SECTORID))
+                                .map(p -> p.getPlateNumber())
+                                .collect(Collectors.toList());
+                        ((TextView)dynamicView.findViewById(R.id.displayShowVehicles)).setText("ΟΧΗΜΑΤΑ (" + vehicleIDs.size() + ")");
+                    });
+
+                    ((MaterialButton)dynamicView.findViewById(R.id.displayShowVehicles)).setOnClickListener(__ ->
+                    {
+                        CommonFragUtils.FragmentSwapper.getParkingCardAdapter().getLiveData().observe(getViewLifecycleOwner(), allParkings ->
+                        {
+                            ArrayList<ParkingCardDataModel> parkings;
+                            parkings = (ArrayList<ParkingCardDataModel>) allParkings.stream()
+                                    .filter(p -> p.getSectorID().equals(f.properties.SECTORID))
+                                    .collect(Collectors.toList());
+                            new OKDialogBox(getContext()).builder()
+                                    .setHeader("Οχήματα")
+                                    .setBodyAndInflate(R.layout.inc_vehicle_rc, frameLayout ->
+                                    {
+                                        RecyclerView rcv = frameLayout.findViewById(R.id.vehicle_rc);
+                                        rcv.setAdapter(new ParkedVehiclesAdapter(parkings));
+                                        LinearLayoutManager ll = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                        rcv.setLayoutManager(ll);
+
+                                        return rcv;
+                                    })
+                                    .show();
+                        });
                     });
                 }
             }

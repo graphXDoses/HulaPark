@@ -119,7 +119,7 @@ public class GuestAuthSignInFrag extends Fragment
                     activity.setResult(Activity.RESULT_OK, resultIntent);
                     activity.finish();
                 } else {
-                    Toast.makeText(getContext(), e + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
                 authProgressBar.setVisibility(View.GONE);
                 authProgrssText.setVisibility(View.GONE);

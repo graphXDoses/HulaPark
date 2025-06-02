@@ -137,7 +137,7 @@ public class HulaMapMarker extends Marker
             if(layoutToInflate.get() != 0)
                 LayoutInflater.from(descriptor.context).inflate(layoutToInflate.get(), dynamicLayout, true);
 
-            descriptor.behaviourMod.afterInflating(layoutToInflate.get(), dynamicLayout, view, bottomSheetDialog);
+            descriptor.behaviourMod.afterInflating(f, layoutToInflate.get(), dynamicLayout, view, bottomSheetDialog);
 
             bottomSheetDialog.setContentView(view);
             bottomSheetDialog.show();

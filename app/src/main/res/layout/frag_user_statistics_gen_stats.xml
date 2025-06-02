@@ -30,7 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:padding="5dp"
-            android:layout_height="120dp">
+            android:layout_height="140dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout4"
@@ -62,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Δημιουργήθηκε : "
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -70,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1/6/2025"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -88,6 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Τελευταία Επίσκεψη : "
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/genStatsUserLastVisited"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -96,16 +99,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1/6/2025"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 style="@style/ModalBottomSheet.SelectButton"
+                android:id="@+id/genStatsUserDelAccount"
                 app:backgroundTint="@android:color/holo_red_dark"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
+                android:layout_marginVertical="15dp"
                 android:text="διαγραφη"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -124,13 +130,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:padding="5dp"
-            android:layout_height="95dp">
+            android:layout_height="110dp">
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Συνολικά Έξοδα Σταθμεύσεων :"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="Συνολικό Ποσό Ανανεώσεων :"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/genStatsUserTotalCredit"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -148,6 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -156,8 +165,9 @@
                 android:id="@+id/genStatsUserTotalCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300.00"
                 android:layout_marginLeft="5dp"
+                android:text="0.00"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView12"
                 app:layout_constraintStart_toEndOf="@+id/textView12" />
@@ -175,7 +185,7 @@
                 android:id="@+id/genStatsUserTotalCredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15.00"
+                android:text="0.00"
                 android:layout_marginLeft="5dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -185,7 +195,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -193,17 +202,18 @@
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Σταθμεύσεις :" />
+                    android:text="Σταθμεύσεις :"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/genStatsUserParkNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="112"
-                    android:textAlignment="textEnd"
-                    android:textStyle="bold"
-                />
+                    android:text="0"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -220,13 +230,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:padding="5dp"
-            android:layout_height="120dp">
+            android:layout_height="110dp">
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Αγαπημένο Όχημα :"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/genStatsUserFavVehicle"
                 app:layout_constraintStart_toStartOf="@+id/genStatsUserFavVehicle" />
 
@@ -235,6 +246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Αγαπημένος Χώρος Στάθμευσης :"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -242,7 +254,8 @@
                 android:id="@+id/genStatsUserFavParking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sgerhrwtjtyurkyuilergtrehhtytejerthrtjry"
+                android:text="---"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView18" />
@@ -251,7 +264,8 @@
                 android:id="@+id/genStatsUserFavVehicle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JAI01569"
+                android:text="---"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

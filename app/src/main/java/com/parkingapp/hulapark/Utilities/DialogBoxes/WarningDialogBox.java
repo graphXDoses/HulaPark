@@ -30,7 +30,7 @@ public class WarningDialogBox extends Dialog
         setCancelable(false);
         setContentView(R.layout.warning_dialog_box);
         getWindow().setBackgroundDrawable(background);
-        findViewById(R.id.WarningDB_OK).setOnClickListener(view -> {
+        findViewById(R.id.OKDB_OK).setOnClickListener(view -> {
             dismiss();
         });
         return this;
@@ -38,7 +38,7 @@ public class WarningDialogBox extends Dialog
 
     public WarningDialogBox setDescription(@NotNull String description)
     {
-        ((TextView)findViewById(R.id.warning_db_desc)).setText(description);
+        ((TextView)findViewById(R.id.ok_db_body)).setText(description);
         return this;
     }
 }

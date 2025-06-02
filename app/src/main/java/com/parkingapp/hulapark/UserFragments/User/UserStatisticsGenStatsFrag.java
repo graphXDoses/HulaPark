@@ -7,19 +7,30 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.parkingapp.hulapark.Adapters.HistoryParkingCardAdapter;
+import com.parkingapp.hulapark.Adapters.OngoingParkingCardAdapter;
 import com.parkingapp.hulapark.R;
+import com.parkingapp.hulapark.Users.Guest;
 import com.parkingapp.hulapark.Users.User;
 import com.parkingapp.hulapark.Utilities.DataBase.CurrentUserCreds;
 import com.parkingapp.hulapark.Utilities.DataBase.DBManager;
 import com.parkingapp.hulapark.Utilities.Frags.CommonFragUtils;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ActionCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.BalanceIncCardDataModel;
+import com.parkingapp.hulapark.Utilities.Users.DataSchemas.Cards.ParkingCardDataModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +48,11 @@ public class UserStatisticsGenStatsFrag extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private int ongoingParkings = 0;
+    private int doneParkings = 0;
+    private OngoingParkingCardAdapter parkingCardAdapter;
+    private HistoryParkingCardAdapter historyParkingCardAdapter;
+    private int balanceIncs;
 
     public UserStatisticsGenStatsFrag()
     {
@@ -83,6 +99,7 @@ public class UserStatisticsGenStatsFrag extends Fragment
         TextView genStatsUserEmail = view.findViewById(R.id.genStatsUserEmail);
         TextView genStatsUserCreated = view.findViewById(R.id.genStatsUserCreated);
         TextView genStatsUserLastVisited = view.findViewById(R.id.genStatsUserLastVisited);
+        MaterialButton genStatsUserDelAccount = view.findViewById(R.id.genStatsUserDelAccount);
         // Expenses
         TextView genStatsUserTotalCost = view.findViewById(R.id.genStatsUserTotalCost);
         TextView genStatsUserTotalCredit = view.findViewById(R.id.genStatsUserTotalCredit);
@@ -98,15 +115,115 @@ public class UserStatisticsGenStatsFrag extends Fragment
         genStatsUserCreated.setText(creds.getCreatedDate());
         genStatsUserLastVisited.setText(creds.getLastVisited());
 
-//        List<String> qq = Arrays.asList(
-//                "Δημιουργία Λογαριασμού",
-//                "Συνολικά Έξοδα Σταθμευσεων",
-//                "Σύνηθες Όχημα (Πανακίδα)",
-//                "Συνήθης Χώρος Στάθμευσης"
-//        );
-//
-//        ((ListView)view.findViewById(R.id.genStatsList)).setAdapter(new ArrayAdapter<String>(getContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, qq));
+        parkingCardAdapter = CommonFragUtils.FragmentSwapper.getParkingCardAdapter();
+        historyParkingCardAdapter = CommonFragUtils.FragmentSwapper.getHistoryParkingCardAdapter();
+
+        parkingCardAdapter.getLiveData().observe(getActivity(), ongoingParkings ->
+        {
+            List<ActionCardDataModel> allHistory = historyParkingCardAdapter.getAllHistory();
+            this.ongoingParkings = ongoingParkings.size();
+
+            List<BalanceIncCardDataModel> balanceIncs = allHistory.stream().filter(e -> e.getType() == 1)
+                                        .map(e -> (BalanceIncCardDataModel)e).collect(Collectors.toList());
+            List<ParkingCardDataModel> oldParkings = allHistory.stream().filter(e -> e.getType() == 0)
+                    .map(e -> (ParkingCardDataModel)e).collect(Collectors.toList());
+            doneParkings = historyParkingCardAdapter.getItemCount() - balanceIncs.size();
+            List<ParkingCardDataModel> allParkings = Stream.concat(ongoingParkings.stream(), oldParkings.stream()).collect(Collectors.toList());
+
+            genStatsUserParkNum.setText(String.valueOf(this.ongoingParkings + doneParkings));
+
+            genStatsUserTotalCredit.setText((String.format("%.2f", balanceIncs.stream().map(e -> Double.parseDouble(e.getAmount())).reduce(0.0, Double::sum))));
+            genStatsUserTotalCost.setText(String.format("%.2f", allParkings.stream().map(e -> Double.parseDouble(e.getAmount())).reduce(0.0, Double::sum)));
+
+            String mostFrequentVehicle = getMostFrequentVehicle(allParkings);
+            String mostFrequentParkingLoc = getMostFrequentParkingLoc(allParkings);
+
+            genStatsUserFavVehicle.setText(mostFrequentVehicle != null ? mostFrequentVehicle : "---");
+            genStatsUserFavParking.setText(mostFrequentParkingLoc != null ? mostFrequentParkingLoc : "---");
+        });
+
+        genStatsUserDelAccount.setOnClickListener(__ ->
+        {
+            DBManager.deleteCurrentUsersAccount().addOnCompleteListener(task -> {
+                if(task.isSuccessful())
+                {
+                    CommonFragUtils.FragmentSwapper.changeUserTo(new Guest());
+                    Toast.makeText(getContext(), "Account Deleted!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(getContext(), "An error has occured..", Toast.LENGTH_SHORT).show();
+            });
+        });
 
         return view;
+    }
+
+    private String getMostFrequentVehicle(List<ParkingCardDataModel> parkingList)
+    {
+        if(parkingList.isEmpty())
+            return null;
+
+        Map<String, Integer> freqMap = new HashMap<>();
+        Map<String, ParkingCardDataModel> parkingMap = new HashMap<>();
+
+        for (ParkingCardDataModel p : parkingList)
+        {
+            String id = p.getPlateNumber();
+            freqMap.put(id, freqMap.getOrDefault(id, 0) + 1);
+            parkingMap.putIfAbsent(id, p);
+        }
+
+        int maxFreq = Collections.max(freqMap.values());
+        long count = freqMap.values().stream().filter(freq -> freq == maxFreq).count();
+
+        if (count > 1) { return null; }
+
+        for (Map.Entry<String, Integer> entry : freqMap.entrySet())
+        {
+            if (entry.getValue() == maxFreq)
+            {
+                return parkingMap.get(entry.getKey()).getPlateNumber();
+            }
+        }
+
+        return null;
+    }
+
+    private String getMostFrequentParkingLoc(List<ParkingCardDataModel> parkingList)
+    {
+        if(parkingList.isEmpty())
+            return null;
+
+        Map<String, Integer> freqMap = new HashMap<>();
+        Map<String, ParkingCardDataModel> parkingMap = new HashMap<>();
+
+        for (ParkingCardDataModel p : parkingList)
+        {
+            String id = p.getSectorID();
+            freqMap.put(id, freqMap.getOrDefault(id, 0) + 1);
+            parkingMap.putIfAbsent(id, p);
+        }
+
+        int maxFreq = Collections.max(freqMap.values());
+        long count = freqMap.values().stream().filter(freq -> freq == maxFreq).count();
+
+        if (count > 1) { return null; }
+
+        for (Map.Entry<String, Integer> entry : freqMap.entrySet())
+        {
+            if (entry.getValue() == maxFreq)
+            {
+                String sectorID = parkingMap.get(entry.getKey()).getSectorID();
+                List<String> addressList = CommonFragUtils.FragmentSwapper.getGeoDataModel().GeoData.features
+                        .stream().filter(f -> f.properties.SECTORID.equals(sectorID))
+                        .map(f -> f.properties.ADDRESS)
+                        .collect(Collectors.toList());
+                if (addressList.size() == 1)
+                    return addressList.get(0);
+                return null;
+            }
+        }
+
+        return null;
     }
 }
